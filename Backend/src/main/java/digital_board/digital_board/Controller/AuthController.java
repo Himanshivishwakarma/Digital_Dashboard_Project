@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ch.qos.logback.classic.Logger;
-import digital_board.digital_board.Model.JwtRequest;
-import digital_board.digital_board.Model.JwtResponse;
+import digital_board.digital_board.Dto.JwtRequest;
+import digital_board.digital_board.Dto.JwtResponse;
 import digital_board.digital_board.Security.JwtHelper;
 
 

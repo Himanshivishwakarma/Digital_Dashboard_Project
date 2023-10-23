@@ -1,4 +1,4 @@
-package digital_board.digital_board.Model;
+package digital_board.digital_board.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
