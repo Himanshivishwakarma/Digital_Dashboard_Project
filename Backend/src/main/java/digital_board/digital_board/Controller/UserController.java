@@ -14,19 +14,6 @@ import digital_board.digital_board.Dto.AuthResponse;
 public class UserController  {
 
 
-    @GetMapping("/test")
-    public ResponseEntity<AuthResponse> home(@AuthenticationPrincipal OidcUser principal) {
-        AuthResponse authResponse = new AuthResponse();
-         authResponse.setName(principal.getEmail());
-        authResponse.setToken(principal.getIdToken().getTokenValue());
-        return ResponseEntity.ok(authResponse);
-    }
-
-      @GetMapping("/public")
-    public String publicTest() {
-        return "working";
-    }
-
 
 
  
