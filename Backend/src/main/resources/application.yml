@@ -22,20 +22,20 @@ spring:
     show-sql: true
     
 
-  # security:
-  #   oauth2:
-  #     client:
-  #       registration:
-  #         auth0:
-  #           client-id: UkrepWEIKkn2CIYLmGIiuU2fdwU34WdH
-  #           client-secret: K1PDdEqQiWsbq5spsZNGKeYkHr6VTwCaBTWpo-RBLJXsD1L6d2W_OlryBd-c50Rw
-  #           scope:
-  #             - openid
-  #             - profile
-  #             - email
-  #       provider:
-  #         auth0:
-  #           issuer-uri: https://dev-2v6nqrql62h5dwnv.us.auth0.com/
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            client-id: UkrepWEIKkn2CIYLmGIiuU2fdwU34WdH
+            client-secret: K1PDdEqQiWsbq5spsZNGKeYkHr6VTwCaBTWpo-RBLJXsD1L6d2W_OlryBd-c50Rw
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          auth0:
+            issuer-uri: https://dev-2v6nqrql62h5dwnv.us.auth0.com/
 
 
   

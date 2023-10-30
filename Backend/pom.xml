@@ -23,15 +23,17 @@
 		</dependency>
 
  <!-- auth0 -->
-		<!-- <dependency>
+		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
-        </dependency> -->
-        <!-- <dependency>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-           -->
+          
+
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -55,10 +57,10 @@
 
 
 		<!-- security -->
-		<!-- <dependency>
+		<dependency>
    			 <groupId>org.springframework.boot</groupId>
    			 <artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
+		</dependency>
        
          <dependency>
       <groupId>org.springdoc</groupId>
@@ -72,6 +74,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 	</dependencies>
 

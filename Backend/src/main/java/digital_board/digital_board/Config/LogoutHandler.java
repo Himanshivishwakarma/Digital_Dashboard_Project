@@ -9,7 +9,7 @@
 // import org.springframework.web.util.UriComponentsBuilder;
 
 
-// @Controller
+// @Controllera
 
 // public class LogoutHandler extends SecurityContextLogoutHandler {
 
