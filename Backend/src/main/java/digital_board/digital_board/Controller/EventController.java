@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import digital_board.digital_board.Entity.Event;
 import digital_board.digital_board.Entity.Notice;
+import digital_board.digital_board.ServiceImpl.EventServiceImpl;
 import digital_board.digital_board.ServiceImpl.NoticeServiceImpl;
 
 @RestController
-@RequestMapping("/notice")
-public class NoticeController {
+    @RequestMapping("/event")
+public class EventController {
 
     @Autowired
-    NoticeServiceImpl noticeServiceImpl;
+    EventServiceImpl eventServiceImpl;
 
 
     @PostMapping("/add")
-    public Notice createNoticeByUser(@RequestBody Notice notice){
-        Notice saveNotice = this.noticeServiceImpl.createNoticeByUser(notice);
-        return saveNotice;
+    public Event createEventByUser(@RequestBody Event event){
+        Event saveEvnet = this.eventServiceImpl.createEventByUser(event);
+        return saveEvnet;
     }
-
-
 }
