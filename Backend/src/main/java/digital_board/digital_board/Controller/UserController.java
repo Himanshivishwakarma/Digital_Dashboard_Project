@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-// import org.springframework.security.core.annotation.AuthenticationPrincipal;
-// import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,7 +16,8 @@ import digital_board.digital_board.Entity.User;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
 
 @RestController
-public class UserController {
+public class UserController  {
+
 
   @Autowired
   private UserServiceImpl userServiceImpl;
@@ -53,4 +54,5 @@ public class UserController {
     List<User> userDetails = userServiceImpl.FindALlUser();
     return ResponseEntity.ok(userDetails);
   }
+
 }
