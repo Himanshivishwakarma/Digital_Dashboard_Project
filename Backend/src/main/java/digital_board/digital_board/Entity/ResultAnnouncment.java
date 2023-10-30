@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-public class Result_Announcment {
+public class ResultAnnouncment {
     @Id
     private String resultAnnouncmentId = UUID.randomUUID().toString();
     private String resultData;
