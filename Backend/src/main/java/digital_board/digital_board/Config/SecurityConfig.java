@@ -6,7 +6,7 @@ package digital_board.digital_board.Config;
 // import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 // import org.springframework.security.web.SecurityFilterChain;
 // import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-// import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestTemplate;
 
 // import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -62,6 +62,7 @@ public class SecurityConfig {
 
     private static final String[] public_urls ={
         "/login",
+        "public",
         "api/v1/auth/**",
         "/v3/api-docs",
         "/v2/api-docs",
@@ -100,6 +101,10 @@ public class SecurityConfig {
               .oauth2ResourceServer(oauth2ResourceServer ->
         oauth2ResourceServer.jwt(jwt -> jwt.decoder(jwtDecoder()))).build();
               
+    }
+        @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 

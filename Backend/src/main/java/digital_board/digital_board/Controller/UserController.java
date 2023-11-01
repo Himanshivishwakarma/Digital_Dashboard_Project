@@ -12,27 +12,50 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import digital_board.digital_board.Dto.AuthResponse;
+import digital_board.digital_board.Entity.EVENT_LOGS;
 import digital_board.digital_board.Entity.User;
+// import digital_board.digital_board.Repository.EVENT_LOGSRepository;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
 
-@RestController
-public class UserController  {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
+@RestController
+public class UserController {
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
   @Autowired
   private UserServiceImpl userServiceImpl;
 
-  // @GetMapping("/test")
-  // public ResponseEntity<AuthResponse> home(@AuthenticationPrincipal OidcUser
-  // principal) {
-  // AuthResponse authResponse = new AuthResponse();
-  // authResponse.setName(principal.getEmail());
-  // authResponse.setToken(principal.getIdToken().getTokenValue());
-  // return ResponseEntity.ok(authResponse);
-  // }
+  // @Autowired
+  // private EVENT_LOGSRepository eVENT_LOGSRepository;
+
+  @GetMapping("/test")
+  public ResponseEntity<AuthResponse> home(@AuthenticationPrincipal OidcUser principal) {
+    AuthResponse authResponse = new AuthResponse();
+    authResponse.setName(principal.getEmail());
+    authResponse.setToken(principal.getIdToken().getTokenValue());
+    return ResponseEntity.ok(authResponse);
+  }
 
   @GetMapping("/public")
   public String publicTest() {
+    // logger.info("This is an info message.");
+    // logger.error("This is an error message.");
+    // log.trace("FROM TRACE METHOD");
+    // log.warn("FROM WARN METHOD");
+    // log.debug("FROM DEBUG METHOD");
+    // log.error("FROM ERROR METHOD");
+    // log.info("FROM INFO METHOD");
+    // log.fatal("FROM FATAL METHOD");
+    MDC.put("User", "mashid@gmail.com");
+    MDC.put("path", "/public");
+    LOGGER.info("1*************getWelcomeMsg action called..");
+    // MDC.remove("User");
+    // MDC.remove("path");
+    MDC.clear();
     return "working";
   }
 
@@ -50,7 +73,7 @@ public class UserController  {
 
   // Find All User
   @GetMapping("/FindAllUser")
-  ResponseEntity<List> FindAllUser() {
+  ResponseEntity<List<User>> FindAllUser() {
     List<User> userDetails = userServiceImpl.FindALlUser();
     return ResponseEntity.ok(userDetails);
   }
