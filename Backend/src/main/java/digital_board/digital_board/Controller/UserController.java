@@ -50,7 +50,7 @@ public class UserController {
   // Find All User
   @GetMapping("/FindAllUser")
   ResponseEntity<List> FindAllUser() {
-    List<User> userDetails = userServiceImpl.FindALlUser();
+    List<User> userDetails = userServiceImpl.FindAllUser();
     return ResponseEntity.ok(userDetails);
   }
 }

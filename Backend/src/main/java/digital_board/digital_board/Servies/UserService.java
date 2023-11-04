@@ -14,5 +14,5 @@ public interface UserService {
     User UpdateUser(User user);
     
     // Find All User
-    List<User> FindALlUser();
+    List<User> FindAllUser();
 }
