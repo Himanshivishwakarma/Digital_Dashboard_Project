@@ -9,11 +9,79 @@
 #     root: error
 #     org.springframework.web: ERROR
 #     com.example.auth0demoapplication: TRACE
+
+# log file ganerate
+# logging:
+#     file:
+#       name: MyAppLogs/myapp.log
+#     level:
+#         com:
+#             infotech:
+#                 com:
+#                     infotech:
+#                         app: info
+#     root: error
+#     org.springframework.web: ERROR
+#     com.example.auth0demoapplication: TRACE
+#     pattern:
+#         console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+#         file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+
+logging:
+    file:
+      name: MyAppLogs/myapp.log
+Configuration:
+  status: info
+  Appenders:
+    Console:
+      name: ConsoleAppender
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+    RollingFile:
+      name: RollingFileAppender
+      fileName: MyAppLogs/myapp.log
+      filePattern: MyAppLogs/myapp-%d{yyyy-MM-dd}.%i.log
+      append: true
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 10MB  # Set your desired log file size here
+        DefaultRolloverStrategy:
+          max: 7  # Number of archived log files to keep
+      PatternLayout:
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+  Loggers:
+    Root:
+      level: error
+      AppenderRef:
+        - ref: RollingFileAppender
+
+    Logger:
+      - name: org.springframework.web
+        level: error
+        additivity: false
+        AppenderRef:
+          - ref: RollingFileAppender
+      - name: com.example.auth0demoapplication
+        level: trace
+        additivity: false
+        AppenderRef:
+          - ref: RollingFileAppender
+
+  AppenderRef:
+    - ref: ConsoleAppender
+    - ref: RollingFileAppender
+
+
+
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/digital_board
+    url: jdbc:mysql://localhost:3307/digital_board
     username: root
-    # password: root
+    password: root
+
     
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
@@ -21,21 +89,24 @@ spring:
       ddl-auto: update
     show-sql: true
     
+    
 
-  # security:
-  #   oauth2:
-  #     client:
-  #       registration:
-  #         auth0:
-  #           client-id: UkrepWEIKkn2CIYLmGIiuU2fdwU34WdH
-  #           client-secret: K1PDdEqQiWsbq5spsZNGKeYkHr6VTwCaBTWpo-RBLJXsD1L6d2W_OlryBd-c50Rw
-  #           scope:
-  #             - openid
-  #             - profile
-  #             - email
-  #       provider:
-  #         auth0:
-  #           issuer-uri: https://dev-2v6nqrql62h5dwnv.us.auth0.com/
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            client-id: UkrepWEIKkn2CIYLmGIiuU2fdwU34WdH
+            client-secret: K1PDdEqQiWsbq5spsZNGKeYkHr6VTwCaBTWpo-RBLJXsD1L6d2W_OlryBd-c50Rw
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          auth0:
+            issuer-uri: https://dev-2v6nqrql62h5dwnv.us.auth0.com/
 
 
   
+# spring.jpa.hibernate.ddl-auto=update
+# spring.jpa.properties.hibernate.dialect =org.hibernate.dialect.MySQL8Dialect

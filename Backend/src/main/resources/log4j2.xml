@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="trace">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a} %level %c - %m %n" />
+            <!-- <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a} %level %c - USER=%X{User} - %m %n" /> -->
+
+        </Console>
+        <JDBC name="dbLogsStore" tableName="digital_board.event_logs">
+            <ConnectionFactory class="digital_board.digital_board.Config.ConnectionFactory" method="getDatabaseConnection" />
+            <Column name="ID" pattern="%u" />
+            <Column name="DATE_TIME" isEventTimestamp="true" />
+            <Column name="CLASS_INFO" pattern="%logger" />
+            <Column name="LEVEL" pattern="%level" />
+            <Column name="USER" pattern="%X{User}" isClob="true" />
+             <Column name="PATH" pattern="%X{path}" isClob="true" />
+            <Column name="MESSAGE" pattern="%message" isClob="true" />
+            <Column name="EXCEPTION_INFO" pattern="%ex{full}" isClob="true" />
+       <Filters>
+    <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL" />
+    <RegexFilter regex="Starting DigitalBoardApplication.*" onMatch="DENY" onMismatch="NEUTRAL" />
+    <RegexFilter regex="Started DigitalBoardApplication.*" onMatch="DENY" onMismatch="NEUTRAL" />
+       <RegexFilter regex="No active profile set.*" onMatch="DENY" onMismatch="NEUTRAL" />
+</Filters> 
+
+ 
+        </JDBC>
+    </Appenders> 
+    <Loggers>
+        <Logger name="digital_board.digital_board" level="info">
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Root level="warn">
+            <AppenderRef ref="dbLogsStore" />
+        </Root>
+    </Loggers>
+</Configuration>
