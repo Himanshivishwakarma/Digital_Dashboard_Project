@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import digital_board.digital_board.Entity.Event;
-import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.ServiceImpl.EventServiceImpl;
-import digital_board.digital_board.ServiceImpl.NoticeServiceImpl;
 
 @RestController
     @RequestMapping("/event")

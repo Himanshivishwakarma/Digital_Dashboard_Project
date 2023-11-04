@@ -73,8 +73,9 @@ public class UserController {
 
   // Find All User
   @GetMapping("/FindAllUser")
-  ResponseEntity<List<User>> FindAllUser() {
-    List<User> userDetails = userServiceImpl.FindALlUser();
+
+  ResponseEntity<List> FindAllUser() {
+    List<User> userDetails = userServiceImpl.FindAllUser();
     return ResponseEntity.ok(userDetails);
   }
 
