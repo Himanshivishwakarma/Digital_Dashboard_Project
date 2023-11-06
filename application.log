@@ -1,0 +1,41 @@
+2023-11-06 11:48:33,265 INFO d.d.DigitalBoardApplication [restartedMain] Starting DigitalBoardApplication using Java 17.0.8.1 with PID 15728 (E:\Code_Olympic\Digital_Dashboard_Project\Backend\target\classes started by HP in E:\Code_Olympic\Digital_Dashboard_Project)
+2023-11-06 11:48:33,277 INFO d.d.DigitalBoardApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-11-06 11:48:40,849 WARN o.h.d.Dialect [restartedMain] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-11-06 11:48:46,784 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-06 11:48:49,301 INFO d.d.DigitalBoardApplication [restartedMain] Started DigitalBoardApplication in 16.894 seconds (process running for 18.545)
+2023-11-06 12:47:33,856 INFO d.d.DigitalBoardApplication [restartedMain] Starting DigitalBoardApplication using Java 17.0.8.1 with PID 19360 (E:\Code_Olympic\Digital_Dashboard_Project\Backend\target\classes started by HP in E:\Code_Olympic\Digital_Dashboard_Project)
+2023-11-06 12:47:33,879 INFO d.d.DigitalBoardApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-11-06 12:47:40,367 WARN o.h.d.Dialect [restartedMain] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-11-06 12:47:46,359 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-06 12:47:48,055 INFO d.d.DigitalBoardApplication [restartedMain] Started DigitalBoardApplication in 15.245 seconds (process running for 18.666)
+2023-11-06 13:59:50,255 INFO d.d.DigitalBoardApplication [restartedMain] Starting DigitalBoardApplication using Java 17.0.8.1 with PID 9992 (E:\Code_Olympic\Digital_Dashboard_Project\Backend\target\classes started by HP in E:\Code_Olympic\Digital_Dashboard_Project)
+2023-11-06 13:59:50,337 INFO d.d.DigitalBoardApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-11-06 13:59:59,841 WARN o.h.d.Dialect [restartedMain] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-11-06 14:00:07,426 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-06 14:00:10,255 INFO d.d.DigitalBoardApplication [restartedMain] Started DigitalBoardApplication in 21.983 seconds (process running for 29.748)
+2023-11-06 14:15:56,790 INFO d.d.DigitalBoardApplication [restartedMain] Starting DigitalBoardApplication using Java 17.0.8.1 with PID 14068 (E:\Code_Olympic\Digital_Dashboard_Project\Backend\target\classes started by HP in E:\Code_Olympic\Digital_Dashboard_Project)
+2023-11-06 14:15:56,809 INFO d.d.DigitalBoardApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-11-06 14:16:02,246 WARN o.h.d.Dialect [restartedMain] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-11-06 14:16:08,943 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-06 14:16:11,280 INFO d.d.DigitalBoardApplication [restartedMain] Started DigitalBoardApplication in 15.785 seconds (process running for 17.996)
+2023-11-06 14:18:46,214 INFO d.d.C.UserController [http-nio-8080-exec-1] 1*************getWelcomeMsg action called..
+2023-11-06 14:20:54,986 INFO d.d.DigitalBoardApplication [restartedMain] Starting DigitalBoardApplication using Java 17.0.8.1 with PID 7568 (E:\Code_Olympic\Digital_Dashboard_Project\Backend\target\classes started by HP in E:\Code_Olympic\Digital_Dashboard_Project)
+2023-11-06 14:20:55,012 INFO d.d.DigitalBoardApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-11-06 14:21:00,470 WARN o.h.d.Dialect [restartedMain] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-11-06 14:21:05,968 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-06 14:21:07,804 WARN o.s.b.d.a.OptionalLiveReloadServer [restartedMain] Unable to start LiveReload server
+2023-11-06 14:21:07,954 WARN o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2023-11-06 14:21:08,105 ERROR o.s.b.d.LoggingFailureAnalysisReporter [restartedMain] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
