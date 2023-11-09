@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 public class Sport{
     @Id
-    private String sprotId = UUID.randomUUID().toString();
+    private String sportId = UUID.randomUUID().toString();
     private String sportName;
     private String sportDescription;
     private String sportStartDate;
