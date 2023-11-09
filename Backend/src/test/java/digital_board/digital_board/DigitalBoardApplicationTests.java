@@ -9,6 +9,7 @@ class DigitalBoardApplicationTests {
 	@Test
 	void contextLoads() 
 	{
+		
 	}
 
 }

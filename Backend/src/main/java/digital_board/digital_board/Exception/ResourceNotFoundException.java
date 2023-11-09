@@ -1,5 +1,8 @@
 package digital_board.digital_board.Exception;
 
+import java.util.stream.Stream;
+
+import digital_board.digital_board.Entity.ExceptionResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,5 +15,6 @@ public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
         this.message = message;
     }
+   
 
 }

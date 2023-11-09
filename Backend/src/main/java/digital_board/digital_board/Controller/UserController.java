@@ -1,5 +1,6 @@
 package digital_board.digital_board.Controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import digital_board.digital_board.Dto.AuthResponse;
 import digital_board.digital_board.Entity.EVENT_LOGS;
+import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
 // import digital_board.digital_board.Repository.EVENT_LOGSRepository;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
+import digital_board.digital_board.constants.ResponseMessagesConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,20 +64,36 @@ public class UserController {
 
   // create user
   @PostMapping("/CreatUser")
-  ResponseEntity<User> CreateUser(@RequestBody User user) {
-    return ResponseEntity.ok(userServiceImpl.CreateUser(user));
+  ResponseEntity<?> CreateUser(@RequestBody User user) {
+    HashMap<String, Object> response = new HashMap<>();
+    response.put("user", userServiceImpl.CreateUser(user));
+
+    response.put("massage", ResponseMessagesConstants.messagelist.stream()
+        .filter(exceptionResponse -> "USER_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+        .map(ExceptionResponse::getMassage)
+        .findFirst()
+        .orElse("Default message if not found"));
+    return ResponseEntity.ok(response);
   }
 
   // UpdateUser
   @PutMapping("/UpdateUser")
-  ResponseEntity<User> UpdateUser(@RequestBody User user) {
-    return ResponseEntity.ok(userServiceImpl.UpdateUser(user));
+  ResponseEntity<?> UpdateUser(@RequestBody User user) 
+  {
+    HashMap<String, Object> response = new HashMap<>();
+    response.put("user", userServiceImpl.UpdateUser(user));
+
+    response.put("massage", ResponseMessagesConstants.messagelist.stream()
+        .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
+        .map(ExceptionResponse::getMassage)
+        .findFirst()
+        .orElse("Default message if not found"));
+    return ResponseEntity.ok(response);
   }
 
   // Find All User
   @GetMapping("/FindAllUser")
-
-  ResponseEntity<List> FindAllUser() {
+  ResponseEntity<List<User>> FindAllUser() {
     List<User> userDetails = userServiceImpl.FindAllUser();
     return ResponseEntity.ok(userDetails);
   }
