@@ -16,6 +16,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 
 /**
  * SwaggerConfig
+ * /v3/api-docs
  */
 //http://localhost:8080/swagger-ui/index.html
 @Configuration

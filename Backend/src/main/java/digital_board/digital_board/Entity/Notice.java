@@ -25,4 +25,5 @@ public class Notice
     private String  noticeEndDate;
     private String  noticeCreatedDate;
     private String  createdBy;
+    private Boolean status;
 }

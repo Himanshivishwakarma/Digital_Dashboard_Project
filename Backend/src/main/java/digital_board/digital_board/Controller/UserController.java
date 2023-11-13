@@ -1,12 +1,16 @@
 package digital_board.digital_board.Controller;
 
 import java.util.HashMap;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,20 +21,27 @@ import digital_board.digital_board.Dto.AuthResponse;
 import digital_board.digital_board.Entity.EVENT_LOGS;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
+import digital_board.digital_board.ServiceImpl.EmailServiceImpl;
 // import digital_board.digital_board.Repository.EVENT_LOGSRepository;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 @RestController
+@CrossOrigin("*")
 public class UserController {
   private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
   @Autowired
   private UserServiceImpl userServiceImpl;
+
+      @Autowired
+    private EmailServiceImpl emailServices;
+
 
   // @Autowired
   // private EVENT_LOGSRepository eVENT_LOGSRepository;
@@ -45,19 +56,18 @@ public class UserController {
 
   @GetMapping("/public")
   public String publicTest() {
-    // logger.info("This is an info message.");
-    // logger.error("This is an error message.");
-    // log.trace("FROM TRACE METHOD");
-    // log.warn("FROM WARN METHOD");
-    // log.debug("FROM DEBUG METHOD");
-    // log.error("FROM ERROR METHOD");
-    // log.info("FROM INFO METHOD");
-    // log.fatal("FROM FATAL METHOD");
+   
     MDC.put("User", "mashid@gmail.com");
     MDC.put("path", "/public");
     LOGGER.info("1*************getWelcomeMsg action called..");
     // MDC.remove("User");
     // MDC.remove("path");
+   
+
+     
+  
+      // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test", "This is the test email template for your email:\n%s\n");
+  
     MDC.clear();
     return "working";
   }
