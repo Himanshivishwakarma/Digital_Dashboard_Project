@@ -62,15 +62,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Deprecated
 public class SecurityConfig {
 
-    private static final String[] public_urls = {
-            "/login",
-            "public",
-            "api/v1/auth/**",
-            "/v3/api-docs",
-            "/v2/api-docs",
-            "/swagger-resources/**",
-            "/swagger-ui/**",
-            "/webjars/**" };
+    
 
     @Bean
     public JwtDecoder jwtDecoder() {
