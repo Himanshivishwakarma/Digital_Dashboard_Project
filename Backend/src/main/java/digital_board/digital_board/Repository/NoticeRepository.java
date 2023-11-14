@@ -16,5 +16,7 @@ public interface NoticeRepository extends JpaRepository<Notice, String>{
    
      @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId")
     List<Notice> getAllNoticeByUserId(@Param("userId") String userId);
+
+
  }
 

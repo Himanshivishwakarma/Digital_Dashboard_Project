@@ -26,6 +26,7 @@ public class DigitalBoardApplication implements CommandLineRunner {
 		System.out.println("ok");
 
 	}
+
 	@Autowired
 	ExceptionResponseServiceImpl exceptionResponseServiceImpl;
 
@@ -41,10 +42,6 @@ public class DigitalBoardApplication implements CommandLineRunner {
 
 		System.out.println("Specific Message: " + specificMessage);
 
-	
-
 	}
-	
-
 
 }

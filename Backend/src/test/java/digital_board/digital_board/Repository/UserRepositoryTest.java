@@ -19,7 +19,7 @@ public class UserRepositoryTest
     void findByEmail() 
     {
        
-      User user=new User("1","ayan","ayan@gmail.com","student","iteg","image");
+       User user=new User("1","ayan","ayan@gmail.com","student","iteg","image");
        userRepository.save(user);
        User userDetails =userRepository.findByEmail("ayan@gmail.com").orElseThrow();
        assertEquals("ayan@gmail.com",userDetails.getEmail());
