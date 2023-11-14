@@ -63,7 +63,7 @@ public class UserController {
 
      
   
-      // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test", "This is the test email template for your email:\n%s\n");
+      // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test", "sultan");
   
     MDC.clear();
     return "working";
@@ -88,5 +88,6 @@ public class UserController {
     List<User> userDetails = userServiceImpl.FindAllUser();
     return ResponseEntity.ok(userDetails);
   }
+  
 
 }
