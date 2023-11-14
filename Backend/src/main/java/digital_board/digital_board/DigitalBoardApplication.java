@@ -44,24 +44,7 @@ public class DigitalBoardApplication implements CommandLineRunner {
 	
 
 	}
-	@Autowired
-	ExceptionResponseServiceImpl exceptionResponseServiceImpl;
-
-	@Override
-	public void run(String... args) throws Exception {
-		ResponseMessagesConstants.messagelist = this.exceptionResponseServiceImpl.GetAllMassage();
-
-		String specificMessage = ResponseMessagesConstants.messagelist.stream()
-				.filter(exceptionResponse -> "USER_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
-				.map(ExceptionResponse::getMassage)
-				.findFirst()
-				.orElse("Default message if not found");
-
-		System.out.println("Specific Message: " + specificMessage);
-
 	
-
-	}
 
 
 }

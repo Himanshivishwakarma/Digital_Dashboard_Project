@@ -1,0 +1,15 @@
+2023-11-13 16:12:52,691 INFO d.d.R.UserRepositoryTest [main] Starting UserRepositoryTest using Java 17.0.8.1 with PID 12416 (started by HP in E:\Code_Olympic\Digital_Dashboard_Project\Backend)
+2023-11-13 16:12:53,357 INFO d.d.R.UserRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-13 16:12:58,370 WARN o.h.d.Dialect [main] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-11-13 16:13:06,732 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-13 16:13:08,800 INFO d.d.R.UserRepositoryTest [main] Started UserRepositoryTest in 17.093 seconds (process running for 21.068)
+2023-11-13 16:14:29,734 INFO d.d.R.UserRepositoryTest [main] Starting UserRepositoryTest using Java 17.0.8.1 with PID 13484 (started by HP in E:\Code_Olympic\Digital_Dashboard_Project\Backend)
+2023-11-13 16:14:30,543 INFO d.d.R.UserRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-13 16:14:35,063 WARN o.h.d.Dialect [main] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-11-13 16:14:41,150 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-13 16:14:43,283 INFO d.d.R.UserRepositoryTest [main] Started UserRepositoryTest in 14.483 seconds (process running for 17.918)
+2023-11-14 09:23:45,118 INFO d.d.DigitalBoardApplicationTests [main] Starting DigitalBoardApplicationTests using Java 17.0.8.1 with PID 10052 (started by HP in E:\Code_Olympic\Digital_Dashboard_Project\Backend)
+2023-11-14 09:23:45,158 INFO d.d.DigitalBoardApplicationTests [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-14 09:23:50,813 WARN o.h.d.Dialect [main] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-11-14 09:23:57,753 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-14 09:24:00,428 INFO d.d.DigitalBoardApplicationTests [main] Started DigitalBoardApplicationTests in 16.471 seconds (process running for 21.586)

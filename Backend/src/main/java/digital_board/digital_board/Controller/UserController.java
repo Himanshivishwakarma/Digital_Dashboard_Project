@@ -1,6 +1,5 @@
 package digital_board.digital_board.Controller;
 
-import java.util.HashMap;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -15,17 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import digital_board.digital_board.Dto.AuthResponse;
 import digital_board.digital_board.Entity.EVENT_LOGS;
-import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
 import digital_board.digital_board.ServiceImpl.EmailServiceImpl;
 // import digital_board.digital_board.Repository.EVENT_LOGSRepository;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
-import digital_board.digital_board.constants.ResponseMessagesConstants;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,15 +30,15 @@ import org.slf4j.MDC;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("/api/v1/user")
 public class UserController {
   private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
   @Autowired
   private UserServiceImpl userServiceImpl;
 
-      @Autowired
-    private EmailServiceImpl emailServices;
-
+  @Autowired
+  private EmailServiceImpl emailServices;
 
   // @Autowired
   // private EVENT_LOGSRepository eVENT_LOGSRepository;
@@ -56,53 +53,35 @@ public class UserController {
 
   @GetMapping("/public")
   public String publicTest() {
-   
+
     MDC.put("User", "mashid@gmail.com");
     MDC.put("path", "/public");
     LOGGER.info("1*************getWelcomeMsg action called..");
     // MDC.remove("User");
     // MDC.remove("path");
-   
 
-     
-  
-      // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test", "This is the test email template for your email:\n%s\n");
-  
+    // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
+    // "This is the test email template for your email:\n%s\n");
+
     MDC.clear();
     return "working";
   }
 
   // create user
   @PostMapping("/CreatUser")
-  ResponseEntity<?> CreateUser(@RequestBody User user) {
-    HashMap<String, Object> response = new HashMap<>();
-    response.put("user", userServiceImpl.CreateUser(user));
-
-    response.put("massage", ResponseMessagesConstants.messagelist.stream()
-        .filter(exceptionResponse -> "USER_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
-        .map(ExceptionResponse::getMassage)
-        .findFirst()
-        .orElse("Default message if not found"));
-    return ResponseEntity.ok(response);
+  ResponseEntity<User> CreateUser(@RequestBody User user) {
+    return ResponseEntity.ok(userServiceImpl.CreateUser(user));
   }
 
   // UpdateUser
   @PutMapping("/UpdateUser")
-  ResponseEntity<?> UpdateUser(@RequestBody User user) 
-  {
-    HashMap<String, Object> response = new HashMap<>();
-    response.put("user", userServiceImpl.UpdateUser(user));
-
-    response.put("massage", ResponseMessagesConstants.messagelist.stream()
-        .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
-        .map(ExceptionResponse::getMassage)
-        .findFirst()
-        .orElse("Default message if not found"));
-    return ResponseEntity.ok(response);
+  ResponseEntity<User> UpdateUser(@RequestBody User user) {
+    return ResponseEntity.ok(userServiceImpl.UpdateUser(user));
   }
 
   // Find All User
   @GetMapping("/FindAllUser")
+
   ResponseEntity<List<User>> FindAllUser() {
     List<User> userDetails = userServiceImpl.FindAllUser();
     return ResponseEntity.ok(userDetails);

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import digital_board.digital_board.Entity.User;
-import digital_board.digital_board.Exception.ResourceNotFoundException;
+
 
 
 
