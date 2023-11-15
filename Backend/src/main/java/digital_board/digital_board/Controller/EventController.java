@@ -10,7 +10,7 @@ import digital_board.digital_board.Entity.Event;
 import digital_board.digital_board.ServiceImpl.EventServiceImpl;
 
 @RestController
-    @RequestMapping("/event")
+@RequestMapping("/api/v1/event")
 public class EventController {
 
     @Autowired
