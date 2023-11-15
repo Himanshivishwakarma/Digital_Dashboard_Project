@@ -63,7 +63,7 @@ public class UserController {
 
      
   
-      // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test", "sultan");
+      emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test", "Sahil");
   
     MDC.clear();
     return "working";

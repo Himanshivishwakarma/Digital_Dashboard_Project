@@ -36,8 +36,27 @@ public class EmailServiceImpl {
       helper.setFrom("sahilk.bca2021@ssismg.org");
       // helper.setFrom("sultans.bca2021@ssism.org");
       helper.setTo(to);
-      helper.setSubject(subject);
-      helper.setText("<html><body><h1>Hello, " + userName + "!</h1></body></html>", true); // true indicates HTML content
+      helper.setSubject("Don't Miss Out: Important Update Inside");
+      helper.setText("<html><head><style>"
+      + "body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; text-align: center; }"
+      + ".container { max-width: 600px; margin: 0 auto; padding: 20px; }"
+      + ".header { background-color: #4B49AC; color: #fff; padding: 10px; display: flex; justify-content: center; align-items: center; }"
+      + ".content { background-color: #fff; padding: 20px; }"
+      + "img {padding-left: 12px;}"
+      + ".button { display: inline-block; padding: 10px 20px; background-color: #4B49AC; color: #fff; text-decoration: none; border-radius: 3px;}"
+      + "</style></head><body>"
+      + "<div class='container'>"
+      + "<div class='header'><div><h1>~~~New~~~</h1><h1>Notification</h1></div><img src='https://angular.io/assets/images/logos/angular/logo-nav@2x.png' alt='Logo'></div>"
+      + "<div class='content'>"
+      + "<p>Hello, " + userName + "!</p>"
+      + "<p>We wanted to inform you about a new notice that has been posted. Please click the button below to view the details:</p>"
+      + "<a class='button' href='  noticeLink  '>View Notification</a>"
+      + "<p>Thank you for being a valued member of our community.</p>"
+      + "<p>Best regards,</p>"
+      + "<p>Digital Dashboard</p>"
+      + "</div>"
+      + "</div>"
+      + "</body></html>", true); // true indicates HTML content
 
       emailSender.send(message);
     } catch (MessagingException e) {
