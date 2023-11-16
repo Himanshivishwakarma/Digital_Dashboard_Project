@@ -23,11 +23,11 @@ public class ConnectionFactory {
     private ConnectionFactory() {
         Properties properties = new Properties();
         properties.setProperty("user", "root");
-        properties.setProperty("password", "root"); // or get properties from some configuration file
+        properties.setProperty("password", ""); // or get properties from some configuration file
 
         GenericObjectPool<PoolableConnection> pool = new GenericObjectPool<PoolableConnection>();
         DriverManagerConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
-                "jdbc:mysql://localhost:3307/digital_board", properties
+                "jdbc:mysql://localhost:3306/digital_board", properties
         );
         new PoolableConnectionFactory(
                 connectionFactory, pool, null, "SELECT 1", 3, false, false, Connection.TRANSACTION_READ_COMMITTED

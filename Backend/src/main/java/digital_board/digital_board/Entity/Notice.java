@@ -1,11 +1,11 @@
 package digital_board.digital_board.Entity;
 
+
 import java.util.Date;
 import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
-
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Notice {
 
     @Id
@@ -26,6 +26,7 @@ public class Notice {
     private String departmentName;
     private String noticeStartDate;
     private String noticeEndDate;
+
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date noticeCreatedDate;
@@ -38,4 +39,5 @@ public class Notice {
     protected void onCreate() {
         this.noticeCreatedDate = new Date();
     }
+
 }

@@ -18,8 +18,7 @@ import digital_board.digital_board.ServiceImpl.NoticeServiceImpl;
 
 @RestController
 @CrossOrigin("*")
-// @CrossOrigin(origins = "*", allowCredentials = "true")
-@RequestMapping("/notices")
+@RequestMapping("/api/v1/notice")
 public class NoticeController {
 
     @Autowired
