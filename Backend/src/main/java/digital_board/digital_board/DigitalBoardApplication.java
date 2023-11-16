@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.ServiceImpl.ExceptionResponseServiceImpl;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
+
 
 @SpringBootApplication
 public class DigitalBoardApplication implements CommandLineRunner {
