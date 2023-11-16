@@ -45,7 +45,7 @@ public class SwaggerConfig {
         .title("Digital Dashboard API")
         .description(("This is digital dashboard Application"))
         .version("1.0")
-        .contact(new Contact().name(" digital dashboard").email(" digitaldashboard@ssism.org").url(" digitaldashboard.com"))
+        .contact(new Contact().name("digital dashboard").email("digitaldashboard@ssism.org").url("digitaldashboard.com"))
         .license(new License().name("Apache"))
         ).externalDocs(new ExternalDocumentation().url(" digitalashboard.com").description("this is external url"));
     }
