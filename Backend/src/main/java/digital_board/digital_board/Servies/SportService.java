@@ -8,7 +8,7 @@ public interface SportService {
     
     Sport addSport(Sport sport);
 
-    Sport getSportById(String sportName);
+    Sport getSportById(String sportId);
     
    List<Sport> getAllSport();
 

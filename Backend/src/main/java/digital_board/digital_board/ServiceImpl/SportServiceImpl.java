@@ -14,6 +14,10 @@ public class SportServiceImpl implements SportService{
     @Autowired
     SportRepository sportRepository;
 
+    public SportServiceImpl(SportRepository sportRepository) {
+      this.sportRepository = sportRepository;
+  }
+
     @Override
     public Sport addSport(Sport sport) {
         Sport sport2 = sportRepository.save(sport);
