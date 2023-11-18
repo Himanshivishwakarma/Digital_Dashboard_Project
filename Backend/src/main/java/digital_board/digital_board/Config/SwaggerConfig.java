@@ -16,6 +16,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 
 /**
  * SwaggerConfig
+ * /v3/api-docs
  */
 //http://localhost:8080/swagger-ui/index.html
 @Configuration
@@ -45,7 +46,7 @@ public class SwaggerConfig {
         .title("Digital Dashboard API")
         .description(("This is digital dashboard Application"))
         .version("1.0")
-        .contact(new Contact().name(" digital dashboard").email(" digitaldashboard@ssism.org").url(" digitaldashboard.com"))
+        .contact(new Contact().name("digital dashboard").email("digitaldashboard@ssism.org").url("digitaldashboard.com"))
         .license(new License().name("Apache"))
         ).externalDocs(new ExternalDocumentation().url(" digitalashboard.com").description("this is external url"));
     }
