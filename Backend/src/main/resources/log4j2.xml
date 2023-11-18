@@ -1,4 +1,4 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="trace">
     <Appenders>
        <File name="File" fileName="application.log">
@@ -39,4 +39,4 @@
         </Root>
     </Loggers>
 </Configuration>
- -->
+
