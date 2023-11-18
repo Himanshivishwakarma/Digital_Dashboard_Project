@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="trace">
     <Appenders>
        <File name="File" fileName="application.log">
@@ -7,7 +7,6 @@
 
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a} %level %c - %m %n" />
-            <!-- <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a} %level %c - USER=%X{User} - %m %n" /> -->
 
         </Console>
         <JDBC name="dbLogsStore" tableName="digital_board.event_logs">
@@ -40,4 +39,4 @@
         </Root>
     </Loggers>
 </Configuration>
-
+ -->

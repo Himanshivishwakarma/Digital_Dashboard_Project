@@ -37,7 +37,7 @@ public class SportServiceImplTest {
     void testgetSportById() {
 
         String sportid = "11";
-        Sport exppecSport = new Sport(sportid, "Cricket", "SPL", "23-11-2023", "24-11-2023", "mangal singh");
+        Sport exppecSport = new Sport(sportid, "Cricket", "SPL", "sportStartDate", "noticeEndDate", "mangal singh",null);
         Mockito.when(sportRepository.findById(eq(sportid))).thenReturn(Optional.of(exppecSport));
         Sport resultSport = sportServiceImpl.getSportById(sportid);
         assertEquals(exppecSport, resultSport);
@@ -47,8 +47,8 @@ public class SportServiceImplTest {
     void testGetAllNotice() {
 
         List<Sport> expectedSports = Arrays.asList(
-                new Sport("123", "Bollowoll", "spl", "15-11-2023", "17-11-2023", "devendra singh"),
-                new Sport("124", "kho-kho", "ipl", "16-11-2023", "18-11-2023", "aditya singh"));
+                new Sport("123", "Bollowoll", "spl", "15-11-2023", "17-11-2023", "devendra singh", null),
+                new Sport("124", "kho-kho", "ipl", "16-11-2023", "18-11-2023", "aditya singh", null));
         Mockito.when(sportRepository.findAll()).thenReturn(expectedSports);
         List<Sport> resultSports = sportServiceImpl.getAllSport();
         assertEquals(expectedSports, resultSports);
@@ -58,8 +58,8 @@ public class SportServiceImplTest {
     @Test
     void testaddSport() {
 
-        Sport inpuSport = new Sport("121", "football", "university", "15-11-2023", "16-11-2023", "raj singh");
-        Sport savedSport = new Sport("122", "football", "university", "15-11-2023", "16-11-2023", "raj singh");
+        Sport inpuSport = new Sport("121", "football", "university", "15-11-2023", "16-11-2023", "raj singh", null);
+        Sport savedSport = new Sport("122", "football", "university", "15-11-2023", "16-11-2023", "raj singh", null);
 
         Mockito.when(sportRepository.save(any(Sport.class))).thenReturn(savedSport);
 
@@ -71,14 +71,14 @@ public class SportServiceImplTest {
     void testUpdateSport() {
       
         SportRepository sportRepository = mock(SportRepository.class);
-        Sport existingSport = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh");
+        Sport existingSport = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
         when(sportRepository.findById("1")).thenReturn(java.util.Optional.of(existingSport));
         when(sportRepository.save(any(Sport.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         SportServiceImpl sportService = new SportServiceImpl(sportRepository);
 
         Sport updatedSport = sportService.updateSport(
-                new Sport("1", "cricket", "ipl", "2023-02-01", "2023-11-30", "anand singh"),
+                new Sport("1", "cricket", "ipl", "2023-02-01", "2023-11-30", "anand singh", null),
                 "1");
 
         assertNotNull(updatedSport);
