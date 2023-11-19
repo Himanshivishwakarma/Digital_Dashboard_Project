@@ -17,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sport{
+public class Sport
+{
     @Id
     private String sprotId = UUID.randomUUID().toString();
     private String sportName;
