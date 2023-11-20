@@ -24,5 +24,7 @@ public interface NoticeRepository extends JpaRepository<Notice, String>{
 
     List<Notice> findAll(Sort sort);
 
+    List<Notice> findByCategoryAndDepartmentName(String category, String departmentName, Sort sort);
+
  }
 

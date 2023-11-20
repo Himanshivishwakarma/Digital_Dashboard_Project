@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Entity.UserNotification;
 import digital_board.digital_board.Repository.NoticeRepository;
@@ -85,6 +87,34 @@ public class NoticeServiceImpl implements NoticeService {
         } else {
             return noticeRepository.findByDepartmentName(departmentName, sort);
         }
+    }
+
+    @Override
+    public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Sort sort) {
+
+        String category = noticeFilterDto.getCategory();
+        String departmentName = noticeFilterDto.getDepartmentName();
+        if (category != null && departmentName != null) {
+
+            return noticeRepository.findByCategoryAndDepartmentName(category, departmentName, sort);
+
+        } else if (departmentName == null && category != null) {
+
+            return getNoticesByCategory(category, sort);
+
+        } else if (category == null && departmentName != null) {
+
+            if ("All".equalsIgnoreCase(departmentName)) {
+
+                return getAllNoticesSorted(sort);
+
+            } else {
+
+                return noticeRepository.findByDepartmentName(departmentName, sort);
+            }
+        }
+
+        return getAllNoticesSorted(sort);
     }
 
 }

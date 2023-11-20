@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.ServiceImpl.NoticeServiceImpl;
 
@@ -36,27 +37,35 @@ public class NoticeController {
         return notice;
     }
 
-     @GetMapping("/getAll/byUserName/{UserName}")
+    @GetMapping("/getAll/byUserName/{UserName}")
     public List<Notice> getNoticeByUserId(@PathVariable String UserName) {
-         List<Notice> notice= noticeServiceImpl.getNoticeByUserId(UserName);
+        List<Notice> notice = noticeServiceImpl.getNoticeByUserId(UserName);
         return notice;
     }
 
-      @GetMapping("/byCategory/{category}")
-    public List<Notice> getNoticesByCategory(@PathVariable String category, @RequestParam(required = false) String sort) {
+    @GetMapping("/byCategory/{category}")
+    public List<Notice> getNoticesByCategory(@PathVariable String category,
+            @RequestParam(required = false) String sort) {
         return noticeServiceImpl.getNoticesByCategory(category, getSortObject(sort));
     }
 
     // http://localhost:8080/notices/byDepartment/iteg?sort=asc
     @GetMapping("/byDepartment/{departmentName}")
-    public List<Notice> getNoticesByDepartment(@PathVariable String departmentName, @RequestParam(required = false) String sort) {
+    public List<Notice> getNoticesByDepartment(@PathVariable String departmentName,
+            @RequestParam(required = false) String sort) {
         return noticeServiceImpl.getNoticesByDepartment(departmentName, getSortObject(sort));
     }
 
-
-     @GetMapping("/getAll")
+    @GetMapping("/getAll")
     public List<Notice> getAllNotice() {
-        List<Notice> notice= noticeServiceImpl.getAllNotice();
+        List<Notice> notice = noticeServiceImpl.getAllNotice();
+        return notice;
+    }
+    // getAllNoticesSorted
+
+    @PostMapping("/getAll/byfilter")
+    public List<Notice> getAllNoticeByDepartmentAndCategory(@RequestBody NoticeFilterDto noticeFilterDto,@RequestParam(required = false) String sort) {
+        List<Notice> notice = noticeServiceImpl.filterNotices(noticeFilterDto, getSortObject(sort));
         return notice;
     }
 
