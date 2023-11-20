@@ -32,13 +32,13 @@ public class SecurityConfig {
   
      @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
+        return http.cors().and().csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/").permitAll()
                         .requestMatchers(public_urls).permitAll()
-                        .requestMatchers(HttpMethod.POST).permitAll()
-                        .requestMatchers(HttpMethod.GET).permitAll()
-                        .requestMatchers(HttpMethod.PUT).permitAll()
+                        // .requestMatchers(HttpMethod.POST).permitAll()
+                        // .requestMatchers(HttpMethod.GET).permitAll()
+                        // .requestMatchers(HttpMethod.PUT).permitAll()
                         .requestMatchers("/notice/add").permitAll()
                         .requestMatchers(HttpMethod.POST).permitAll()
                         .anyRequest().authenticated())
