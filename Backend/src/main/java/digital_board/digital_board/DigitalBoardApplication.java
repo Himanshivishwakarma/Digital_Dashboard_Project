@@ -16,8 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.ServiceImpl.ExceptionResponseServiceImpl;
+import digital_board.digital_board.constants.ResponseMessagesBackup;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
-
 
 @SpringBootApplication
 public class DigitalBoardApplication implements CommandLineRunner {
@@ -32,8 +32,12 @@ public class DigitalBoardApplication implements CommandLineRunner {
 	@Autowired
 	ExceptionResponseServiceImpl exceptionResponseServiceImpl;
 
+	@Autowired
+	ResponseMessagesBackup responseMessagesBackup;
+
 	@Override
 	public void run(String... args) throws Exception {
+
 		ResponseMessagesConstants.messagelist = this.exceptionResponseServiceImpl.GetAllMassage();
 
 		String specificMessage = ResponseMessagesConstants.messagelist.stream()
@@ -44,6 +48,9 @@ public class DigitalBoardApplication implements CommandLineRunner {
 
 		System.out.println("Specific Message: " + specificMessage);
 
+		if (ResponseMessagesConstants.messagelist == null) {
+			responseMessagesBackup.smsResponseService();
+		}
 	}
 
 }
