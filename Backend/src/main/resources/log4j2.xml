@@ -5,11 +5,6 @@
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
 
-        <!-- <Console name="Console" target="SYSTEM_OUT"> -->
-            <!-- <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a} %level %c - %m %n" /> -->
-         <!-- <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a} %level %c - USER=%X{User} - %m %n" />  -->
-
-        <!-- </Console> -->
         <JDBC name="dbLogsStore" tableName="digital_board.event_logs">
             <ConnectionFactory class="digital_board.digital_board.Config.ConnectionFactory" method="getDatabaseConnection" />
             <Column name="ID" pattern="%u" />

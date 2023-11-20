@@ -1,6 +1,7 @@
 package digital_board.digital_board.ServiceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,23 +20,27 @@ public class UserNotificationServiceImpl implements UserNotificationService {
     public boolean createNotificationByUser(UserNotification userNotification) {
         boolean t = false;
         try {
-            this.userNotificationRepository.save(userNotification);
-            t = true;
+            UserNotification user = userNotificationRepository.getbyemail(userNotification.getUserEmail());
+            if (user != null) {
+                this.userNotificationRepository.save(userNotification);
+                t = true;
+            }
+
         } catch (Exception e) {
-           
+
         }
         return t;
     }
 
     @Override
-    public  List<UserNotification> getAllUserNotification() {
-         List<UserNotification> userNotification = this.userNotificationRepository.findAll();
-       return userNotification;
-        
+    public List<UserNotification> getAllUserNotification() {
+        List<UserNotification> userNotification = this.userNotificationRepository.findAll();
+        return userNotification;
+
     }
 
     @Override
-    public  List<UserNotification> getUserNotificationByDepartment() {
+    public List<UserNotification> getUserNotificationByDepartment() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getUserNotificationByDepartment'");
     }
