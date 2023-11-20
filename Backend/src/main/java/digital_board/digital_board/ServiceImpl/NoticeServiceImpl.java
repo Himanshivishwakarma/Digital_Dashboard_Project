@@ -1,7 +1,6 @@
 package digital_board.digital_board.ServiceImpl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -27,19 +26,24 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public Notice createNoticeByUser(Notice notice) {
         Notice saveNotice = this.noticeRepository.save(notice);
-        if (saveNotice != null && saveNotice.getStatus() == true) {
-            List<UserNotification> userNotification = this.notificationServiceImpl.getAllUserNotification();
-            for (UserNotification user : userNotification) {
+        try {
 
-                System.out.println("user Email____________________");
-                System.out.println(user.getUserEmail());
-                if (user.getDepartmentName().equals(saveNotice.getDepartmentName())
-                        || "All".equals(user.getDepartmentName())) {
-                    System.out.println("mail component");
-                    emailServices.sendSimpleMessage(user.getUserEmail(), "New Notice", user.getUserName());
+            if (saveNotice != null && saveNotice.getStatus() == true) {
+                List<UserNotification> userNotification = this.notificationServiceImpl.getAllUserNotification();
+                for (UserNotification user : userNotification) {
+
+                    System.out.println("user Email____________________");
+                    System.out.println(user.getUserEmail());
+                    if (user.getDepartmentName().equals(saveNotice.getDepartmentName())
+                            || "All".equals(user.getDepartmentName())) {
+                        System.out.println("mail component");
+                        emailServices.sendSimpleMessage(user.getUserEmail(), "New Notice", user.getUserName());
+                    }
                 }
-            }
 
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
         }
         return saveNotice;
     }
