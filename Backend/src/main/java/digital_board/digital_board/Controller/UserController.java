@@ -1,11 +1,7 @@
 package digital_board.digital_board.Controller;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.mail.MessagingException;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import digital_board.digital_board.Dto.AuthResponse;
-import digital_board.digital_board.Entity.EVENT_LOGS;
-import digital_board.digital_board.Entity.ExceptionResponse;
+import digital_board.digital_board.Dto.SignupRequestDto;
+import digital_board.digital_board.Dto.SignupResponseDto;
 import digital_board.digital_board.Entity.User;
 import digital_board.digital_board.ServiceImpl.EmailServiceImpl;
-// import digital_board.digital_board.Repository.EVENT_LOGSRepository;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
-import digital_board.digital_board.constants.ResponseMessagesConstants;
-
+import digital_board.digital_board.Servies.Auth0Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -39,8 +33,13 @@ public class UserController {
   @Autowired
   private UserServiceImpl userServiceImpl;
 
+
+
   @Autowired
-  private EmailServiceImpl emailServices;
+  private Auth0Service auth0Service;
+
+  @Autowired
+  EmailServiceImpl emailServices;
 
   // @Autowired
   // private EVENT_LOGSRepository eVENT_LOGSRepository;
@@ -62,26 +61,35 @@ public class UserController {
     // MDC.remove("User");
     // MDC.remove("path");
 
-    // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
-    // "This is the test email template for your email:\n%s\n");
+    emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
+    "Sahil");
 
     MDC.clear();
     return "working";
   }
 
   // create user
-  @PostMapping("/CreatUser")
-  ResponseEntity<?> CreateUser(@RequestBody User user) {
+  // @PostMapping("/CreatUser")
+  // ResponseEntity<?> CreateUser(@RequestBody User user) {
 
-     Map<String,Object> response = new HashMap<>();
-        response.put("Massage",ResponseMessagesConstants.messagelist.stream()
-				.filter(exceptionResponse -> "USER_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
-				.map(ExceptionResponse::getMassage)
-				.findFirst()
-				.orElse("Default message if not found"));
-        response.put("User", userServiceImpl.CreateUser(user));
-    return ResponseEntity.ok(response);
+  // Map<String,Object> response = new HashMap<>();
+  // response.put("Massage",ResponseMessagesConstants.messagelist.stream()
+  // .filter(exceptionResponse ->
+  // "USER_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+  // .map(ExceptionResponse::getMassage)
+  // .findFirst()
+  // .orElse("Default message if not found"));
+  // response.put("User", userServiceImpl.CreateUser(user));
+  // return ResponseEntity.ok(response);
+  // }
+
+  @PostMapping("/signup")
+  public ResponseEntity<?> signUp(@RequestBody SignupRequestDto signupRequestDto) {
+    System.out.println("signUp controller");
+    SignupResponseDto signupResponseDto=auth0Service.signUp(signupRequestDto);
+    return ResponseEntity.ok(signupResponseDto);
   }
+
   // UpdateUser
   @PutMapping("/UpdateUser")
   ResponseEntity<User> UpdateUser(@RequestBody User user) {
@@ -95,6 +103,5 @@ public class UserController {
     List<User> userDetails = userServiceImpl.FindAllUser();
     return ResponseEntity.ok(userDetails);
   }
-  
 
 }

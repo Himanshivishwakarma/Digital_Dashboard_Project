@@ -1,16 +1,11 @@
 package digital_board.digital_board.ServiceImpl;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
-
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
 import digital_board.digital_board.Exception.ResourceNotFoundException;
-import digital_board.digital_board.Repository.ExceptionResponseRepository;
 import digital_board.digital_board.Repository.UserRepository;
 import digital_board.digital_board.Servies.UserService;
 import digital_board.digital_board.constants.ResponseMessagesConstants;

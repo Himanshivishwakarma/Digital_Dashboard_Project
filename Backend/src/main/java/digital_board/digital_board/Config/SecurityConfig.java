@@ -1,7 +1,7 @@
 package digital_board.digital_board.Config;
 
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.cors.CorsConfiguration;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+
 @Configuration
 @EnableWebSecurity
 @Deprecated
@@ -36,12 +32,13 @@ public class SecurityConfig {
   
      @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
+        return http.cors().and().csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/").permitAll()
-                        
-                        .requestMatchers(HttpMethod.GET).permitAll()
-                        .requestMatchers(HttpMethod.PUT).permitAll()
+                        .requestMatchers(public_urls).permitAll()
+                        // .requestMatchers(HttpMethod.POST).permitAll()
+                        // .requestMatchers(HttpMethod.GET).permitAll()
+                        // .requestMatchers(HttpMethod.PUT).permitAll()
                         .requestMatchers("/notice/add").permitAll()
                         .requestMatchers(HttpMethod.POST).permitAll()
                         .anyRequest().authenticated())
