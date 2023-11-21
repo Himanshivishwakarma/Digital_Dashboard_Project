@@ -2066,3 +2066,43 @@ could not find expected ':'
 2023-11-18 15:54:19,002 INFO d.d.S.SportServiceImplTest [main] No active profile set, falling back to 1 default profile: "default"
 2023-11-18 15:54:34,611 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2023-11-18 15:54:37,511 INFO d.d.S.SportServiceImplTest [main] Started SportServiceImplTest in 26.282 seconds (process running for 34.882)
+2023-11-18 21:00:29,631 INFO d.d.R.SportRepositoryTest [main] Starting SportRepositoryTest using Java 17.0.8.1 with PID 10372 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-18 21:00:37,186 INFO d.d.R.SportRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-18 21:00:54,822 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-18 21:00:58,170 INFO d.d.R.SportRepositoryTest [main] Started SportRepositoryTest in 29.838 seconds (process running for 33.91)
+2023-11-18 21:04:31,441 INFO d.d.R.SportRepositoryTest [main] Starting SportRepositoryTest using Java 17.0.8.1 with PID 6612 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-18 21:04:38,117 INFO d.d.R.SportRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-18 21:04:58,492 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-18 21:05:03,485 INFO d.d.R.SportRepositoryTest [main] Started SportRepositoryTest in 33.128 seconds (process running for 37.069)
+2023-11-21 14:15:13,736 INFO d.d.R.SportRepositoryTest [main] Starting SportRepositoryTest using Java 17.0.8.1 with PID 6172 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-21 14:15:19,991 INFO d.d.R.SportRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-21 14:15:36,108 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-21 14:15:39,013 INFO d.d.R.SportRepositoryTest [main] Started SportRepositoryTest in 26.575 seconds (process running for 31.653)
+2023-11-21 14:17:09,860 INFO d.d.R.SportRepositoryTest [main] Starting SportRepositoryTest using Java 17.0.8.1 with PID 12900 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-21 14:17:16,567 INFO d.d.R.SportRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-21 14:17:33,167 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-21 14:17:35,944 INFO d.d.R.SportRepositoryTest [main] Started SportRepositoryTest in 27.166 seconds (process running for 31.15)
+2023-11-21 14:18:01,534 INFO d.d.R.SportRepositoryTest [main] Starting SportRepositoryTest using Java 17.0.8.1 with PID 16316 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-21 14:18:08,228 INFO d.d.R.SportRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-21 14:18:23,349 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-21 14:18:26,086 INFO d.d.R.SportRepositoryTest [main] Started SportRepositoryTest in 25.657 seconds (process running for 29.373)
+2023-11-21 14:35:05,345 INFO d.d.R.SportRepositoryTest [main] Starting SportRepositoryTest using Java 17.0.8.1 with PID 7352 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-21 14:35:11,939 INFO d.d.R.SportRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-21 14:35:27,021 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-21 14:35:30,533 INFO d.d.R.SportRepositoryTest [main] Started SportRepositoryTest in 26.362 seconds (process running for 30.562)
+2023-11-21 14:36:01,415 INFO d.d.R.SportRepositoryTest [main] Starting SportRepositoryTest using Java 17.0.8.1 with PID 7112 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-21 14:36:07,951 INFO d.d.R.SportRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-21 14:36:25,574 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-21 14:36:31,456 INFO d.d.R.SportRepositoryTest [main] Started SportRepositoryTest in 31.117 seconds (process running for 34.949)
+2023-11-21 14:38:45,289 INFO d.d.R.SportRepositoryTest [main] Starting SportRepositoryTest using Java 17.0.8.1 with PID 9916 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-21 14:38:51,693 INFO d.d.R.SportRepositoryTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-21 14:39:06,464 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-21 14:39:09,091 INFO d.d.R.SportRepositoryTest [main] Started SportRepositoryTest in 24.924 seconds (process running for 28.507)
+2023-11-21 14:49:06,899 INFO d.d.S.SportServiceImplTest [main] Starting SportServiceImplTest using Java 17.0.8.1 with PID 13816 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-21 14:49:13,230 INFO d.d.S.SportServiceImplTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-21 14:49:28,060 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-21 14:49:31,168 INFO d.d.S.SportServiceImplTest [main] Started SportServiceImplTest in 25.19 seconds (process running for 28.951)
+2023-11-21 14:57:47,769 INFO d.d.S.SportServiceImplTest [main] Starting SportServiceImplTest using Java 17.0.8.1 with PID 11628 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-21 14:57:53,936 INFO d.d.S.SportServiceImplTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-21 14:58:11,118 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-21 14:58:14,426 INFO d.d.S.SportServiceImplTest [main] Started SportServiceImplTest in 27.687 seconds (process running for 31.304)

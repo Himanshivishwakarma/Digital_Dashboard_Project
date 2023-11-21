@@ -23,6 +23,8 @@ import digital_board.digital_board.ServiceImpl.SportServiceImpl;
 
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.data.domain.Sort;
+
 
 @SpringBootTest
 public class SportServiceImplTest {
@@ -79,7 +81,7 @@ public class SportServiceImplTest {
 
         Sport updatedSport = sportService.updateSport(
                 new Sport("1", "cricket", "ipl", "2023-02-01", "2023-11-30", "anand singh", null),
-                "1");
+                "1"); 
 
         assertNotNull(updatedSport);
         assertEquals("cricket", updatedSport.getSportName());
@@ -91,4 +93,38 @@ public class SportServiceImplTest {
         verify(sportRepository, times(1)).findById("1");
         verify(sportRepository, times(1)).save(existingSport);
     }
+    
+    @Test
+    public void testGetSportsByName() {
+     
+        String sportNameToSearch = "Football";
+        Sort sort = Sort.by(Sort.Direction.ASC, "sportCreatedDate"); 
+
+        Sport sport1 = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
+        Sport sport2 = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
+        List<Sport> expectedSports = Arrays.asList(sport1, sport2);
+        when(sportRepository.findBySportName(sportNameToSearch, sort)).thenReturn(expectedSports);
+
+        List<Sport> actualSports = sportServiceImpl.getSportsByName(sportNameToSearch, sort);
+
+        assertEquals(expectedSports.size(), actualSports.size());
+    }
+
+    @Test
+    public void testgetAllSportsSorted() {
+     
+        Sort sort = Sort.by(Sort.Direction.ASC, "sportCreatedDate"); 
+
+        Sport sport1 = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
+        Sport sport2 = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
+        List<Sport> expectedSports = Arrays.asList(sport1, sport2);
+        when(sportRepository.findAll(sort)).thenReturn(expectedSports);
+
+        List<Sport> actualSports = sportServiceImpl.getAllSportsSorted(sort);
+
+        assertEquals(expectedSports.size(), actualSports.size());
+    }
+
+
+
 }

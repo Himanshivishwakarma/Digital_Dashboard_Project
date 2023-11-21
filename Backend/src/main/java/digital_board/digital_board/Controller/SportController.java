@@ -18,7 +18,7 @@ import digital_board.digital_board.ServiceImpl.SportServiceImpl;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/sport/")
+@RequestMapping("/api/v1/sport/")
 public class SportController {
 
   @Autowired

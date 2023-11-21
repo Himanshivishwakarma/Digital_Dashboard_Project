@@ -33,7 +33,7 @@ public class SportServiceImpl implements SportService {
     return sport;
   }
 
-  @Override
+  @Override 
   public List<Sport> getAllSport() {
     List<Sport> sports = sportRepository.findAll();
     return sports;
