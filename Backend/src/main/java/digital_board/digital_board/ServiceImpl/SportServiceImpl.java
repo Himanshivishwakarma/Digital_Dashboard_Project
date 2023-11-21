@@ -1,56 +1,67 @@
 package digital_board.digital_board.ServiceImpl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import digital_board.digital_board.Entity.Sport;
+import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.Repository.SportRepository;
 import digital_board.digital_board.Servies.SportService;
-
+import java.util.*;
 
 @Service
-public class SportServiceImpl implements SportService{
+public class SportServiceImpl implements SportService {
 
-    @Autowired
-    SportRepository sportRepository; 
+  @Autowired
+  SportRepository sportRepository;
 
-    @Override
-    public Sport createSportByUser(Sport sport) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createSportByUser'");
-    }
+  public SportServiceImpl(SportRepository sportRepository) {
+    this.sportRepository = sportRepository;
+  }
 
-    @Override
-    public Sport getSportBySportId(String sportId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSportBySportId'");
-    }
+  @Override
+  public Sport addSport(Sport sport) {
+    Sport sport2 = sportRepository.save(sport);
+    return sport2;
+  }
 
-    @Override
-    public List<Sport> getSportByCreatedUserName(String userName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSportByCreatedUserName'");
-    }
+  @Override
+  public Sport getSportById(String sportId) {
+    Sport sport = sportRepository.findById(sportId)
+        .orElseThrow(() -> new ResourceNotFoundException("Sport Id not found"));
+    return sport;
+  }
 
-    @Override
-    public List<Sport> getAllSport() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllSport'");
-    }
+  @Override 
+  public List<Sport> getAllSport() {
+    List<Sport> sports = sportRepository.findAll();
+    return sports;
+  }
 
-    @Override
-    public List<Sport> getSportsByName(String sportName, Sort sort) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSportsByName'");
-    }
+  @Override
+  public Sport updateSport(Sport sport, String sportId) {
+    Sport sports = sportRepository.findById(sportId)
+        .orElseThrow(() -> new ResourceNotFoundException("Sport Id not found"));
+    sports.setSportName(sport.getSportName());
+    sports.setSportDescription(sport.getSportDescription());
+    sports.setSportStartDate(sport.getSportStartDate());
+    sports.setCreatedBy(sport.getCreatedBy());
+    sports.setSportEndDate(sport.getSportEndDate());
+    return sportRepository.save(sports);
+  }
 
-    @Override
-    public List<Sport> getAllSportsSorted(Sort sort) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllSportsSorted'");
-    }
-    
+  @Override
+  public List<Sport> getSportsByName(String sportName, Sort sort) {
+    return sportRepository.findBySportName(sportName, sort);
+  }
+
+  @Override
+  public List<Sport> getAllSportsSorted(Sort sort) {
+    return sportRepository.findAll(sort);
+
+  }
+
+  
+  
 }
