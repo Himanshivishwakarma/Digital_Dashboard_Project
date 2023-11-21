@@ -48,7 +48,7 @@ public class DigitalBoardApplication implements CommandLineRunner {
 
 		System.out.println("Specific Message: " + specificMessage);
 
-		if (ResponseMessagesConstants.messagelist == null) {
+		if (ResponseMessagesConstants.messagelist.isEmpty()) {
 			responseMessagesBackup.smsResponseService();
 		}
 	}

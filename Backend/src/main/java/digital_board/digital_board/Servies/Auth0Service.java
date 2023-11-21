@@ -38,7 +38,7 @@ public class Auth0Service {
         String apiUrl = "https://" + auth0Domain + "/dbconnections/signup";
         // SignupRequestDto.getEmail(), SignupRequestDto.getPassword()
         User userAvailable = userRepo.getbyemail(signupRequestDto.getEmail());
-        if (userAvailable != null) {
+        if (userAvailable == null) {
             String randomPasswrod = RandomStringUtils.random(8, true, true);
 
             System.out.println(randomPasswrod);
@@ -67,8 +67,10 @@ public class Auth0Service {
                     user.setDepartmentName(signupRequestDto.getDepartmentName());
                     userRepo.save(user);
                 }
-            } catch (Exception e) {
-                // TODO: handle exception
+            }
+             catch (Exception e) 
+            {
+                
             }
 
             return signupResponseDto;
