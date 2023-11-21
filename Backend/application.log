@@ -2058,3 +2058,11 @@ could not find expected ':'
 2023-11-16 07:49:46,149 INFO d.d.S.SportServiceImplTest [main] No active profile set, falling back to 1 default profile: "default"
 2023-11-16 07:49:56,674 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2023-11-16 07:50:00,371 INFO d.d.S.SportServiceImplTest [main] Started SportServiceImplTest in 21.891 seconds (process running for 26.085)
+2023-11-18 15:08:49,157 INFO d.d.S.SportServiceImplTest [main] Starting SportServiceImplTest using Java 17.0.8.1 with PID 13752 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-18 15:08:55,747 INFO d.d.S.SportServiceImplTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-18 15:09:12,920 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-18 15:09:15,622 INFO d.d.S.SportServiceImplTest [main] Started SportServiceImplTest in 27.71 seconds (process running for 32.231)
+2023-11-18 15:54:12,595 INFO d.d.S.SportServiceImplTest [main] Starting SportServiceImplTest using Java 17.0.8.1 with PID 7660 (started by mstom in C:\Users\mstom\OneDrive\Documents\GitHub\Digital_Dashboard_Project\Backend)
+2023-11-18 15:54:19,002 INFO d.d.S.SportServiceImplTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-11-18 15:54:34,611 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-18 15:54:37,511 INFO d.d.S.SportServiceImplTest [main] Started SportServiceImplTest in 26.282 seconds (process running for 34.882)

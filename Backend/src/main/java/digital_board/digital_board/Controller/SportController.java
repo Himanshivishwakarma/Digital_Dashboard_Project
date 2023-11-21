@@ -36,8 +36,9 @@ public class SportController {
     return new ResponseEntity<Sport>(sport2, HttpStatus.OK);
   }
 
+  
   @GetMapping("/getsport/{sportId}")
-  public ResponseEntity<Sport> getSport(@PathVariable String sportId) {
+  public ResponseEntity<Sport> getSportBySportId(@PathVariable String sportId) {
     Sport sport2 = sportServiceImpl.getSportById(sportId);
     return new ResponseEntity<Sport>(sport2, HttpStatus.ACCEPTED);
   }
@@ -64,9 +65,9 @@ public class SportController {
 
   private Sort getSortObject(String sort) {
     if (sort != null && sort.equalsIgnoreCase("desc")) {
-      return Sort.by(Sort.Direction.DESC, "sportStartDate"); // Change the field as per your requirement
+      return Sort.by(Sort.Direction.DESC, "sportCreatedDate"); // Change the field as per your requirement
     } else {
-      return Sort.by(Sort.Direction.ASC, "sportStartDate"); // Change the field as per your requirement
+      return Sort.by(Sort.Direction.ASC, "sportCreatedDate"); // Change the field as per your requirement
     }
   }
 }
