@@ -2,6 +2,7 @@ package digital_board.digital_board.Servies;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import digital_board.digital_board.Dto.NoticeFilterDto;
@@ -17,12 +18,12 @@ public interface NoticeService {
 
     public List<Notice> getAllNotice();
 
-    public List<Notice> getNoticesByCategory(String category, Sort sort);   
+    public List<Notice> getNoticesByCategory(List<String> category,Pageable pageable);   
 
-    public List<Notice> getNoticesByDepartment(String departmentName, Sort sort);
+    public List<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable);
 
-    public List<Notice> getAllNoticesSorted(Sort sort);
+    public List<Notice> getAllNoticesSorted(Pageable pageable);
 
-    public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Sort sort);
+    public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable);
     
 }

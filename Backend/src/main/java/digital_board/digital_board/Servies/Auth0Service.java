@@ -12,9 +12,12 @@ import org.springframework.web.client.RestTemplate;
 import digital_board.digital_board.Dto.CreateUserRequestDto;
 import digital_board.digital_board.Dto.SignupRequestDto;
 import digital_board.digital_board.Dto.SignupResponseDto;
+import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
+import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.Repository.UserRepository;
 import digital_board.digital_board.ServiceImpl.EmailServiceImpl;
+import digital_board.digital_board.constants.ResponseMessagesConstants;
 
 @Service
 public class Auth0Service {
@@ -38,42 +41,62 @@ public class Auth0Service {
         String apiUrl = "https://" + auth0Domain + "/dbconnections/signup";
         // SignupRequestDto.getEmail(), SignupRequestDto.getPassword()
         User userAvailable = userRepo.getbyemail(signupRequestDto.getEmail());
-        if (userAvailable != null) {
-            String randomPasswrod = RandomStringUtils.random(8, true, true);
+        User superAdminAvailable = userRepo.getbyemail(signupRequestDto.getCreatedBy());
+        if (superAdminAvailable != null && "SuperAdmin".equals(superAdminAvailable.getRole())) {
 
-            System.out.println(randomPasswrod);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            if (userAvailable == null) {
+                System.out.println("signUp if block");
+                String randomPasswrod = RandomStringUtils.random(8, true, true);
 
-            CreateUserRequestDto request = new CreateUserRequestDto(clientId, signupRequestDto.getEmail(),
-                    randomPasswrod,
-                    connection);
-            HttpEntity<CreateUserRequestDto> requestEntity = new HttpEntity<>(request, headers);
+                System.out.println(randomPasswrod);
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // restTemplate.postForLocation(apiUrl, requestEntity);
-            ResponseEntity<SignupResponseDto> responseEntity = restTemplate.postForEntity(apiUrl, requestEntity,
-                    SignupResponseDto.class);
-            SignupResponseDto signupResponseDto = responseEntity.getBody();
-            try {
-                if (signupResponseDto != null && signupResponseDto.getEmail() != null) {
-                    emailServices.sendSimpleMessageForPassword(signupResponseDto.getEmail(),
-                            signupRequestDto.getUserName(),
-                            randomPasswrod);
+                CreateUserRequestDto request = new CreateUserRequestDto(clientId, signupRequestDto.getEmail(),
+                        randomPasswrod,
+                        connection);
+                HttpEntity<CreateUserRequestDto> requestEntity = new HttpEntity<>(request, headers);
 
-                    User user = new User();
-                    user.setUserName(signupRequestDto.getUserName());
-                    user.setEmail(signupResponseDto.getEmail());
-                    user.setRole("Admin");
-                    user.setDepartmentName(signupRequestDto.getDepartmentName());
-                    userRepo.save(user);
+                // restTemplate.postForLocation(apiUrl, requestEntity);
+                ResponseEntity<SignupResponseDto> responseEntity = restTemplate.postForEntity(apiUrl, requestEntity,
+                        SignupResponseDto.class);
+                SignupResponseDto signupResponseDto = responseEntity.getBody();
+                try {
+                    if (signupResponseDto != null && signupResponseDto.getEmail() != null) {
+                        emailServices.sendSimpleMessageForPassword(signupResponseDto.getEmail(),
+                                signupRequestDto.getUserName(),
+                                randomPasswrod);
+
+                        User user = new User();
+                        user.setUserName(signupRequestDto.getUserName());
+                        user.setEmail(signupResponseDto.getEmail());
+                        user.setRole("Admin");
+                        user.setDepartmentName(signupRequestDto.getDepartmentName());
+                        user.setCategory(signupRequestDto.getCategory());
+                        user.setStatus("enable");
+                        userRepo.save(user);
+                    }
+                } catch (Exception e) {
+                    // TODO: handle exception
                 }
-            } catch (Exception e) {
-                // TODO: handle exception
+
+                return signupResponseDto;
+            } else {
+                throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+                        .filter(exceptionResponse -> "MESSAGE_REGISTER_ERRROR"
+                                .equals(exceptionResponse.getExceptonName()))
+                        .map(ExceptionResponse::getMassage)
+                        .findFirst()
+                        .orElse("Default message if not found"));
             }
+        } else {
+            throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "EMAIL_ERROR".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
 
-            return signupResponseDto;
         }
-        return null;
-    }
 
+    }
 }
