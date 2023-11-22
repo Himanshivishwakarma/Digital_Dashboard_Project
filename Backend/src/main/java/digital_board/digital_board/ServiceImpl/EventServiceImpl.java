@@ -1,7 +1,8 @@
 package digital_board.digital_board.ServiceImpl;
 
 import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.RequestEntity;
@@ -74,9 +75,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event EventUpdate(String EventId) {
+    public Event EventUpdate(Event event) {
 
-        Event event = eventRepository.findById(EventId)
+        Event findEvent = eventRepository.findById(event.getEventId())
                 .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
                         .filter(exceptionResponse -> "EVENT_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
                         .map(ExceptionResponse::getMassage)
@@ -87,8 +88,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getAllEventSorted(Sort sort) {
-        List<Event> event = eventRepository.findAll(sort);
+    public List<Event> getAllEventSorted(Pageable pageable)
+     {
+        Page<Event> event = eventRepository.findAll(pageable);
         if (event.isEmpty()) {
             throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
@@ -97,7 +99,7 @@ public class EventServiceImpl implements EventService {
                     .orElse("Default message if not found"));
         } else {
 
-            return event;
+            return event.getContent();
         }
     }
 

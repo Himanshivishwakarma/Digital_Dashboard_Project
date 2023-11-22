@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +29,7 @@ import digital_board.digital_board.constants.ResponseMessagesConstants;
 public class EventController {
 
     @Autowired
-    EventServiceImpl eventServiceImpl;
+    private EventServiceImpl eventServiceImpl;
 
     @PostMapping("/add")
     public ResponseEntity<?> createEventByUser(@RequestBody Event event) {
@@ -47,35 +50,45 @@ public class EventController {
         return ResponseEntity.ok(eventServiceImpl.getEventByEventId(EventId));
     }
 
-     @GetMapping("/getAll/byUserName/{UserName}")
-     public ResponseEntity<List<Event>>getEventByUserId(@PathVariable String UserName) 
-     {
-        List<Event> event=eventServiceImpl.getEventByUserId(UserName);
+    @GetMapping("/getAll/byUserName/{UserName}")
+    public ResponseEntity<List<Event>> getEventByUserId(@PathVariable String UserName) {
+        List<Event> event = eventServiceImpl.getEventByUserId(UserName);
         return ResponseEntity.ok(event);
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Event>>getAllNotice() {
-      
+    public ResponseEntity<List<Event>> getAllNotice() {
+
         return ResponseEntity.ok(eventServiceImpl.getAllEvent());
     }
 
     // sorted
     @GetMapping("/getAll/sortedby")
-    public ResponseEntity<List<Event>>getAllNoticeSorted(@RequestParam(required = false) String sort)
-    {
-      
-        return ResponseEntity.ok(eventServiceImpl.getAllEventSorted(getSortObject(sort)));
+    public ResponseEntity<List<Event>> getAllNoticeSorted(
+            @RequestParam(required = false, defaultValue = "eventCreatedDate,asc") String sort,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+
+        return ResponseEntity.ok(eventServiceImpl.getAllEventSorted(pageable));
     }
 
-     private Sort getSortObject(String sort) 
-     {
-        if (sort != null && sort.equalsIgnoreCase("desc")) {
-            return Sort.by(Sort.Direction.DESC, "eventCreatedDate"); // Change the field as per your requirement
-        } 
-        else 
-        {
-            return Sort.by(Sort.Direction.ASC, "eventCreatedDate"); // Change the field as per your requirement
+    @PutMapping("/update")
+    public ResponseEntity<Event> EventUpdate(@RequestBody Event event) {
+
+        return ResponseEntity.ok(eventServiceImpl.EventUpdate(event));
+    }
+
+    private Sort parseSortString(String sort) {
+        String[] sortParams = sort.split(",");
+        if (sortParams.length == 2) {
+            Sort.Direction direction = sortParams[1].equalsIgnoreCase("desc") ? Sort.Direction.DESC
+                    : Sort.Direction.ASC;
+            return Sort.by(new Sort.Order(direction, sortParams[0]));
+        } else {
+            return Sort.by(Sort.Order.asc("noticeCreatedDate")); // Default sorting by noticeCreatedDate in ascending
+                                                                 // order
         }
     }
 }
