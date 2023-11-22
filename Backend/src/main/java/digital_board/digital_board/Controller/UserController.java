@@ -61,8 +61,8 @@ public class UserController {
     // MDC.remove("User");
     // MDC.remove("path");
 
-    emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
-    "Sahil");
+    // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
+    // "Sahil");
 
     MDC.clear();
     return "working";

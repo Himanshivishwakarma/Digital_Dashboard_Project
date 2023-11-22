@@ -3,9 +3,13 @@ package digital_board.digital_board.ServiceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Entity.UserNotification;
 import digital_board.digital_board.Repository.NoticeRepository;
@@ -25,6 +29,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice createNoticeByUser(Notice notice) {
+        
         Notice saveNotice = this.noticeRepository.save(notice);
         try {
 
@@ -69,22 +74,68 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> getAllNoticesSorted(Sort sort) {
-        return noticeRepository.findAll(sort);
+    public List<Notice> getAllNoticesSorted(Pageable pageable) {
+        // return null;
+
+        // return
+        Page<Notice> noticesPage = noticeRepository.findAll(pageable);
+
+        // Page<Notice> noticesPage =
+        // noticeRepository.findByCategoryAndDepartmentName(category, departmentName,
+        // pageable);
+        // List<Notice> notices =
+        return noticesPage.getContent();
     }
 
     @Override
-    public List<Notice> getNoticesByCategory(String category, Sort sort) {
-        return noticeRepository.findByCategory(category, sort);
+    public List<Notice> getNoticesByCategory(List<String> category, Pageable pageable) {
+        return noticeRepository.findByCategoryIn(category, pageable);
     }
 
     @Override
-    public List<Notice> getNoticesByDepartment(String departmentName, Sort sort) {
-        if ("All".equalsIgnoreCase(departmentName)) {
-            return getAllNoticesSorted(sort);
+    public List<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable) {
+        // if ("All".equalsIgnoreCase(departmentName)) {
+        // return getAllNoticesSorted(pageable);
+        // } else {
+        // return noticeRepository.findByDepartmentName(departmentName, pageable);
+        // }
+        if (departmentName != null && departmentName.contains("All")) {
+            return getAllNoticesSorted(pageable);
         } else {
-            return noticeRepository.findByDepartmentName(departmentName, sort);
+            return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
         }
     }
+
+    @Override
+    public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable) {
+
+        List<String> category = noticeFilterDto.getCategory();
+        List<String> departmentName = noticeFilterDto.getDepartmentName();
+        if (category != null && departmentName != null) {
+            if (departmentName.contains("All")) {
+                return getNoticesByCategory(category, pageable);
+            } else {
+                return noticeRepository.findByCategoryInAndDepartmentNameIn(category, departmentName, pageable);
+            }
+            // return noticeRepository.findByCategoryInAndDepartmentNameIn(category,
+            // departmentName, pageable);
+
+        } else if (departmentName == null && category != null) {
+
+            return getNoticesByCategory(category, pageable);
+
+        } else if (category == null && departmentName != null) {
+
+            if (departmentName.contains("All")) {
+                return getAllNoticesSorted(pageable);
+            } else {
+                return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
+            }
+        } else {
+            return getAllNoticesSorted(pageable);
+        }
+
+    }
+    // return null;
 
 }

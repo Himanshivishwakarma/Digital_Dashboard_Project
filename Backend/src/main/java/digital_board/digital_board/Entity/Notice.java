@@ -3,6 +3,9 @@ package digital_board.digital_board.Entity;
 
 import java.util.Date;
 import java.util.UUID;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
@@ -29,6 +32,7 @@ public class Notice {
 
 
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date noticeCreatedDate;
 
     private String createdBy;
