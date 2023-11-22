@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 
-
 @SpringBootTest
 public class SportServiceImplTest {
 
@@ -39,7 +38,8 @@ public class SportServiceImplTest {
     void testgetSportById() {
 
         String sportid = "11";
-        Sport exppecSport = new Sport(sportid, "Cricket", "SPL", "sportStartDate", "noticeEndDate", "mangal singh",null);
+        Sport exppecSport = new Sport(sportid, "Cricket", "SPL", "sportStartDate", "noticeEndDate", "mangal singh",
+                null);
         Mockito.when(sportRepository.findById(eq(sportid))).thenReturn(Optional.of(exppecSport));
         Sport resultSport = sportServiceImpl.getSportById(sportid);
         assertEquals(exppecSport, resultSport);
@@ -71,7 +71,7 @@ public class SportServiceImplTest {
 
     @Test
     void testUpdateSport() {
-      
+
         SportRepository sportRepository = mock(SportRepository.class);
         Sport existingSport = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
         when(sportRepository.findById("1")).thenReturn(java.util.Optional.of(existingSport));
@@ -81,7 +81,7 @@ public class SportServiceImplTest {
 
         Sport updatedSport = sportService.updateSport(
                 new Sport("1", "cricket", "ipl", "2023-02-01", "2023-11-30", "anand singh", null),
-                "1"); 
+                "1");
 
         assertNotNull(updatedSport);
         assertEquals("cricket", updatedSport.getSportName());
@@ -93,12 +93,12 @@ public class SportServiceImplTest {
         verify(sportRepository, times(1)).findById("1");
         verify(sportRepository, times(1)).save(existingSport);
     }
-    
+
     @Test
     public void testGetSportsByName() {
-     
+
         String sportNameToSearch = "Football";
-        Sort sort = Sort.by(Sort.Direction.ASC, "sportCreatedDate"); 
+        Sort sort = Sort.by(Sort.Direction.ASC, "sportCreatedDate");
 
         Sport sport1 = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
         Sport sport2 = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
@@ -112,8 +112,8 @@ public class SportServiceImplTest {
 
     @Test
     public void testgetAllSportsSorted() {
-     
-        Sort sort = Sort.by(Sort.Direction.ASC, "sportCreatedDate"); 
+
+        Sort sort = Sort.by(Sort.Direction.ASC, "sportCreatedDate");
 
         Sport sport1 = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
         Sport sport2 = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
@@ -124,7 +124,5 @@ public class SportServiceImplTest {
 
         assertEquals(expectedSports.size(), actualSports.size());
     }
-
-
 
 }
