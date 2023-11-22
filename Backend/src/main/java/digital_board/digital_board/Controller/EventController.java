@@ -75,9 +75,17 @@ public class EventController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Event> EventUpdate(@RequestBody Event event) {
+    public ResponseEntity<?> EventUpdate(@RequestBody Event event) {
 
-        return ResponseEntity.ok(eventServiceImpl.EventUpdate(event));
+        Map response = new HashMap<>();
+        response.put("Message", ResponseMessagesConstants.messagelist.stream()
+                .filter(exceptionResponse -> "EVENT_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
+                .map(ExceptionResponse::getMassage)
+                .findFirst()
+                .orElse("Default message if not found"));
+        response.put("Event", eventServiceImpl.EventUpdate(event));
+
+        return ResponseEntity.ok(response);
     }
 
     private Sort parseSortString(String sort) {
