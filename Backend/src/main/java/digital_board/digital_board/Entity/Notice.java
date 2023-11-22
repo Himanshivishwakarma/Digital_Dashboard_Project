@@ -1,11 +1,14 @@
 package digital_board.digital_board.Entity;
 
+
 import java.util.Date;
 import java.util.UUID;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
@@ -14,9 +17,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Notice")
+@NoArgsConstructor
 public class Notice {
 
     @Id
@@ -28,7 +30,9 @@ public class Notice {
     private String noticeStartDate;
     private String noticeEndDate;
 
+
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date noticeCreatedDate;
 
     private String createdBy;
@@ -39,4 +43,5 @@ public class Notice {
     protected void onCreate() {
         this.noticeCreatedDate = new Date();
     }
+
 }

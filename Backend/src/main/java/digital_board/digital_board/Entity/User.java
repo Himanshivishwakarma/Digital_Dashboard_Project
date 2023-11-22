@@ -17,10 +17,11 @@ public class User
 {
     @Id
     private String id=UUID.randomUUID().toString();
-    private String user_name;
+    private String userName;
     private String email;
     private String role;
-    private String ssismGroup;
-    private String prifilePhoto;
+    private String departmentName;
+    private String category;
+    private String status;
 
 }
