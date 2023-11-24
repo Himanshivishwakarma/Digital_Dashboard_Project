@@ -28,5 +28,6 @@ public interface NoticeRepository extends JpaRepository<Notice, String>{
 
     List<Notice> findByCategoryInAndDepartmentNameIn(List<String> categories, List<String> departmentNames, Pageable pageable);
 
+    List<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
  }
 

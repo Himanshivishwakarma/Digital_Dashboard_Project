@@ -2,6 +2,7 @@ package digital_board.digital_board.ServiceImpl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
@@ -17,15 +18,13 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepo;
 
     // for testing purpose argument constructer
-    public UserServiceImpl(UserRepository userRepo) 
-    {
+    public UserServiceImpl(UserRepository userRepo) {
 
         this.userRepo = userRepo;
     }
 
     @Override
-    public User CreateUser(User user) 
-    {
+    public User CreateUser(User user) {
         return userRepo.save(user);
     }
 
@@ -42,26 +41,29 @@ public class UserServiceImpl implements UserService {
         return userRepo.save(user);
     }
 
-    
-
     @Override
-    public List<User> FindAllUser() 
-    {
+    public List<User> FindAllUser() {
         List<User> users = userRepo.findAll();
-        if (users.isEmpty()) 
-        {
-            throw new  ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-                        .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-                        .map(ExceptionResponse::getMassage)
-                        .findFirst()
-                        .orElse("Default message if not found"));
-        } 
-        else 
-        {
-
+        if (users.isEmpty()) {
+            throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
+        } else {
             return users;
         }
-        
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+                        .filter(exceptionResponse -> "USER_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+                        .map(ExceptionResponse::getMassage)
+                        .findFirst()
+                        .orElse("Default message if not found")));
+
     }
 
 }

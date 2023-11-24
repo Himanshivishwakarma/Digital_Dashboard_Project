@@ -25,5 +25,9 @@ public interface NoticeService {
     public List<Notice> getAllNoticesSorted(Pageable pageable);
 
     public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable);
+
+    public Long getTotalNoticeCount();
+
+    public List<Notice> searchNotices(String query);
     
 }

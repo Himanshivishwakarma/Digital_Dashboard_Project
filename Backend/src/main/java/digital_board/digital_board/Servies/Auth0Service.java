@@ -46,7 +46,7 @@ public class Auth0Service {
 
             if (userAvailable == null) {
                 System.out.println("signUp if block");
-                String randomPasswrod = RandomStringUtils.random(8, true, true);
+                String randomPasswrod = RandomStringUtils.random(12, true, true);
 
                 System.out.println(randomPasswrod);
                 HttpHeaders headers = new HttpHeaders();

@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +33,6 @@ public class UserController {
 
   @Autowired
   private UserServiceImpl userServiceImpl;
-
-
 
   @Autowired
   private Auth0Service auth0Service;
@@ -86,22 +85,27 @@ public class UserController {
   @PostMapping("/signup")
   public ResponseEntity<?> signUp(@RequestBody SignupRequestDto signupRequestDto) {
     System.out.println("signUp controller");
-    SignupResponseDto signupResponseDto=auth0Service.signUp(signupRequestDto);
+    SignupResponseDto signupResponseDto = auth0Service.signUp(signupRequestDto);
     return ResponseEntity.ok(signupResponseDto);
   }
 
   // UpdateUser
-  @PutMapping("/UpdateUser")
-  ResponseEntity<User> UpdateUser(@RequestBody User user) {
+  @PutMapping("/update")
+  public ResponseEntity<User> updateUser(@RequestBody User user) {
     return ResponseEntity.ok(userServiceImpl.UpdateUser(user));
   }
 
   // Find All User
   @GetMapping("/FindAllUser")
 
-  ResponseEntity<List<User>> FindAllUser() {
+  public ResponseEntity<List<User>> findAllUser() {
     List<User> userDetails = userServiceImpl.FindAllUser();
     return ResponseEntity.ok(userDetails);
+  }
+
+  @GetMapping("/getByEmail/{email}")
+  public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+    return ResponseEntity.ok(userServiceImpl.getUserByEmail(email));
   }
 
 }
