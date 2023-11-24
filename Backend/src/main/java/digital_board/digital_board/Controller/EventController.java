@@ -45,7 +45,7 @@ public class EventController {
     }
 
     @GetMapping("/get/byEventId/{EventId}")
-    public ResponseEntity<Event> getNoticeByNoticeId(@PathVariable String EventId) {
+    public ResponseEntity<Event> getEventByEventId(@PathVariable String EventId) {
 
         return ResponseEntity.ok(eventServiceImpl.getEventByEventId(EventId));
     }
@@ -57,14 +57,14 @@ public class EventController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Event>> getAllNotice() {
+    public ResponseEntity<List<Event>> getAllEvent() {
 
         return ResponseEntity.ok(eventServiceImpl.getAllEvent());
     }
 
     // sorted
     @GetMapping("/getAll/sortedby")
-    public ResponseEntity<List<Event>> getAllNoticeSorted(
+    public ResponseEntity<List<Event>> getAllEventSorted(
             @RequestParam(required = false, defaultValue = "eventCreatedDate,asc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
