@@ -45,7 +45,7 @@ public class SportServiceImplTest {
         assertEquals(exppecSport, resultSport);
     }
 
-    @Test
+    @Test 
     void testGetAllNotice() {
 
         List<Sport> expectedSports = Arrays.asList(
@@ -71,8 +71,8 @@ public class SportServiceImplTest {
 
     @Test
     void testUpdateSport() {
-
-        SportRepository sportRepository = mock(SportRepository.class);
+    
+        // SportRepository sportRepository = mock(SportRepository.class);
         Sport existingSport = new Sport("1", "Football", "spl", "2023-11-11", "2023-12-31", "mangal singh", null);
         when(sportRepository.findById("1")).thenReturn(java.util.Optional.of(existingSport));
         when(sportRepository.save(any(Sport.class))).thenAnswer(invocation -> invocation.getArgument(0));
