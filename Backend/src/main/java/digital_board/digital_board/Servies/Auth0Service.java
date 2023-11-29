@@ -61,11 +61,10 @@ public class Auth0Service {
                 ResponseEntity<SignupResponseDto> responseEntity = restTemplate.postForEntity(apiUrl, requestEntity,
                         SignupResponseDto.class);
                 SignupResponseDto signupResponseDto = responseEntity.getBody();
+
+                
                 try {
                     if (signupResponseDto != null && signupResponseDto.getEmail() != null) {
-                        emailServices.sendSimpleMessageForPassword(signupResponseDto.getEmail(),
-                                signupRequestDto.getUserName(),
-                                randomPasswrod);
 
                         User user = new User();
                         user.setUserName(signupRequestDto.getUserName());
@@ -74,10 +73,15 @@ public class Auth0Service {
                         user.setDepartmentName(signupRequestDto.getDepartmentName());
                         user.setCategory(signupRequestDto.getCategory());
                         user.setStatus("enable");
+                        user.setAddress(signupRequestDto.getAddress());
+                        user.setContact(signupRequestDto.getContact());
                         userRepo.save(user);
+                        emailServices.sendSimpleMessageForPassword(signupResponseDto.getEmail(),
+                                signupRequestDto.getUserName(),
+                                randomPasswrod);
                     }
                 } catch (Exception e) {
-                    // TODO: handle exception
+
                 }
 
                 return signupResponseDto;

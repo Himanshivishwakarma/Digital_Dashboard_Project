@@ -12,4 +12,6 @@ public class SignupRequestDto {
     private String departmentName;
     private String category;
     private String createdBy;
+    private String address;
+    private String contact;
 }

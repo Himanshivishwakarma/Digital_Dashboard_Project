@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User UpdateUser(User user) {
         // ExceptionResponse ex = exceptionRepository.FindbyId("404");
-        userRepo.findByEmail(user.getEmail())
+        userRepo.findById(user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
                         .filter(exceptionResponse -> "USER_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
                         .map(ExceptionResponse::getMassage)
@@ -43,16 +43,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> FindAllUser() {
-        List<User> users = userRepo.findAll();
-        if (users.isEmpty()) {
-            throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-                    .map(ExceptionResponse::getMassage)
-                    .findFirst()
-                    .orElse("Default message if not found"));
-        } else {
-            return users;
-        }
+        return userRepo.findAllByRoleAndStatus("Admin", "enable");  
+
     }
 
     @Override

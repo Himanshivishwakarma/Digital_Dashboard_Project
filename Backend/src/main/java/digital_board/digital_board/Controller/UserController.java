@@ -3,6 +3,7 @@ package digital_board.digital_board.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import digital_board.digital_board.Dto.AuthResponse;
 import digital_board.digital_board.Dto.SignupRequestDto;
 import digital_board.digital_board.Dto.SignupResponseDto;
+import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
 import digital_board.digital_board.ServiceImpl.EmailServiceImpl;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
 import digital_board.digital_board.Servies.Auth0Service;
+import digital_board.digital_board.constants.ResponseMessagesConstants;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -98,9 +102,18 @@ public class UserController {
   // Find All User
   @GetMapping("/FindAllUser")
 
-  public ResponseEntity<List<User>> findAllUser() {
+  public ResponseEntity<?> findAllUser() {
     List<User> userDetails = userServiceImpl.FindAllUser();
-    return ResponseEntity.ok(userDetails);
+       if (userDetails.isEmpty()) {
+            // Return a JSON response with a message for data not found
+            return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"), HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(userDetails, HttpStatus.OK);
   }
 
   @GetMapping("/getByEmail/{email}")

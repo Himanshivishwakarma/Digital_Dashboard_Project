@@ -45,9 +45,9 @@ public class NoticeController {
     }
 
 
-    @GetMapping("/getAll/byUserName/{UserName}")
-    public ResponseEntity<List<Notice>> getNoticeByUserId(@PathVariable String userName) {
-        List<Notice> notice = noticeServiceImpl.getNoticeByUserId(userName);
+    @GetMapping("/getAll/byAdminEmail/{adminEmail}")
+    public ResponseEntity<List<Notice>> getNoticeByUserId(@PathVariable String adminEmail) {
+        List<Notice> notice = noticeServiceImpl.getNoticeByUserId(adminEmail);
         return  ResponseEntity.ok(notice);
     }
 
@@ -132,7 +132,7 @@ public class NoticeController {
     }
     
     @GetMapping("/search/{query}")
-    public ResponseEntity<Object> searchNotices(@RequestParam String query) {
+    public ResponseEntity<Object> searchNotices(@PathVariable String query) {
         List<Notice> result = noticeServiceImpl.searchNotices(query);
 
         if (result.isEmpty()) {
