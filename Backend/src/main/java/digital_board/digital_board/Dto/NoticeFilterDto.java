@@ -16,4 +16,7 @@ public class NoticeFilterDto {
 
     private List<String>  category;
     private List<String>  departmentName;
+    private List<String> createdBy;
+    private String status;
+    private boolean isImportant;
 }

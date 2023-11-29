@@ -39,7 +39,11 @@ public class ResponseMessagesBackup {
                 new ExceptionResponse("14", "SPORT_UPDATED_SUCCESS", "Sport Updated Successfully"),
                 new ExceptionResponse("15", "EMAIL_SUCCESS", "Email Send Suceessfully"),
                 new ExceptionResponse("16", "EMAIL_ERROR", "Something Went Wrong!"),
-                new ExceptionResponse("17", "USER_EMAIL_SUCCESS", "Your Email Id Added Successfully")
+                new ExceptionResponse("17", "USER_EMAIL_SUCCESS", "Your Email Id Added Successfully"),
+                 new ExceptionResponse("18", "EVENT_CREATE_SUCCESS", "Event Added Successfully"),
+                new ExceptionResponse("19", "EVENT_DELETE_SUCCESS", "Event Deleted Sucessfully"),
+                new ExceptionResponse("20", "EVENT_NOT_FOUND", "Event Not Found !"),
+                new ExceptionResponse("21", "EVENT_UPDATED_SUCCESS", "Event Updated Successfully")
                 
         ));
         exceptionResponseRepository.saveAll(messagelist);

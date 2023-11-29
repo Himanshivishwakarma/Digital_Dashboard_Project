@@ -41,6 +41,7 @@ public class Auth0Service {
         String apiUrl = "https://" + auth0Domain + "/dbconnections/signup";
         // SignupRequestDto.getEmail(), SignupRequestDto.getPassword()
         User userAvailable = userRepo.getbyemail(signupRequestDto.getEmail());
+
         User superAdminAvailable = userRepo.getbyemail(signupRequestDto.getCreatedBy());
         if (superAdminAvailable != null && "SuperAdmin".equals(superAdminAvailable.getRole())) {
 
@@ -82,25 +83,21 @@ public class Auth0Service {
                     }
                 } catch (Exception e) {
 
-                }
 
-                return signupResponseDto;
-            } else {
-                throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-                        .filter(exceptionResponse -> "MESSAGE_REGISTER_ERRROR"
-                                .equals(exceptionResponse.getExceptonName()))
-                        .map(ExceptionResponse::getMassage)
-                        .findFirst()
-                        .orElse("Default message if not found"));
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
             }
+
+            return signupResponseDto;
         } else {
             throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "EMAIL_ERROR".equals(exceptionResponse.getExceptonName()))
+                    .filter(exceptionResponse -> "MESSAGE_REGISTER_ERRROR"
+                            .equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)
                     .findFirst()
                     .orElse("Default message if not found"));
-
         }
-
     }
+
 }

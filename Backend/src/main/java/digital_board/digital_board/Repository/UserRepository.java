@@ -13,7 +13,6 @@ import org.springframework.data.repository.query.Param;
 // import org.springframework.data.jpa.repository.JpaRepository;
 
 import digital_board.digital_board.Entity.User;
-import digital_board.digital_board.Entity.UserNotification;
 
 public interface UserRepository extends JpaRepository<User, String> {
 

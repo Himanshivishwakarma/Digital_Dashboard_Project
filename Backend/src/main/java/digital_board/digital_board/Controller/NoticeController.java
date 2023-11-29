@@ -130,6 +130,19 @@ public class NoticeController {
                                                                  // order
         }
     }
+
+
+    // serching filter
+    @GetMapping("/getAll/byfilters")
+    public List<Notice> searchNotices(@RequestParam(required = false)List<String> department,
+    @RequestParam(required = false) List<String> categories,
+    @RequestParam(required = false) List<String> createdByList,
+    @RequestParam(required = false) String status)
+    {
+        // Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+
+        return noticeServiceImpl.searchNotices(department,categories,createdByList,status);
+    }
     
     @GetMapping("/search/{query}")
     public ResponseEntity<Object> searchNotices(@PathVariable String query) {
@@ -146,5 +159,6 @@ public class NoticeController {
 
         // Return the list of notices if data is found
         return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 }

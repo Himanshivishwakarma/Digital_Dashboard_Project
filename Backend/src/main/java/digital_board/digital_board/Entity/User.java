@@ -19,9 +19,10 @@ public class User {
     private String email;
     private String role;
     private String departmentName;
-    private String category;
+
     private String address;
     private String contact;
     private String status;
+
 
 }
