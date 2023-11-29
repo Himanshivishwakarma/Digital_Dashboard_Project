@@ -7,10 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
@@ -41,36 +38,46 @@ public class NoticeServiceImpl implements NoticeService {
             if (saveNotice != null && saveNotice.getStatus() == "enable") {
                 List<UserNotification> userNotification = this.notificationServiceImpl.getAllUserNotification();
                 for (UserNotification user : userNotification) {
-
-                    System.out.println("user Email____________________");
-                    System.out.println(user.getUserEmail());
                     if (user.getDepartmentName().equals(saveNotice.getDepartmentName())
                             || "All".equals(user.getDepartmentName())) {
-                        System.out.println("mail component");
                         emailServices.sendSimpleMessage(user.getUserEmail(), "New Notice", user.getUserName());
                     }
                 }
 
             }
         } catch (Exception e) {
-            // TODO: handle exception
+
         }
         return saveNotice;
     }
 
+
     @Override
-    public Notice getNoticeByNoticeId(String NoticeId) {
-        System.out.println(NoticeId);
-        Notice notice = this.noticeRepository.findById(NoticeId).orElseThrow();
-        return notice;
+    public Notice getNoticeByNoticeId(String noticeId) {
+        return this.noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ResponseMessagesConstants.messagelist.stream()
+                                .filter(exceptionResponse -> "NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+                                .map(ExceptionResponse::getMassage)
+                                .findFirst()
+                                .orElse("Default message if not found")
+                ));
     }
 
     @Override
-    public List<Notice> getNoticeByUserId(String UserId) {
-        List<Notice> notice = this.noticeRepository.getAllNoticeByUserId(UserId);
-        return notice;
-        // return null;
+    public List<Notice> getNoticeByUserId(String userId) {
+        List<Notice> notices = this.noticeRepository.getAllNoticeByUserId(userId);
+        if (notices.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    ResponseMessagesConstants.messagelist.stream()
+                            .filter(exceptionResponse -> "USER_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+                            .map(ExceptionResponse::getMassage)
+                            .findFirst()
+                            .orElse("Default message if not found"));
+        }
+        return notices;
     }
+
 
     @Override
     public List<Notice> getAllNotice() {
@@ -78,17 +85,10 @@ public class NoticeServiceImpl implements NoticeService {
         return notice;
     }
 
+
     @Override
     public List<Notice> getAllNoticesSorted(Pageable pageable) {
-        // return null;
-
-        // return
         Page<Notice> noticesPage = noticeRepository.findAll(pageable);
-
-        // Page<Notice> noticesPage =
-        // noticeRepository.findByCategoryAndDepartmentName(category, departmentName,
-        // pageable);
-        // List<Notice> notices =
         return noticesPage.getContent();
     }
 
@@ -97,19 +97,16 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeRepository.findByCategoryIn(category, pageable);
     }
 
+
     @Override
     public List<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable) {
-        // if ("All".equalsIgnoreCase(departmentName)) {
-        // return getAllNoticesSorted(pageable);
-        // } else {
-        // return noticeRepository.findByDepartmentName(departmentName, pageable);
-        // }
         if (departmentName != null && departmentName.contains("All")) {
             return getAllNoticesSorted(pageable);
         } else {
             return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
         }
     }
+
 
     @Override
     public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable) {
@@ -122,9 +119,6 @@ public class NoticeServiceImpl implements NoticeService {
             } else {
                 return noticeRepository.findByCategoryInAndDepartmentNameIn(category, departmentName, pageable);
             }
-            // return noticeRepository.findByCategoryInAndDepartmentNameIn(category,
-            // departmentName, pageable);
-
         } else if (departmentName == null && category != null) {
 
             return getNoticesByCategory(category, pageable);
@@ -140,7 +134,20 @@ public class NoticeServiceImpl implements NoticeService {
             return getAllNoticesSorted(pageable);
         }
 
+
+
+
+    @Override
+    public Long getTotalNoticeCount() {
+        return noticeRepository.count();
     }
+
+
+    @Override
+    public List<Notice> searchNotices(String query) {
+        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+    }
+
 
     @Override
     public List<Notice> getAllImportantNotice(int limit) {

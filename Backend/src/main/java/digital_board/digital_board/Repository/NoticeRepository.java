@@ -40,10 +40,14 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
       List<Notice> findBycategoriesInAndStatusNotDisable( @Param("categories") List<String>categories);
 
 
+
       @Query("SELECT n FROM Notice n WHERE n.departmentName IN :department AND n.status != 'disable'")
       List<Notice> findByDepartmentAndStatusNotDisabled(@Param("department") List<String >department);
       
       @Query("SELECT n FROM Notice n WHERE n.status !='disable'")
       List<Notice> findAllNotDisabled();
+
+    List<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
+ 
 
 }

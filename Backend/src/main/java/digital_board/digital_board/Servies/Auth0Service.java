@@ -41,34 +41,49 @@ public class Auth0Service {
         String apiUrl = "https://" + auth0Domain + "/dbconnections/signup";
         // SignupRequestDto.getEmail(), SignupRequestDto.getPassword()
         User userAvailable = userRepo.getbyemail(signupRequestDto.getEmail());
-        if (userAvailable == null) {
-            String randomPasswrod = RandomStringUtils.random(8, true, true);
 
-            System.out.println(randomPasswrod);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+        User superAdminAvailable = userRepo.getbyemail(signupRequestDto.getCreatedBy());
+        if (superAdminAvailable != null && "SuperAdmin".equals(superAdminAvailable.getRole())) {
 
-            CreateUserRequestDto request = new CreateUserRequestDto(clientId, signupRequestDto.getEmail(),
-                    randomPasswrod,
-                    connection);
-            HttpEntity<CreateUserRequestDto> requestEntity = new HttpEntity<>(request, headers);
+            if (userAvailable == null) {
+                System.out.println("signUp if block");
+                String randomPasswrod = RandomStringUtils.random(12, true, true);
 
-            // restTemplate.postForLocation(apiUrl, requestEntity);
-            ResponseEntity<SignupResponseDto> responseEntity = restTemplate.postForEntity(apiUrl, requestEntity,
-                    SignupResponseDto.class);
-            SignupResponseDto signupResponseDto = responseEntity.getBody();
-            try {
-                if (signupResponseDto != null && signupResponseDto.getEmail() != null) {
-                    emailServices.sendSimpleMessageForPassword(signupResponseDto.getEmail(),
-                            signupRequestDto.getUserName(),
-                            randomPasswrod);
+                System.out.println(randomPasswrod);
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
 
-                    User user = new User();
-                    user.setUserName(signupRequestDto.getUserName());
-                    user.setEmail(signupResponseDto.getEmail());
-                    user.setRole("Admin");
-                    user.setDepartmentName(signupRequestDto.getDepartmentName());
-                    userRepo.save(user);
+                CreateUserRequestDto request = new CreateUserRequestDto(clientId, signupRequestDto.getEmail(),
+                        randomPasswrod,
+                        connection);
+                HttpEntity<CreateUserRequestDto> requestEntity = new HttpEntity<>(request, headers);
+
+                // restTemplate.postForLocation(apiUrl, requestEntity);
+                ResponseEntity<SignupResponseDto> responseEntity = restTemplate.postForEntity(apiUrl, requestEntity,
+                        SignupResponseDto.class);
+                SignupResponseDto signupResponseDto = responseEntity.getBody();
+
+                
+                try {
+                    if (signupResponseDto != null && signupResponseDto.getEmail() != null) {
+
+                        User user = new User();
+                        user.setUserName(signupRequestDto.getUserName());
+                        user.setEmail(signupResponseDto.getEmail());
+                        user.setRole("Admin");
+                        user.setDepartmentName(signupRequestDto.getDepartmentName());
+                        user.setCategory(signupRequestDto.getCategory());
+                        user.setStatus("enable");
+                        user.setAddress(signupRequestDto.getAddress());
+                        user.setContact(signupRequestDto.getContact());
+                        userRepo.save(user);
+                        emailServices.sendSimpleMessageForPassword(signupResponseDto.getEmail(),
+                                signupRequestDto.getUserName(),
+                                randomPasswrod);
+                    }
+                } catch (Exception e) {
+
+
                 }
             } catch (Exception e) {
                 // TODO: handle exception

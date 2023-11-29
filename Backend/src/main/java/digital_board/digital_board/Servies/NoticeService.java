@@ -26,8 +26,14 @@ public interface NoticeService {
 
     public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable);
 
+
     // Get ALl important notice
     public List<Notice> getAllImportantNotice(int limit);
+
+    public Long getTotalNoticeCount();
+
+    public List<Notice> searchNotices(String query);
+
     
     // update notice
     public Notice updateNotice(Notice notice);
