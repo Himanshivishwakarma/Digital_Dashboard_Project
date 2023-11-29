@@ -29,6 +29,7 @@ public class Notice {
     private String departmentName;
     private String noticeStartDate;
     private String noticeEndDate;
+    private boolean isImportant;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -36,7 +37,7 @@ public class Notice {
     private Date noticeCreatedDate;
 
     private String createdBy;
-    private Boolean status;
+    private String status;
 
 
     @PrePersist

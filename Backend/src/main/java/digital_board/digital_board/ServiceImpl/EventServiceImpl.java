@@ -103,4 +103,12 @@ public class EventServiceImpl implements EventService {
         }
     }
 
+    // get all important notice
+    @Override
+    public List<Event> getAllImportantNotice() 
+    {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'GetAllImportantNotice'");
+    }
+
 }

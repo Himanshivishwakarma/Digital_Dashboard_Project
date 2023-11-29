@@ -22,6 +22,10 @@ public interface EventService {
 
     public Event EventUpdate(Event EventId);
 
+    // get All important notice
+
+    public List<Event> getAllImportantNotice();
+
 
 
 }

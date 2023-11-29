@@ -22,6 +22,6 @@ public class User
     private String role;
     private String departmentName;
     private String category;
-    private String status;
+    private String status; 
 
 }

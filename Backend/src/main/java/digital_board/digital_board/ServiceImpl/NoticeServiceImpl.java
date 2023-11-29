@@ -1,6 +1,8 @@
 package digital_board.digital_board.ServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,10 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import digital_board.digital_board.Dto.NoticeFilterDto;
+import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Entity.UserNotification;
+import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.Repository.NoticeRepository;
 import digital_board.digital_board.Servies.NoticeService;
+import digital_board.digital_board.constants.ResponseMessagesConstants;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -29,11 +34,11 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice createNoticeByUser(Notice notice) {
-        
+
         Notice saveNotice = this.noticeRepository.save(notice);
         try {
 
-            if (saveNotice != null && saveNotice.getStatus() == true) {
+            if (saveNotice != null && saveNotice.getStatus() == "enable") {
                 List<UserNotification> userNotification = this.notificationServiceImpl.getAllUserNotification();
                 for (UserNotification user : userNotification) {
 
@@ -136,6 +141,90 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
     }
-    // return null;
+
+    @Override
+    public List<Notice> getAllImportantNotice(int limit) {
+        List<Notice> findNoticesWithLimit = noticeRepository.findNoticesWithLimit(limit, "important");
+
+        if (findNoticesWithLimit.isEmpty()) {
+            throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
+        } else {
+            return findNoticesWithLimit;
+
+        }
+
+    }
+
+    @Override
+    public Notice updateNotice(Notice notice) {
+
+        this.noticeRepository.findById(notice.getNoticeId())
+                .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+                        .filter(exceptionResponse -> "NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+                        .map(ExceptionResponse::getMassage)
+                        .findFirst()
+                        .orElse("Default message if not found")));
+
+        return noticeRepository.save(notice);
+
+    }
+
+    // searching filter
+
+    public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> createdByList,
+            String status)
+
+    {
+
+        if (department == null && categories == null) {
+            List<Notice> findAllNotDisabled = noticeRepository.findAllNotDisabled();
+
+            if (status == null && createdByList == null) {
+                return findAllNotDisabled;
+            } else {
+
+                List<Notice> filteredNotices = findAllNotDisabled.stream()
+                        .filter(notice -> (status != null && status.equals(notice.getStatus()))
+                                || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                        .collect(Collectors.toList());
+
+                return filteredNotices;
+
+            }
+
+        } else {
+            System.out.println(categories + "categories");
+            List<Notice> findByCreatedByInAndStatusNotDisable = noticeRepository
+                    .findBycategoriesInAndStatusNotDisable(categories);
+            List<Notice> findByDepartmentAndStatusNotDisabled = noticeRepository
+                    .findByDepartmentAndStatusNotDisabled(department);
+
+            List<Notice> finalListofData = new ArrayList<>();
+
+            finalListofData.addAll(findByCreatedByInAndStatusNotDisable);
+
+            finalListofData.addAll(findByDepartmentAndStatusNotDisabled);
+
+            if (status == null && createdByList == null) {
+                return finalListofData;
+            } 
+            else 
+            {
+
+                List<Notice> filteredNotices = finalListofData.stream()
+                        .filter(notice -> (status != null && status.equals(notice.getStatus()))
+                                || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                        .collect(Collectors.toList());
+
+                return filteredNotices;
+            }
+
+        }
+
+    }
 
 }

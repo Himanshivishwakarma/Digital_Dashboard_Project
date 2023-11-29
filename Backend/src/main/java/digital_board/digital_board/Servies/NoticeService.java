@@ -18,12 +18,20 @@ public interface NoticeService {
 
     public List<Notice> getAllNotice();
 
-    public List<Notice> getNoticesByCategory(List<String> category,Pageable pageable);   
+    public List<Notice> getNoticesByCategory(List<String> category, Pageable pageable);
 
     public List<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable);
 
     public List<Notice> getAllNoticesSorted(Pageable pageable);
 
     public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable);
+
+    // Get ALl important notice
+    public List<Notice> getAllImportantNotice(int limit);
     
+    // update notice
+    public Notice updateNotice(Notice notice);
+   
+    // searching filter
+
 }

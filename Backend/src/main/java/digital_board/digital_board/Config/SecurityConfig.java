@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private static final String[] public_urls ={
         "/login",
-        "public",
+        "/public",
         "api/v1/auth/**",
         "/v3/api-docs",
         "/v2/api-docs",
@@ -40,12 +40,12 @@ public class SecurityConfig {
                         // .requestMatchers(HttpMethod.GET).permitAll()
                         // .requestMatchers(HttpMethod.PUT).permitAll()
                         .requestMatchers("/notice/add").permitAll()
-                        .requestMatchers(HttpMethod.POST).permitAll()
+                        .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated())
               .oauth2ResourceServer(oauth2ResourceServer ->
         oauth2ResourceServer.jwt(jwt -> jwt.decoder(jwtDecoder()))).build();
     }
-        @Bean
+     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
