@@ -133,7 +133,7 @@ public class NoticeServiceImpl implements NoticeService {
         } else {
             return getAllNoticesSorted(pageable);
         }
-
+    }
 
 
 
