@@ -139,7 +139,7 @@ public class NoticeController {
     @RequestParam(required = false) List<String> admins,
     @RequestParam(required = false) String status,
     @RequestParam(name = "page", defaultValue = "0") int page,
-    @RequestParam(name = "size", defaultValue = "10") int size)
+    @RequestParam(name = "size", defaultValue = "2") int size)
     {
         // Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
 

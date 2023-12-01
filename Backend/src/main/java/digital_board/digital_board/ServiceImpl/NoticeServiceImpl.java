@@ -1,6 +1,7 @@
 package digital_board.digital_board.ServiceImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,17 +52,16 @@ public class NoticeServiceImpl implements NoticeService {
         return saveNotice;
     }
 
-
     @Override
     public Notice getNoticeByNoticeId(String noticeId) {
         return this.noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         ResponseMessagesConstants.messagelist.stream()
-                                .filter(exceptionResponse -> "NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+                                .filter(exceptionResponse -> "NOTICE_NOT_FOUND"
+                                        .equals(exceptionResponse.getExceptonName()))
                                 .map(ExceptionResponse::getMassage)
                                 .findFirst()
-                                .orElse("Default message if not found")
-                ));
+                                .orElse("Default message if not found")));
     }
 
     @Override
@@ -78,13 +78,11 @@ public class NoticeServiceImpl implements NoticeService {
         return notices;
     }
 
-
     @Override
     public List<Notice> getAllNotice() {
         List<Notice> notice = this.noticeRepository.findAll();
         return notice;
     }
-
 
     @Override
     public List<Notice> getAllNoticesSorted(Pageable pageable) {
@@ -97,7 +95,6 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeRepository.findByCategoryIn(category, pageable);
     }
 
-
     @Override
     public List<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable) {
         if (departmentName != null && departmentName.contains("All")) {
@@ -106,7 +103,6 @@ public class NoticeServiceImpl implements NoticeService {
             return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
         }
     }
-
 
     @Override
     public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable) {
@@ -135,19 +131,15 @@ public class NoticeServiceImpl implements NoticeService {
         }
     }
 
-
-
     @Override
     public Long getTotalNoticeCount() {
         return noticeRepository.count();
     }
 
-
     @Override
     public List<Notice> searchNotices(String query) {
         return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
     }
-
 
     @Override
     public List<Notice> getAllImportantNotice(int limit) {
@@ -183,7 +175,7 @@ public class NoticeServiceImpl implements NoticeService {
     // searching filter
 
     public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> createdByList,
-            String status,int page, int size)
+            String status, int page, int size)
 
     {
 
@@ -191,36 +183,55 @@ public class NoticeServiceImpl implements NoticeService {
             List<Notice> findAllNotDisabled = noticeRepository.findAllNotDisabled();
 
             if (status == null && createdByList == null) {
-                return findAllNotDisabled;
+                int startIndex = page * size;
+                int endIndex = Math.min(startIndex + size, findAllNotDisabled.size());
+                if (startIndex > endIndex) {
+                    // Page index out of bounds
+                    return Collections.emptyList();
+                }
 
-            } 
-            else 
-            {
-                if (status != null && createdByList != null)
-                {
+                return findAllNotDisabled.subList(startIndex, endIndex);
 
-                    return findAllNotDisabled.stream()
+            } else {
+                if (status != null && createdByList != null) {
+
+                    List<Notice> findAllNotDisabled2 = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
-                }
-                else
-                {
-                      return findAllNotDisabled.stream()
+
+                    int startIndex = page * size;
+                    int endIndex = Math.min(startIndex + size, findAllNotDisabled2.size());
+                    if (startIndex > endIndex) {
+                        // Page index out of bounds
+                        return Collections.emptyList();
+                    }
+
+                    return findAllNotDisabled2.subList(startIndex, endIndex);
+
+                } else {
+                    List<Notice> findAllNotDisabled3 = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
+
+                    int startIndex = page * size;
+                    int endIndex = Math.min(startIndex + size, findAllNotDisabled3.size());
+                    if (startIndex > endIndex) {
+                        // Page index out of bounds
+                        return Collections.emptyList();
+                    }
+
+                    return findAllNotDisabled3.subList(startIndex, endIndex);
 
                 }
 
             }
 
-        }
-        else 
-        {
-            System.out.println(categories + "categories");
+        } else {
             List<Notice> findByCreatedByInAndStatusNotDisable = noticeRepository
                     .findBycategoriesInAndStatusNotDisable(categories);
+
             List<Notice> findByDepartmentAndStatusNotDisabled = noticeRepository
                     .findByDepartmentAndStatusNotDisabled(department);
 
@@ -231,27 +242,48 @@ public class NoticeServiceImpl implements NoticeService {
             finalListofData.addAll(findByDepartmentAndStatusNotDisabled);
 
             if (status == null && createdByList == null) {
-                return finalListofData;
-            } 
-            else 
-            {
-               if(status != null && createdByList != null)
-               {
+                // return finalListofData;
+                int startIndex = page * size;
+                int endIndex = Math.min(startIndex + size, finalListofData.size());
+                if (startIndex > endIndex) {
+                    // Page index out of bounds
+                    return Collections.emptyList();
+                }
 
-                   return finalListofData.stream()
-                           .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                  && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
-                           .collect(Collectors.toList());
-               }
-               else
-               {
-                   return finalListofData.stream()
-                           .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                  || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
-                           .collect(Collectors.toList());
-               }
+                return finalListofData.subList(startIndex, endIndex);
 
-               
+            } else {
+                if (status != null && createdByList != null) {
+
+                    List<Notice> findAllNotDisabled2 = finalListofData.stream()
+                            .filter(notice -> (status != null && status.equals(notice.getStatus()))
+                                    && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                            .collect(Collectors.toList());
+                    int startIndex = page * size;
+                    int endIndex = Math.min(startIndex + size, findAllNotDisabled2.size());
+                    if (startIndex > endIndex) {
+                        // Page index out of bounds
+                        return Collections.emptyList();
+                    }
+
+                    return findAllNotDisabled2.subList(startIndex, endIndex);
+
+                } else {
+                    List<Notice> findAllNotDisabled3 = finalListofData.stream()
+                            .filter(notice -> (status != null && status.equals(notice.getStatus()))
+                                    || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                            .collect(Collectors.toList());
+                    int startIndex = page * size;
+                    int endIndex = Math.min(startIndex + size, findAllNotDisabled3.size());
+                    if (startIndex > endIndex) {
+                        // Page index out of bounds
+                        return Collections.emptyList();
+                    }
+
+                    return findAllNotDisabled3.subList(startIndex, endIndex);
+
+                }
+
             }
 
         }
