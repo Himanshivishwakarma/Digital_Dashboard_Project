@@ -11,7 +11,7 @@ public interface NoticeService {
 
     public Notice getNoticeByNoticeId(String noticeId);
 
-    public List<Notice> getNoticeByUserId(String userId);
+    public List<Notice> getNoticeByUserEmail(String email);
 
     public List<Notice> getAllNotice();
 
@@ -23,19 +23,21 @@ public interface NoticeService {
 
     public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable);
 
-
     // Get ALl important notice
     public List<Notice> getAllImportantNotice(int limit);
 
     public Long getTotalNoticeCount();
 
-    public List<Notice> searchNotices(String query);
+    public List<Notice> searchNotices(String query, Pageable pageable);
 
-    
     // update notice
     public Notice updateNotice(Notice notice);
-   
+
     // searching filter
     public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> createdByList,
     String status,int page, int size);
+
+    public Long countByCategory(String category);
+
+    public Long countByDepartmentName(String departmentName);
 }

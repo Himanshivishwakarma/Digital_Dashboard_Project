@@ -47,7 +47,10 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
       @Query("SELECT n FROM Notice n WHERE n.status !='disable'")
       List<Notice> findAllNotDisabled();
 
-    List<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
+    List<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description, Pageable pageable);
  
 
+    Long countByCategory(String category);
+
+    Long countByDepartmentName(String departmentName);
 }

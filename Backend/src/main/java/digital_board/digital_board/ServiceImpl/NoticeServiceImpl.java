@@ -32,7 +32,6 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice createNoticeByUser(Notice notice) {
-
         Notice saveNotice = this.noticeRepository.save(notice);
         try {
 
@@ -65,18 +64,10 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> getNoticeByUserId(String userId) {
-        List<Notice> notices = this.noticeRepository.getAllNoticeByUserId(userId);
-        if (notices.isEmpty()) {
-            throw new ResourceNotFoundException(
-                    ResponseMessagesConstants.messagelist.stream()
-                            .filter(exceptionResponse -> "USER_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
-                            .map(ExceptionResponse::getMassage)
-                            .findFirst()
-                            .orElse("Default message if not found"));
-        }
-        return notices;
+    public List<Notice> getNoticeByUserEmail(String email) {
+        return this.noticeRepository.getAllNoticeByUserId(email);
     }
+
 
     @Override
     public List<Notice> getAllNotice() {
@@ -129,7 +120,9 @@ public class NoticeServiceImpl implements NoticeService {
         } else {
             return getAllNoticesSorted(pageable);
         }
+
     }
+
 
     @Override
     public Long getTotalNoticeCount() {
@@ -137,8 +130,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> searchNotices(String query) {
-        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+    public List<Notice> searchNotices(String query, Pageable pageable) {
+        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query, pageable);
     }
 
     @Override
@@ -197,7 +190,7 @@ public class NoticeServiceImpl implements NoticeService {
 
                     List<Notice> findAllNotDisabled2 = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                    && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                                    && (admins != null && admins.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
 
                     int startIndex = page * size;
@@ -212,7 +205,7 @@ public class NoticeServiceImpl implements NoticeService {
                 } else {
                     List<Notice> findAllNotDisabled3 = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                    || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                                    || (admins != null && admins.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
 
                     int startIndex = page * size;
@@ -288,6 +281,15 @@ public class NoticeServiceImpl implements NoticeService {
 
         }
 
+    }
+
+
+    public Long countByCategory(String category) {
+        return noticeRepository.countByCategory(category);
+    }
+
+    public Long countByDepartmentName(String departmentName) {
+        return noticeRepository.countByDepartmentName(departmentName);
     }
 
 }

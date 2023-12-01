@@ -47,6 +47,7 @@ public class Auth0Service {
                 ResponseEntity<SignupResponseDto> responseEntity = restTemplate.postForEntity(apiUrl, requestEntity,
                         SignupResponseDto.class);
                 SignupResponseDto signupResponseDto = responseEntity.getBody();
+
                 try {
                     if (signupResponseDto != null && signupResponseDto.getEmail() != null) {
                         User user = new User();
@@ -63,10 +64,13 @@ public class Auth0Service {
                                 signupRequestDto.getUserName(),
                                 randomPasswrod);
                     }
+
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
+
                 return signupResponseDto;
+
             } else {
                 throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
                         .filter(exceptionResponse -> "MESSAGE_REGISTER_ERRROR"
@@ -77,7 +81,7 @@ public class Auth0Service {
             }
         }else{
             throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-                        .filter(exceptionResponse -> "MESSAGE_REGISTER_ERRROR"
+                        .filter(exceptionResponse -> "NOT_SUPERADMIN"
                                 .equals(exceptionResponse.getExceptonName()))
                         .map(ExceptionResponse::getMassage)
                         .findFirst()

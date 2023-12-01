@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Exception.ResourceNotFoundException;
@@ -36,47 +36,138 @@ public class NoticeController {
     private NoticeServiceImpl noticeServiceImpl;
 
     @PostMapping("/add")
-    public  ResponseEntity<Notice> createNoticeByUser(@RequestBody Notice notice) {
-        Notice saveNotice = this.noticeServiceImpl.createNoticeByUser(notice);
-        return ResponseEntity.ok(saveNotice);
+    public ResponseEntity<Map<String, Object>> createNoticeByUser(@RequestBody Notice notice) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Notice savedNotice = this.noticeServiceImpl.createNoticeByUser(notice);
+
+            String successMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "NOTICE_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default success message if not found");
+
+            response.put("message", successMessage);
+            response.put("data", savedNotice);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            String failureMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "NOTICE_CREATE_FAILURE".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default failure message if not found");
+
+            response.put("message", failureMessage);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<Map<String, Object>> updateNoticeByNoticeId(@RequestBody Notice notice) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Notice updatedNotice = this.noticeServiceImpl.updateNotice(notice);
 
-    @GetMapping("/get/byNoticeId/{NoticeId}")
+            String successMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "NOTICE_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default success message if not found");
+
+            response.put("message", successMessage);
+            response.put("data", updatedNotice);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            String failureMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "NOTICE_UPDATE_FAILURE".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default failure message if not found");
+
+            response.put("message", failureMessage);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/get/byNoticeId/{noticeId}")
     public ResponseEntity<Notice> getNoticeByNoticeId(@PathVariable String noticeId) {
         Notice notice = noticeServiceImpl.getNoticeByNoticeId(noticeId);
         return ResponseEntity.ok(notice);
     }
 
-
     @GetMapping("/getAll/byAdminEmail/{adminEmail}")
-    public ResponseEntity<List<Notice>> getNoticeByUserId(@PathVariable String adminEmail) {
-        List<Notice> notice = noticeServiceImpl.getNoticeByUserId(adminEmail);
-        return  ResponseEntity.ok(notice);
+    public ResponseEntity<Map<String, Object>> getNoticeByUserEmail(@PathVariable String adminEmail) {
+        Map<String, Object> response = new HashMap<>();
+        List<Notice> notice = noticeServiceImpl.getNoticeByUserEmail(adminEmail);
+        response.put("count", notice.size());
+        response.put("data", notice);
+
+        if (notice.isEmpty()) {
+            String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default failure message if not found");
+
+            response.put("message", emptyMessage);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/byCategory/{category}")
-    public ResponseEntity<List<Notice>> getNoticesByCategory(@PathVariable List<String> category,
+    public ResponseEntity<?> getNoticesByCategory(@PathVariable List<String> category,
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-
+        Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
-        return   ResponseEntity.ok(noticeServiceImpl.getNoticesByCategory(category, pageable));
-    }
+        List<Notice> notice = noticeServiceImpl.getNoticesByCategory(category, pageable);
+        response.put("count", notice.size());
+        response.put("data", notice);
 
+        if (notice.isEmpty()) {
+            // Return a JSON response with a message for data not found
+            String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default failure message if not found");
+
+            response.put("message", emptyMessage);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        // Return the list of notices if data is found
+        return ResponseEntity.ok(response);
+    }
 
     // http://localhost:8080/notices/byDepartment/iteg?sort=asc
     @GetMapping("/byDepartment/{departmentName}")
-    public ResponseEntity<List<Notice>> getNoticesByDepartment(@PathVariable List<String> departmentName,
+    public ResponseEntity<Map<String, Object>> getNoticesByDepartment(@PathVariable List<String> departmentName,
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-
+        Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(noticeServiceImpl.getNoticesByDepartment(departmentName, pageable));
-    }
+        List<Notice> notice = noticeServiceImpl.getNoticesByDepartment(departmentName, pageable);
+        response.put("count", notice.size());
+        response.put("data", notice);
+        if (notice.isEmpty()) {
+            // Return a JSON response with a message for data not found
+            String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default failure message if not found");
 
+            response.put("message", emptyMessage);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        // Return the list of notices if data is found
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllNotice(
@@ -95,33 +186,45 @@ public class NoticeController {
         return ResponseEntity.ok(notice);
     }
 
-
     // getAllNoticesSorted
-    @PostMapping("/getAll/byfilter")
-    public ResponseEntity<?> getAllNoticeByDepartmentAndCategory(@RequestBody NoticeFilterDto noticeFilterDto,
-            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+    // @PostMapping("/getAll/byfilter")
+    // public ResponseEntity<?> getAllNoticeByDepartmentAndCategory(@RequestBody
+    // NoticeFilterDto noticeFilterDto,
+    // @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc")
+    // String sort,
+    // @RequestParam(defaultValue = "0") int page,
+    // @RequestParam(defaultValue = "10") int size) {
 
-        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
-        List<Notice> notice = noticeServiceImpl.filterNotices(noticeFilterDto, pageable);
+    // Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+    // List<Notice> notice = noticeServiceImpl.filterNotices(noticeFilterDto,
+    // pageable);
 
-        if (notice.isEmpty()) {
-            throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-                    .map(ExceptionResponse::getMassage)
-                    .findFirst()
-                    .orElse("Default message if not found"));
-        }
-        return ResponseEntity.ok(notice);
-    }
+    // if (notice.isEmpty()) {
+    // throw new
+    // ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+    // .filter(exceptionResponse ->
+    // "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+    // .map(ExceptionResponse::getMassage)
+    // .findFirst()
+    // .orElse("Default message if not found"));
+    // }
+    // return ResponseEntity.ok(notice);
+    // }
 
-    
     @GetMapping("/count")
-    public ResponseEntity<Long> getTotalNoticeCount() {
-        return ResponseEntity.ok(noticeServiceImpl.getTotalNoticeCount());
+    public ResponseEntity<Long> countNoticesByCriteria(@RequestParam(required = false) String category,
+            @RequestParam(required = false) String departmentName) {
+        if (category != null) {
+            // Count notices by category
+            return ResponseEntity.ok(noticeServiceImpl.countByCategory(category));
+        } else if (departmentName != null) {
+            // Count notices by departmentName
+            return ResponseEntity.ok(noticeServiceImpl.countByDepartmentName(departmentName));
+        } else {
+            // No criteria provided, return total count
+            return ResponseEntity.ok(noticeServiceImpl.getTotalNoticeCount());
+        }
     }
-
 
     private Sort parseSortString(String sort) {
         String[] sortParams = sort.split(",");
@@ -134,7 +237,6 @@ public class NoticeController {
                                                                  // order
         }
     }
-
 
     // serching filter
     @GetMapping("/getAll/byfilters")
@@ -160,22 +262,31 @@ public class NoticeController {
         }
         return ResponseEntity.ok(response);
     }
-    
-    @GetMapping("/search/{query}")
-    public ResponseEntity<Object> searchNotices(@PathVariable String query) {
-        List<Notice> result = noticeServiceImpl.searchNotices(query);
 
-        if (result.isEmpty()) {
+    @GetMapping("/search/{query}")
+    public ResponseEntity<?> searchNotices(@PathVariable String query,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Map<String, Object> response = new HashMap<>();
+        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+        List<Notice> notice = noticeServiceImpl.searchNotices(query, pageable);
+        response.put("count", notice.size());
+        response.put("data", notice);
+
+        if (notice.isEmpty()) {
             // Return a JSON response with a message for data not found
-            return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
+            String emptyMessage = ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)
                     .findFirst()
-                    .orElse("Default message if not found"), HttpStatus.NOT_FOUND);
-        }
+                    .orElse("Default failure message if not found");
 
+            response.put("message", emptyMessage);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
         // Return the list of notices if data is found
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return ResponseEntity.ok(response);
 
     }
 }

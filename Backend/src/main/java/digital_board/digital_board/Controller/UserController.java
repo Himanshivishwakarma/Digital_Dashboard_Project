@@ -140,16 +140,25 @@ public class UserController {
           .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
           .map(ExceptionResponse::getMassage)
           .findFirst()
-          .orElse("Default message if not found"), HttpStatus.NOT_FOUND);
+          .orElse("Default message if not found"), HttpStatus.OK);
     }
 
     return new ResponseEntity<>(userDetails, HttpStatus.OK);
   }
 
   @GetMapping("/getByEmail/{email}")
-  public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
-    return ResponseEntity.ok(userServiceImpl.getUserByEmail(email));
+  public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    User user = userServiceImpl.getUserByEmail(email);
+
+    if (user == null) {
+      return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default message if not found"), HttpStatus.OK);
+    }
+    return ResponseEntity.ok(user);
   }
 
-  // Add other controller methods as needed
+
 }

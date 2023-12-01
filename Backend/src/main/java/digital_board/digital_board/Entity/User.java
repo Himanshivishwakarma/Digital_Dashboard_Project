@@ -26,6 +26,4 @@ public class User {
     private String address;
     private String contact;
     private String status;
-
-
 }
