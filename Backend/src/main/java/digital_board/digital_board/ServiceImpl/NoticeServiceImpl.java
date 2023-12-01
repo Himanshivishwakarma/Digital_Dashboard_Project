@@ -167,7 +167,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     // searching filter
 
-    public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> createdByList,
+    public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> admins,
             String status, int page, int size)
 
     {
@@ -175,7 +175,7 @@ public class NoticeServiceImpl implements NoticeService {
         if (department == null && categories == null) {
             List<Notice> findAllNotDisabled = noticeRepository.findAllNotDisabled();
 
-            if (status == null && createdByList == null) {
+            if (status == null && admins == null) {
                 int startIndex = page * size;
                 int endIndex = Math.min(startIndex + size, findAllNotDisabled.size());
                 if (startIndex > endIndex) {
@@ -186,7 +186,7 @@ public class NoticeServiceImpl implements NoticeService {
                 return findAllNotDisabled.subList(startIndex, endIndex);
 
             } else {
-                if (status != null && createdByList != null) {
+                if (status != null && admins != null) {
 
                     List<Notice> findAllNotDisabled2 = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
@@ -234,7 +234,7 @@ public class NoticeServiceImpl implements NoticeService {
 
             finalListofData.addAll(findByDepartmentAndStatusNotDisabled);
 
-            if (status == null && createdByList == null) {
+            if (status == null && admins == null) {
                 // return finalListofData;
                 int startIndex = page * size;
                 int endIndex = Math.min(startIndex + size, finalListofData.size());
@@ -246,11 +246,11 @@ public class NoticeServiceImpl implements NoticeService {
                 return finalListofData.subList(startIndex, endIndex);
 
             } else {
-                if (status != null && createdByList != null) {
+                if (status != null && admins != null) {
 
                     List<Notice> findAllNotDisabled2 = finalListofData.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                    && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                                    && (admins != null && admins.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
                     int startIndex = page * size;
                     int endIndex = Math.min(startIndex + size, findAllNotDisabled2.size());
@@ -264,7 +264,7 @@ public class NoticeServiceImpl implements NoticeService {
                 } else {
                     List<Notice> findAllNotDisabled3 = finalListofData.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                    || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                                    || (admins != null && admins.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
                     int startIndex = page * size;
                     int endIndex = Math.min(startIndex + size, findAllNotDisabled3.size());
