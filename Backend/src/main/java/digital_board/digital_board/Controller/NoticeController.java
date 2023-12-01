@@ -1,11 +1,15 @@
 package digital_board.digital_board.Controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -134,16 +138,27 @@ public class NoticeController {
 
     // serching filter
     @GetMapping("/getAll/byfilters")
-    public List<Notice> searchNotices(@RequestParam(required = false)List<String> department,
+    public ResponseEntity<Map<String, Object>> searchNotices(@RequestParam(required = false)List<String> department,
     @RequestParam(required = false) List<String> categories,
     @RequestParam(required = false) List<String> admins,
     @RequestParam(required = false) String status,
     @RequestParam(name = "page", defaultValue = "0") int page,
-    @RequestParam(name = "size", defaultValue = "2") int size)
+    @RequestParam(name = "size", defaultValue = "5") int size)
     {
-        // Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
-
-        return noticeServiceImpl.searchNotices(department,categories,admins,status,page,size);
+       Map<String,Object> response=new HashMap<>();
+       List<Notice> searchNotices = noticeServiceImpl.searchNotices(department,categories,admins,status,page,size);
+          response.put("data", searchNotices);
+          response.put("count",searchNotices.size());
+        if(searchNotices.isEmpty()) {
+            String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default failure message if not found");
+            response.put("message", emptyMessage);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        return ResponseEntity.ok(response);
     }
     
     @GetMapping("/search/{query}")

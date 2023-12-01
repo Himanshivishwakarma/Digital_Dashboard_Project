@@ -343,3 +343,7 @@
 2023-12-01 15:34:58,210 WARN o.h.d.Dialect [restartedMain] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
 2023-12-01 15:34:59,124 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2023-12-01 15:34:59,620 INFO d.d.DigitalBoardApplication [restartedMain] Started DigitalBoardApplication in 2.989 seconds (process running for 1370.228)
+2023-12-01 15:40:20,597 INFO d.d.C.UserController [http-nio-9090-exec-1] 1*************getWelcomeMsg action called..
+2023-12-01 15:42:18,431 INFO d.d.C.UserController [http-nio-9090-exec-4] 1*************getWelcomeMsg action called..
+2023-12-01 15:44:03,331 INFO d.d.C.UserController [http-nio-9090-exec-7] 1*************getWelcomeMsg action called..
+2023-12-01 15:44:03,643 INFO d.d.C.UserController [http-nio-9090-exec-8] 1*************getWelcomeMsg action called..
