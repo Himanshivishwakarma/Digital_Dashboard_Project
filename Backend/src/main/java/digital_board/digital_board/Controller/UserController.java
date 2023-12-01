@@ -104,21 +104,30 @@ public class UserController {
 
   public ResponseEntity<?> findAllUser() {
     List<User> userDetails = userServiceImpl.FindAllUser();
-       if (userDetails.isEmpty()) {
-            // Return a JSON response with a message for data not found
-            return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-                    .map(ExceptionResponse::getMassage)
-                    .findFirst()
-                    .orElse("Default message if not found"), HttpStatus.NOT_FOUND);
-        }
+    if (userDetails.isEmpty()) {
+      // Return a JSON response with a message for data not found
+      return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default message if not found"), HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(userDetails, HttpStatus.OK);
+    return new ResponseEntity<>(userDetails, HttpStatus.OK);
   }
 
   @GetMapping("/getByEmail/{email}")
-  public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
-    return ResponseEntity.ok(userServiceImpl.getUserByEmail(email));
+  public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    User user = userServiceImpl.getUserByEmail(email);
+
+    if (user == null) {
+      return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default message if not found"), HttpStatus.OK);
+    }
+    return ResponseEntity.ok(user);
   }
 
 }

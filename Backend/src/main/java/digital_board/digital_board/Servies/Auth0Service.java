@@ -63,7 +63,6 @@ public class Auth0Service {
                         SignupResponseDto.class);
                 SignupResponseDto signupResponseDto = responseEntity.getBody();
 
-                
                 try {
                     if (signupResponseDto != null && signupResponseDto.getEmail() != null) {
 
@@ -81,22 +80,28 @@ public class Auth0Service {
                                 signupRequestDto.getUserName(),
                                 randomPasswrod);
                     }
+
                 } catch (Exception e) {
-
-
+                    // TODO: handle exception
                 }
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
 
-            return signupResponseDto;
-        } else {
+                return signupResponseDto;
+
+            } else {
+                throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+                        .filter(exceptionResponse -> "MESSAGE_REGISTER_ERRROR"
+                                .equals(exceptionResponse.getExceptonName()))
+                        .map(ExceptionResponse::getMassage)
+                        .findFirst()
+                        .orElse("Default message if not found"));
+            }
+        }else{
             throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "MESSAGE_REGISTER_ERRROR"
-                            .equals(exceptionResponse.getExceptonName()))
-                    .map(ExceptionResponse::getMassage)
-                    .findFirst()
-                    .orElse("Default message if not found"));
+                        .filter(exceptionResponse -> "NOT_SUPERADMIN"
+                                .equals(exceptionResponse.getExceptonName()))
+                        .map(ExceptionResponse::getMassage)
+                        .findFirst()
+                        .orElse("Default message if not found"));
         }
     }
 

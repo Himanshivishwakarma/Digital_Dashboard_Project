@@ -31,7 +31,6 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice createNoticeByUser(Notice notice) {
-
         Notice saveNotice = this.noticeRepository.save(notice);
         try {
 
@@ -65,17 +64,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> getNoticeByUserId(String userId) {
-        List<Notice> notices = this.noticeRepository.getAllNoticeByUserId(userId);
-        if (notices.isEmpty()) {
-            throw new ResourceNotFoundException(
-                    ResponseMessagesConstants.messagelist.stream()
-                            .filter(exceptionResponse -> "USER_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
-                            .map(ExceptionResponse::getMassage)
-                            .findFirst()
-                            .orElse("Default message if not found"));
-        }
-        return notices;
+    public List<Notice> getNoticeByUserEmail(String email) {
+        return this.noticeRepository.getAllNoticeByUserId(email);
     }
 
 
@@ -134,7 +124,7 @@ public class NoticeServiceImpl implements NoticeService {
             return getAllNoticesSorted(pageable);
         }
 
-
+    }
 
 
     @Override
@@ -144,8 +134,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 
     @Override
-    public List<Notice> searchNotices(String query) {
-        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+    public List<Notice> searchNotices(String query, Pageable pageable) {
+        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query, pageable);
     }
 
 
@@ -182,7 +172,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     // searching filter
 
-    public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> createdByList,
+    public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> admins,
             String status)
 
     {
@@ -190,17 +180,17 @@ public class NoticeServiceImpl implements NoticeService {
         if (department == null && categories == null) {
             List<Notice> findAllNotDisabled = noticeRepository.findAllNotDisabled();
 
-            if (status == null && createdByList == null) {
+            if (status == null && admins == null) {
                 return findAllNotDisabled;
             } 
             else 
             {
-                if (status != null && createdByList != null)
+                if (status != null && admins != null)
                 {
 
                     List<Notice> filteredNotices = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                    && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                                    && (admins != null && admins.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
     
                     return filteredNotices;
@@ -209,7 +199,7 @@ public class NoticeServiceImpl implements NoticeService {
                 {
                       List<Notice> filteredNotices = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                    || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                                    || (admins != null && admins.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
     
                     return filteredNotices;
@@ -233,17 +223,17 @@ public class NoticeServiceImpl implements NoticeService {
 
             finalListofData.addAll(findByDepartmentAndStatusNotDisabled);
 
-            if (status == null && createdByList == null) {
+            if (status == null && admins == null) {
                 return finalListofData;
             } 
             else 
             {
-               if(status != null && createdByList != null)
+               if(status != null && admins != null)
                {
 
                    List<Notice> filteredNotices = finalListofData.stream()
                            .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                  && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                                  && (admins != null && admins.contains(notice.getCreatedBy())))
                            .collect(Collectors.toList());
 
                            return filteredNotices;
@@ -252,7 +242,7 @@ public class NoticeServiceImpl implements NoticeService {
                {
                    List<Notice> filteredNotices = finalListofData.stream()
                            .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                                  || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
+                                  || (admins != null && admins.contains(notice.getCreatedBy())))
                            .collect(Collectors.toList());
 
                            return filteredNotices;
@@ -263,6 +253,15 @@ public class NoticeServiceImpl implements NoticeService {
 
         }
 
+    }
+
+
+    public Long countByCategory(String category) {
+        return noticeRepository.countByCategory(category);
+    }
+
+    public Long countByDepartmentName(String departmentName) {
+        return noticeRepository.countByDepartmentName(departmentName);
     }
 
 }

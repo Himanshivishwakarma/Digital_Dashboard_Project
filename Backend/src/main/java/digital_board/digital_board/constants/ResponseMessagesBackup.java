@@ -43,9 +43,11 @@ public class ResponseMessagesBackup {
                  new ExceptionResponse("18", "EVENT_CREATE_SUCCESS", "Event Added Successfully"),
                 new ExceptionResponse("19", "EVENT_DELETE_SUCCESS", "Event Deleted Sucessfully"),
                 new ExceptionResponse("20", "EVENT_NOT_FOUND", "Event Not Found !"),
-                new ExceptionResponse("21", "EVENT_UPDATED_SUCCESS", "Event Updated Successfully")
-                
-        ));
+                new ExceptionResponse("21", "EVENT_UPDATED_SUCCESS", "Event Updated Successfully"),
+                 new ExceptionResponse("22", "NOTICE_CREATE_FAILURE", "Notice Created Failure!"),
+                 new ExceptionResponse("23", "NOTICE_UPDATE_FAILURE", "Notice update Failure!"),
+                                  new ExceptionResponse("24", "NOT_SUPERADMIN", "User Must be Super Admin!")
+        ));//NOTICE_CREATE_FAILURE
         exceptionResponseRepository.saveAll(messagelist);
     }
 
