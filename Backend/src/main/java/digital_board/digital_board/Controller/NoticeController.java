@@ -136,12 +136,14 @@ public class NoticeController {
     @GetMapping("/getAll/byfilters")
     public List<Notice> searchNotices(@RequestParam(required = false)List<String> department,
     @RequestParam(required = false) List<String> categories,
-    @RequestParam(required = false) List<String> createdByList,
-    @RequestParam(required = false) String status)
+    @RequestParam(required = false) List<String> admins,
+    @RequestParam(required = false) String status,
+    @RequestParam(name = "page", defaultValue = "0") int page,
+    @RequestParam(name = "size", defaultValue = "10") int size)
     {
         // Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
 
-        return noticeServiceImpl.searchNotices(department,categories,createdByList,status);
+        return noticeServiceImpl.searchNotices(department,categories,admins,status,page,size);
     }
     
     @GetMapping("/search/{query}")

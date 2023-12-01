@@ -1,5 +1,6 @@
 package digital_board.digital_board.Entity;
 
+import java.util.Map;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ public class User {
     private String role;
     private String departmentName;
     private String category;
-
+    private String  image;
 
     private String address;
     private String contact;

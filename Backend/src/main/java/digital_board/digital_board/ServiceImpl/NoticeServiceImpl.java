@@ -183,7 +183,7 @@ public class NoticeServiceImpl implements NoticeService {
     // searching filter
 
     public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> createdByList,
-            String status)
+            String status,int page, int size)
 
     {
 
@@ -192,27 +192,24 @@ public class NoticeServiceImpl implements NoticeService {
 
             if (status == null && createdByList == null) {
                 return findAllNotDisabled;
+
             } 
             else 
             {
                 if (status != null && createdByList != null)
                 {
 
-                    List<Notice> filteredNotices = findAllNotDisabled.stream()
+                    return findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
-    
-                    return filteredNotices;
                 }
                 else
                 {
-                      List<Notice> filteredNotices = findAllNotDisabled.stream()
+                      return findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
-    
-                    return filteredNotices;
 
                 }
 
@@ -241,21 +238,17 @@ public class NoticeServiceImpl implements NoticeService {
                if(status != null && createdByList != null)
                {
 
-                   List<Notice> filteredNotices = finalListofData.stream()
+                   return finalListofData.stream()
                            .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                   && (createdByList != null && createdByList.contains(notice.getCreatedBy())))
                            .collect(Collectors.toList());
-
-                           return filteredNotices;
                }
                else
                {
-                   List<Notice> filteredNotices = finalListofData.stream()
+                   return finalListofData.stream()
                            .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                   || (createdByList != null && createdByList.contains(notice.getCreatedBy())))
                            .collect(Collectors.toList());
-
-                           return filteredNotices;
                }
 
                

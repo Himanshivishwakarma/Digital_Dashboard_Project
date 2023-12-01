@@ -43,6 +43,8 @@ public class SecurityConfig {
                         // .requestMatchers(HttpMethod.PUT).permitAll()
                         .requestMatchers("/notice/add").permitAll()
                         .requestMatchers(HttpMethod.GET).permitAll()
+                        .requestMatchers(HttpMethod.POST).permitAll()
+                        .requestMatchers(HttpMethod.PUT).permitAll()
                         .anyRequest().authenticated())
               .oauth2ResourceServer(oauth2ResourceServer ->
         oauth2ResourceServer.jwt(jwt -> jwt.decoder(jwtDecoder()))).build();
