@@ -34,11 +34,11 @@ public class NoticeServiceImplTest {
     public void testCreateNoticeByUser() {
 
         Notice myNotice = new Notice(noticeId, "This is an important announcement.", "this is notice descriptions",
-                "General", "HR Department", "2023-11-01", "2023-11-10", new Date(), "John Doe", true);
+                "General", "HR Department", "2023-11-01", "2023-11-10", new Date(), "John Doe", "enable");
 
         Notice myNotice1 = new Notice("Important Notice1", "This is an important announcement.",
                 "this is notice descriptions",
-                "General", "HR Department", "2023-11-01", "2023-11-10", new Date(), "John Doe", true);
+                "General", "HR Department", "2023-11-01", "2023-11-10", new Date(), "John Doe", "enable");
 
         Mockito.when(noticeRepository.save(any(Notice.class))).thenReturn(myNotice);
 
@@ -52,7 +52,7 @@ public class NoticeServiceImplTest {
     public void testGetNoticeByNoticeId() {
 
         Notice myNotice = new Notice(noticeId, "This is an important announcement.", "this is notice descriptions",
-                "General", "HR Department", "2023-11-01", "2023-11-10", new Date(), "John Doe", true);
+                "General", "HR Department", "2023-11-01", "2023-11-10", new Date(), "John Doe", "enable");
 
         Mockito.when(noticeRepository.findById(eq(noticeId))).thenReturn(Optional.of(myNotice));
 
@@ -67,13 +67,13 @@ public class NoticeServiceImplTest {
 
         List<Notice> myNotice = Arrays.asList(
                 new Notice(noticeId, "This is an important announcement.", "this is notice descriptions", "General",
-                        "HR Department", "2023-11-01", "2023-11-10", new Date(), userId, true),
+                        "HR Department", "2023-11-01", "2023-11-10", new Date(), userId, "important"),
                 new Notice(noticeId, "This is an important announcement.", "this is notice descriptions", "General",
-                        "HR Department", "2023-11-01", "2023-11-10", new Date(), userId, true));
+                        "HR Department", "2023-11-01", "2023-11-10", new Date(), userId, "important"));
 
         Mockito.when(noticeRepository.getAllNoticeByUserId(eq(userId))).thenReturn(myNotice);
 
-        List<Notice> result = noticeService.getNoticeByUserId(userId);
+        List<Notice> result = noticeService.getNoticeByUserEmail(userId);
 
         assertEquals(myNotice, result);
 
@@ -84,9 +84,9 @@ public class NoticeServiceImplTest {
 
        List<Notice> myNotice = Arrays.asList(
                 new Notice(noticeId, "This is an important announcement.", "this is notice descriptions", "General",
-                        "HR Department", "2023-11-01", "2023-11-10", new Date(), userId, true),
+                        "HR Department", "2023-11-01", "2023-11-10", new Date(), userId, "enable"),
                 new Notice(noticeId, "This is an important announcement.", "this is notice descriptions", "General",
-                        "HR Department", "2023-11-01", "2023-11-10", new Date(), userId, true));
+                        "HR Department", "2023-11-01", "2023-11-10", new Date(), userId, "enable"));
 
 
     Mockito.when(noticeRepository.findAll()).thenReturn(myNotice);
