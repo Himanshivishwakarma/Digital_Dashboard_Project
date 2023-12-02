@@ -1,0 +1,8 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "maven.view": "flat",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "ai-test.endpoint": "Notice",
+    "ai-test.apiKey": "notice",
+    "java.debug.settings.onBuildFailureProceed": true
+}

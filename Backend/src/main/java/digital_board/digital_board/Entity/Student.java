@@ -4,25 +4,30 @@ import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Table;
 
-@Data
-@Setter
-@Getter
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
-public class Student {
 
+@Table(name = "studentInfo")
+public class Student {
     @Id
-    private String id = UUID.randomUUID().toString();
-    private String stdName;
-    private String stdClassId;
-    private String stdGroupId;
-    private String stdLevelId;
-    private String stdYearId;
-    private String email;
-    private String gender;
-    private boolean enable;
+    String student_id = UUID.randomUUID().toString();
+    
+    // @NotBlank(message = "Name is mandatory")
+    String student_name;
+
+    @Email(regexp = ".*@ssism.org", message = "Email must be from ssism.org domain")
+    String student_email;
+
+    String student_group;
+
+    String student_mobile_no;
+
+    String created_At;
+
+    String updateAt;
 
 }
