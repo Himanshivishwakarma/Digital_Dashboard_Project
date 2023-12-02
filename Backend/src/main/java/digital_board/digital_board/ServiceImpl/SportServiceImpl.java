@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import digital_board.digital_board.Entity.Sport;
+import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.Repository.SportRepository;
 import digital_board.digital_board.Servies.SportService;
 import java.util.*;
@@ -28,7 +29,7 @@ public class SportServiceImpl implements SportService {
   @Override
   public Sport getSportById(String sportId) {
     Sport sport = sportRepository.findById(sportId)
-        .orElseThrow();
+        .orElseThrow(() -> new ResourceNotFoundException("Sport Id not found"));
     return sport;
   }
 
@@ -41,7 +42,7 @@ public class SportServiceImpl implements SportService {
   @Override
   public Sport updateSport(Sport sport, String sportId) {
     Sport sports = sportRepository.findById(sportId)
-        .orElseThrow();
+        .orElseThrow(() -> new ResourceNotFoundException("Sport Id not found"));
     sports.setSportName(sport.getSportName());
     sports.setSportDescription(sport.getSportDescription());
     sports.setSportStartDate(sport.getSportStartDate());
@@ -64,3 +65,4 @@ public class SportServiceImpl implements SportService {
   
   
 }
+

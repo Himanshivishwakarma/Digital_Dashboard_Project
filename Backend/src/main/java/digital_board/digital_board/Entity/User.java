@@ -1,6 +1,6 @@
 package digital_board.digital_board.Entity;
 
-
+import java.util.Map;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -13,14 +13,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User 
-{
+public class User {
     @Id
-    private String id=UUID.randomUUID().toString();
-    private String user_name;
+    private String id = UUID.randomUUID().toString();
+    private String userName;
     private String email;
     private String role;
-    private String ssismGroup;
-    private String prifilePhoto;
+    private String departmentName;
+    private String category;
+    private String  image;
 
+    private String address;
+    private String contact;
+    private String status;
 }

@@ -1,31 +1,41 @@
 package digital_board.digital_board.Controller;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.mail.MessagingException;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import digital_board.digital_board.Dto.AuthResponse;
-import digital_board.digital_board.Entity.EVENT_LOGS;
+import digital_board.digital_board.Dto.SignupRequestDto;
+import digital_board.digital_board.Dto.SignupResponseDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
+import digital_board.digital_board.Repository.UserRepository;
 import digital_board.digital_board.ServiceImpl.EmailServiceImpl;
-// import digital_board.digital_board.Repository.EVENT_LOGSRepository;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
+import digital_board.digital_board.Servies.Auth0Service;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -40,7 +50,16 @@ public class UserController {
   private UserServiceImpl userServiceImpl;
 
   @Autowired
-  private EmailServiceImpl emailServices;
+  private Auth0Service auth0Service;
+
+  @Autowired
+  EmailServiceImpl emailServices;
+
+  @Autowired
+  private Cloudinary cloudinary;
+
+  @Autowired
+  private UserRepository userRepo;
 
   // @Autowired
   // private EVENT_LOGSRepository eVENT_LOGSRepository;
@@ -63,38 +82,83 @@ public class UserController {
     // MDC.remove("path");
 
     // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
-    // "This is the test email template for your email:\n%s\n");
+    // "Sahil");
 
     MDC.clear();
     return "working";
   }
 
   // create user
-  @PostMapping("/CreatUser")
-  ResponseEntity<?> CreateUser(@RequestBody User user) {
+  // @PostMapping("/CreatUser")
+  // ResponseEntity<?> CreateUser(@RequestBody User user) {
 
-     Map<String,Object> response = new HashMap<>();
-        response.put("Massage",ResponseMessagesConstants.messagelist.stream()
-				.filter(exceptionResponse -> "USER_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
-				.map(ExceptionResponse::getMassage)
-				.findFirst()
-				.orElse("Default message if not found"));
-        response.put("User", userServiceImpl.CreateUser(user));
-    return ResponseEntity.ok(response);
+  // Map<String,Object> response = new HashMap<>();
+  // response.put("Massage",ResponseMessagesConstants.messagelist.stream()
+  // .filter(exceptionResponse ->
+  // "USER_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+  // .map(ExceptionResponse::getMassage)
+  // .findFirst()
+  // .orElse("Default message if not found"));
+  // response.put("User", userServiceImpl.CreateUser(user));
+  // return ResponseEntity.ok(response);
+  // }
+
+  @PostMapping("/signup")
+  public ResponseEntity<?> signUp(@RequestBody SignupRequestDto signupRequestDto) {
+    System.out.println("signUp controller");
+    SignupResponseDto signupResponseDto = auth0Service.signUp(signupRequestDto);
+    return ResponseEntity.ok(signupResponseDto);
   }
+
   // UpdateUser
-  @PutMapping("/UpdateUser")
-  ResponseEntity<User> UpdateUser(@RequestBody User user) {
-    return ResponseEntity.ok(userServiceImpl.UpdateUser(user));
+  @PutMapping("/update")
+  public ResponseEntity<Map<String,Object>> updateUser(@RequestParam(name = "user", required = false) String user,
+      @RequestParam(name = "file", required = false) MultipartFile file)
+      throws IOException {
+    ObjectMapper objectMapper = new ObjectMapper();
+    User user1 = objectMapper.readValue(user, User.class);
+    Map<String,Object>response = new HashMap<>();
+    response.put("Message", ResponseMessagesConstants.messagelist.stream()
+        .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
+        .map(ExceptionResponse::getMassage)
+        .findFirst()
+        .orElse("Default message if not found"));
+
+    response.put("User", userServiceImpl.UpdateUser(file, user1));
+    return ResponseEntity.ok(response);
+
   }
 
   // Find All User
   @GetMapping("/FindAllUser")
 
-  ResponseEntity<List<User>> FindAllUser() {
+  public ResponseEntity<?> findAllUser() {
     List<User> userDetails = userServiceImpl.FindAllUser();
-    return ResponseEntity.ok(userDetails);
+    if (userDetails.isEmpty()) {
+      // Return a JSON response with a message for data not found
+      return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default message if not found"), HttpStatus.OK);
+    }
+
+    return new ResponseEntity<>(userDetails, HttpStatus.OK);
   }
-  
+
+  @GetMapping("/getByEmail/{email}")
+  public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    User user = userServiceImpl.getUserByEmail(email);
+
+    if (user == null) {
+      return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default message if not found"), HttpStatus.OK);
+    }
+    return ResponseEntity.ok(user);
+  }
+
 
 }

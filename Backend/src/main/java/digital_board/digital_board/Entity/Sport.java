@@ -23,10 +23,12 @@ public class Sport {
     private String sportDescription;
     private String sportStartDate;
     private String sportEndDate;
-    private String createdBy;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date sportCreatedDate;
+
+    private String createdBy;
+
 
     @PrePersist
     protected void onCreate() {
@@ -36,3 +38,4 @@ public class Sport {
    
 
 }
+
