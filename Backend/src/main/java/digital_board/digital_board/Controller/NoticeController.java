@@ -248,10 +248,11 @@ public class NoticeController {
     @RequestParam(name = "size", defaultValue = "5") int size)
     {
        Map<String,Object> response=new HashMap<>();
-       List<Notice> searchNotices = noticeServiceImpl.searchNotices(department,categories,admins,status,page,size);
+       List<Notice> searchNotices = noticeServiceImpl.filterNotices(department,categories,admins,status,page,size);
           response.put("data", searchNotices);
           response.put("count",searchNotices.size());
-        if(searchNotices.isEmpty()) {
+        if(searchNotices.isEmpty()) 
+        {
             String emptyMessage = ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)

@@ -167,7 +167,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     // searching filter
 
-    public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> admins,
+    public List<Notice> filterNotices(List<String> department, List<String> categories, List<String> admins,
             String status, int page, int size)
 
     {
@@ -178,14 +178,17 @@ public class NoticeServiceImpl implements NoticeService {
             if (status == null && admins == null) {
                 int startIndex = page * size;
                 int endIndex = Math.min(startIndex + size, findAllNotDisabled.size());
-                if (startIndex > endIndex) {
+                if (startIndex > endIndex) 
+                {
                     // Page index out of bounds
                     return Collections.emptyList();
                 }
 
                 return findAllNotDisabled.subList(startIndex, endIndex);
 
-            } else {
+            } 
+            else 
+            {
                 if (status != null && admins != null) {
 
                     List<Notice> findAllNotDisabled2 = findAllNotDisabled.stream()
@@ -202,7 +205,9 @@ public class NoticeServiceImpl implements NoticeService {
 
                     return findAllNotDisabled2.subList(startIndex, endIndex);
 
-                } else {
+                } 
+                else 
+                {
                     List<Notice> findAllNotDisabled3 = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     || (admins != null && admins.contains(notice.getCreatedBy())))
@@ -221,7 +226,9 @@ public class NoticeServiceImpl implements NoticeService {
 
             }
 
-        } else {
+        } 
+        else 
+        {
             List<Notice> findByCreatedByInAndStatusNotDisable = noticeRepository
                     .findBycategoriesInAndStatusNotDisable(categories);
 
@@ -245,7 +252,9 @@ public class NoticeServiceImpl implements NoticeService {
 
                 return finalListofData.subList(startIndex, endIndex);
 
-            } else {
+            }
+             else 
+             {
                 if (status != null && admins != null) {
 
                     List<Notice> findAllNotDisabled2 = finalListofData.stream()
@@ -282,7 +291,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
     }
-
+//    **************** end*********
 
     public Long countByCategory(String category) {
         return noticeRepository.countByCategory(category);
