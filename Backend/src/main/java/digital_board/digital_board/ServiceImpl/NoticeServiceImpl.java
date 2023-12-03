@@ -77,21 +77,21 @@ public class NoticeServiceImpl implements NoticeService {
 
 
     @Override
-    public List<Notice> getAllNoticesSorted(Pageable pageable) {
-        Page<Notice> noticesPage = noticeRepository.findAll(pageable);
-        return noticesPage.getContent();
+    public Page<Notice> getAllNoticesSorted(Pageable pageable) {
+        return noticeRepository.findAll(pageable);
     }
 
     @Override
-    public List<Notice> getNoticesByCategory(List<String> category, Pageable pageable) {
+    public Page<Notice> getNoticesByCategory(List<String> category, Pageable pageable) {
         return noticeRepository.findByCategoryIn(category, pageable);
     }
 
 
     @Override
-    public List<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable) {
+    public Page<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable) {
         if (departmentName != null && departmentName.contains("All")) {
-            return getAllNoticesSorted(pageable);
+            // return getAllNoticesSorted(pageable);
+            return null;
         } else {
             return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
         }
@@ -105,23 +105,28 @@ public class NoticeServiceImpl implements NoticeService {
         List<String> departmentName = noticeFilterDto.getDepartmentName();
         if (category != null && departmentName != null) {
             if (departmentName.contains("All")) {
-                return getNoticesByCategory(category, pageable);
+                // return getNoticesByCategory(category, pageable);
+                return null;
             } else {
                 return noticeRepository.findByCategoryInAndDepartmentNameIn(category, departmentName, pageable);
             }
         } else if (departmentName == null && category != null) {
 
-            return getNoticesByCategory(category, pageable);
+            // return getNoticesByCategory(category, pageable);
+            return null;
 
         } else if (category == null && departmentName != null) {
 
             if (departmentName.contains("All")) {
-                return getAllNoticesSorted(pageable);
+                // return getAllNoticesSorted(pageable);
+return null;
             } else {
-                return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
+                // return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
+                return null;
             }
         } else {
-            return getAllNoticesSorted(pageable);
+            // return getAllNoticesSorted(pageable);
+            return null;
         }
 
     }
@@ -134,7 +139,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 
     @Override
-    public List<Notice> searchNotices(String query, Pageable pageable) {
+    public Page<Notice> searchNotices(String query, Pageable pageable) {
         return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query, pageable);
     }
 

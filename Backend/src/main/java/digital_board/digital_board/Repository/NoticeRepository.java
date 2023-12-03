@@ -17,9 +17,9 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
       @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId")
       List<Notice> getAllNoticeByUserId(@Param("userId") String userId);
 
-      List<Notice> findByCategoryIn(List<String> category, Pageable pageable);
+      Page<Notice> findByCategoryIn(List<String> category, Pageable pageable);
 
-      List<Notice> findByDepartmentNameIn(List<String> departmentName, Pageable pageable);
+      Page<Notice> findByDepartmentNameIn(List<String> departmentName, Pageable pageable);
 
       Page<Notice> findAll(Pageable pageable);
 
@@ -47,7 +47,7 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
       @Query("SELECT n FROM Notice n WHERE n.status !='disable'")
       List<Notice> findAllNotDisabled();
 
-    List<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description, Pageable pageable);
+    Page<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description, Pageable pageable);
  
 
     Long countByCategory(String category);
