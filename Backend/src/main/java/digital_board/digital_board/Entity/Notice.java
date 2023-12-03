@@ -1,6 +1,5 @@
 package digital_board.digital_board.Entity;
 
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -29,8 +28,6 @@ public class Notice {
     private String departmentName;
     private String noticeStartDate;
     private String noticeEndDate;
-    private boolean isImportant;
-
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -38,7 +35,6 @@ public class Notice {
 
     private String createdBy;
     private String status;
-
 
     @PrePersist
     protected void onCreate() {

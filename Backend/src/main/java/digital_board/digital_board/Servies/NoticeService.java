@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-
 import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.Notice;
 
@@ -38,6 +36,9 @@ public interface NoticeService {
     public Notice updateNotice(Notice notice);
 
     // searching filter
+    
+    // public List<Notice> filterNotices(List<String> department, List<String> categories, List<String> admins,
+    // String status, int page, int size);
 
     public Long countByCategory(String category);
 
