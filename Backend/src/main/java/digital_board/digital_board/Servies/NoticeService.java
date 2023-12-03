@@ -34,8 +34,9 @@ public interface NoticeService {
     public Notice updateNotice(Notice notice);
 
     // searching filter
-    public List<Notice> filterNotices(List<String> department, List<String> categories, List<String> admins,
-    String status, int page, int size);
+    
+    // public List<Notice> filterNotices(List<String> department, List<String> categories, List<String> admins,
+    // String status, int page, int size);
 
     public Long countByCategory(String category);
 

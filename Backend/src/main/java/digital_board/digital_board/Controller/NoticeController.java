@@ -248,20 +248,30 @@ public class NoticeController {
     @RequestParam(name = "size", defaultValue = "5") int size)
     {
        Map<String,Object> response=new HashMap<>();
-       List<Notice> searchNotices = noticeServiceImpl.filterNotices(department,categories,admins,status,page,size);
-          response.put("data", searchNotices);
-          response.put("count",searchNotices.size());
-        if(searchNotices.isEmpty()) 
+    // //    List<Notice> searchNotices = noticeServiceImpl.filterNotices(department,categories,admins,status,page,size);
+    //       response.put("data", searchNotices);
+    //       response.put("count",searchNotices.size());
+
+    Map<String,Object> searchNotices= noticeServiceImpl.filterNotices(department,categories,admins,status,page,size);
+        // if(searchNotices.isEmpty()) 
+        // {
+        //     String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+        //             .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+        //             .map(ExceptionResponse::getMassage)
+        //             .findFirst()
+        //             .orElse("Default failure message if not found");
+        //     response.put("message", emptyMessage);
+        //     return ResponseEntity.status(HttpStatus.OK).body(response);
+        // }
+        if(searchNotices.containsKey("count") && (int) searchNotices.get("count") == 0)
         {
-            String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+            searchNotices.put("message",ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)
                     .findFirst()
-                    .orElse("Default failure message if not found");
-            response.put("message", emptyMessage);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+                    .orElse("Default failure message if not found"));
         }
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(searchNotices);
     }
 
     @GetMapping("/search/{query}")
