@@ -112,19 +112,17 @@ public class UserController {
 
   // UpdateUser
   @PutMapping("/update")
-  public ResponseEntity<Map<String,Object>> updateUser(@RequestParam(name = "user", required = false) String user,
-      @RequestParam(name = "file", required = false) MultipartFile file)
+  public ResponseEntity<Map<String,Object>> updateUser(@RequestBody User user)
       throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    User user1 = objectMapper.readValue(user, User.class);
+    // ObjectMapper objectMapper = new ObjectMapper();
+    // User user1 = objectMapper.readValue(user, User.class);
     Map<String,Object>response = new HashMap<>();
-    response.put("Message", ResponseMessagesConstants.messagelist.stream()
+    response.put("message", ResponseMessagesConstants.messagelist.stream()
         .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
         .map(ExceptionResponse::getMassage)
         .findFirst()
         .orElse("Default message if not found"));
-
-    response.put("User", userServiceImpl.UpdateUser(file, user1));
+    response.put("user", userServiceImpl.UpdateUser(user));
     return ResponseEntity.ok(response);
 
   }

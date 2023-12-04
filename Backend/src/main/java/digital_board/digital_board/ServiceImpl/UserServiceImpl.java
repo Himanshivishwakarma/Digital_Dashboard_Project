@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User UpdateUser(MultipartFile file, User user) throws IOException {
+    public User UpdateUser(User user) throws IOException {
         System.out.println("sultan id" + user.getId());
         userRepo.findById(user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
@@ -47,19 +47,21 @@ public class UserServiceImpl implements UserService {
                         .map(ExceptionResponse::getMassage)
                         .findFirst()
                         .orElse("Default message if not found")));
-
         try {
-            if (file != null && !file.isEmpty()) {
-                Map r = this.cloudinary.uploader().upload(file.getBytes(),ObjectUtils.asMap("folder", "/digital_board"));
+            if (!user.getImage().startsWith("https://res.cloudinary.com")) {
 
-                String secureUrl = (String) r.get("secure_url");
+                if (user.getImage() != null && !user.getImage().isEmpty()) {
+                    Map r = this.cloudinary.uploader().upload(user.getImage(),
+                            ObjectUtils.asMap("folder", "/digital_board"));
+                    String secureUrl = (String) r.get("secure_url");
 
-                user.setImage(secureUrl);
+                    user.setImage(secureUrl);
+                }
+
             }
-
             return userRepo.save(user);
         } catch (Exception e) {
-               throw new ResourceNotFoundException("Image should be unber 10MB");
+            throw new ResourceNotFoundException("Image should be unber 10MB");
         }
 
     }
