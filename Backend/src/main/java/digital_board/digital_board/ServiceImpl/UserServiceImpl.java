@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
                         .findFirst()
                         .orElse("Default message if not found")));
         try {
-            if (!user.getImage().startsWith("https://res.cloudinary.com")) {
+            if (user.getImage() == null || !user.getImage().startsWith("https://res.cloudinary.com")) {
 
                 if (user.getImage() != null && !user.getImage().isEmpty()) {
                     Map r = this.cloudinary.uploader().upload(user.getImage(),
