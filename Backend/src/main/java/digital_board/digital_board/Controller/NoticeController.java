@@ -250,7 +250,7 @@ public class NoticeController {
     }
 
     // serching filter
-    @GetMapping("/getAll/byfilters")
+    @GetMapping("/getAll/byfilter")
     public ResponseEntity<Map<String, Object>> searchNotices(@RequestParam(required = false)List<String> department,
     @RequestParam(required = false) List<String> categories,
     @RequestParam(required = false) List<String> admins,

@@ -135,7 +135,10 @@ return null;
 
     @Override
     public Page<Notice> searchNotices(String query, Pageable pageable) {
-        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query, pageable);
+        List<String> status=new ArrayList<>();
+        status.add("enable");
+         status.add("important");
+        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query,pageable);
     }
 
     @Override
