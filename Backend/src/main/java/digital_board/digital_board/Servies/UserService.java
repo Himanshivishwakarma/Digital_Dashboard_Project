@@ -14,7 +14,7 @@ public interface UserService {
     User CreateUser(User user);
 
     // Update User
-    User UpdateUser(MultipartFile imageFile,User user) throws IOException;
+    User UpdateUser(User user) throws IOException;
     
     // Find All User
     List<User> FindAllUser();
