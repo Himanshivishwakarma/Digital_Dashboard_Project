@@ -68,16 +68,28 @@ public class NoticeController {
         Map<String, Object> response = new HashMap<>();
         try {
             Notice updatedNotice = this.noticeServiceImpl.updateNotice(notice);
+           if(updatedNotice.getStatus().startsWith("disable")) 
+           {
+              String successMessage = ResponseMessagesConstants.messagelist.stream()
+                       .filter(exceptionResponse -> "NOTICE_DELETE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+                       .map(ExceptionResponse::getMassage)
+                       .findFirst()
+                       .orElse("Default success message if not found");
+   
+               response.put("message", successMessage);
+            //    response.put("data", updatedNotice);
+           }
+           else{
 
-            String successMessage = ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "NOTICE_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
-                    .map(ExceptionResponse::getMassage)
-                    .findFirst()
-                    .orElse("Default success message if not found");
-
-            response.put("message", successMessage);
-            response.put("data", updatedNotice);
-
+               String successMessage = ResponseMessagesConstants.messagelist.stream()
+                       .filter(exceptionResponse -> "NOTICE_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
+                       .map(ExceptionResponse::getMassage)
+                       .findFirst()
+                       .orElse("Default success message if not found");
+   
+               response.put("message", successMessage);
+               response.put("data", updatedNotice);
+           }
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             String failureMessage = ResponseMessagesConstants.messagelist.stream()
@@ -248,21 +260,7 @@ public class NoticeController {
     @RequestParam(name = "size", defaultValue = "5") int size)
     {
        Map<String,Object> response=new HashMap<>();
-    // //    List<Notice> searchNotices = noticeServiceImpl.filterNotices(department,categories,admins,status,page,size);
-    //       response.put("data", searchNotices);
-    //       response.put("count",searchNotices.size());
-
-    Map<String,Object> searchNotices= noticeServiceImpl.filterNotices(department,categories,admins,status,page,size);
-        // if(searchNotices.isEmpty()) 
-        // {
-        //     String emptyMessage = ResponseMessagesConstants.messagelist.stream()
-        //             .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-        //             .map(ExceptionResponse::getMassage)
-        //             .findFirst()
-        //             .orElse("Default failure message if not found");
-        //     response.put("message", emptyMessage);
-        //     return ResponseEntity.status(HttpStatus.OK).body(response);
-        // }
+      Map<String,Object> searchNotices= noticeServiceImpl.filterNotices(department,categories,admins,status,page,size);
         if(searchNotices.containsKey("count") && (int) searchNotices.get("count") == 0)
         {
             searchNotices.put("message",ResponseMessagesConstants.messagelist.stream()
@@ -286,17 +284,14 @@ public class NoticeController {
         response.put("data", notice);
 
         if (notice.isEmpty()) {
-            // Return a JSON response with a message for data not found
             String emptyMessage = ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)
                     .findFirst()
                     .orElse("Default failure message if not found");
-
             response.put("message", emptyMessage);
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
-        // Return the list of notices if data is found
         return ResponseEntity.ok(response);
 
     }

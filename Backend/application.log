@@ -2116,3 +2116,10 @@ could not find expected ':'
 2023-12-02 11:46:38,573 WARN o.h.d.Dialect [main] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
 2023-12-02 11:46:42,611 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2023-12-02 11:46:44,135 INFO d.d.S.NoticeServiceImplTest [main] Started NoticeServiceImplTest in 9.686 seconds (process running for 11.653)
+2023-12-04 16:21:29,624 INFO d.d.S.NoticeServiceImplTest [main] Starting NoticeServiceImplTest using Java 17.0.9 with PID 22620 (started by HP in E:\Code_Olympic\Digital_Dashboard_Project\Backend)
+2023-12-04 16:21:32,884 INFO d.d.S.NoticeServiceImplTest [main] No active profile set, falling back to 1 default profile: "default"
+2023-12-04 16:21:45,173 WARN o.h.d.Dialect [main] HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2023-12-04 16:22:01,338 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-04 16:22:06,475 INFO d.d.S.NoticeServiceImplTest [main] Started NoticeServiceImplTest in 38.593 seconds (process running for 53.467)
+2023-12-04 22:16:53,826 INFO d.d.DigitalBoardApplicationTests [main] Starting DigitalBoardApplicationTests using Java 17.0.9 with PID 48568 (started by HP in E:\Code_Olympic\Digital_Dashboard_Project\Backend)
+2023-12-04 22:16:53,866 INFO d.d.DigitalBoardApplicationTests [main] No active profile set, falling back to 1 default profile: "default"
