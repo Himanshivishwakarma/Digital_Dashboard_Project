@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,7 +50,8 @@ public class UserServiceImpl implements UserService {
                         .findFirst()
                         .orElse("Default message if not found")));
         try {
-            if (!user.getImage().startsWith("https://res.cloudinary.com")) {
+            if(user.getImage()!=null){
+                if (!user.getImage().startsWith("https://res.cloudinary.com") ) {
 
                 if (user.getImage() != null && !user.getImage().isEmpty()) {
                     Map r = this.cloudinary.uploader().upload(user.getImage(),
@@ -59,6 +62,7 @@ public class UserServiceImpl implements UserService {
                 }
 
             }
+            }
             return userRepo.save(user);
         } catch (Exception e) {
             throw new ResourceNotFoundException("Image should be unber 10MB");
@@ -67,8 +71,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> FindAllUser() {
-        return userRepo.findAllByRoleAndStatus("Admin", "enable");
+    public Page<User> FindAllUser(Pageable pageable) {
+        return userRepo.findAllByRoleAndStatus("Admin", "enable",pageable);
 
     }
 
