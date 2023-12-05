@@ -119,7 +119,7 @@ public class UserController {
       SignupResponseDto signupResponseDto = auth0Service.signUp(signupRequestDto);
 
       String successMessage = ResponseMessagesConstants.messagelist.stream()
-          .filter(exceptionResponse -> "NOTICE_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+          .filter(exceptionResponse -> "USER_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
           .map(ExceptionResponse::getMassage)
           .findFirst()
           .orElse("Default success message if not found");
@@ -134,7 +134,7 @@ public class UserController {
       return ResponseEntity.ok(response);
     } catch (Exception e) {
       String failureMessage = ResponseMessagesConstants.messagelist.stream()
-          .filter(exceptionResponse -> "NOTICE_CREATE_FAILURE".equals(exceptionResponse.getExceptonName()))
+          .filter(exceptionResponse -> "USER_CREATE_FAILURE".equals(exceptionResponse.getExceptonName()))
           .map(ExceptionResponse::getMassage)
           .findFirst()
           .orElse("Default failure message if not found");

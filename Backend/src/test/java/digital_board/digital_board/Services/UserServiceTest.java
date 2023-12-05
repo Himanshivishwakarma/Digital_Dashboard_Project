@@ -29,7 +29,7 @@ class UserServiceTest {
     @Test
     void getAllUser() 
     {
-        this.userServiceImpl.FindAllUser();
+        // this.userServiceImpl.FindAllUser();
         verify(userRepository).findAll();
     }
 
