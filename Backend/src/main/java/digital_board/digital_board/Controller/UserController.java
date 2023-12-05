@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,6 +34,7 @@ import digital_board.digital_board.Dto.AuthResponse;
 import digital_board.digital_board.Dto.SignupRequestDto;
 import digital_board.digital_board.Dto.SignupResponseDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
+import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Entity.User;
 import digital_board.digital_board.Repository.UserRepository;
 import digital_board.digital_board.ServiceImpl.EmailServiceImpl;
@@ -74,10 +79,11 @@ public class UserController {
 
   @GetMapping("/public")
   public String publicTest() {
+    LOGGER.info("Start User Controller : public method");
 
     MDC.put("User", "mashid@gmail.com");
     MDC.put("path", "/public");
-    LOGGER.info("1*************getWelcomeMsg action called..");
+    LOGGER.info("WelcomeMsg action called..");
     // MDC.remove("User");
     // MDC.remove("path");
 
@@ -85,6 +91,8 @@ public class UserController {
     // "Sahil");
 
     MDC.clear();
+    LOGGER.info("End User Controller : public method");
+
     return "working";
   }
 
@@ -104,10 +112,38 @@ public class UserController {
   // }
 
   @PostMapping("/signup")
-  public ResponseEntity<?> signUp(@RequestBody SignupRequestDto signupRequestDto) {
-    System.out.println("signUp controller");
-    SignupResponseDto signupResponseDto = auth0Service.signUp(signupRequestDto);
-    return ResponseEntity.ok(signupResponseDto);
+  public ResponseEntity<Map<String, Object>> signUp(@RequestBody SignupRequestDto signupRequestDto) {
+    LOGGER.info("Start User Controller : signUp method");
+    Map<String, Object> response = new HashMap<>();
+    try {
+      SignupResponseDto signupResponseDto = auth0Service.signUp(signupRequestDto);
+
+      String successMessage = ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "NOTICE_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default success message if not found");
+
+      response.put("message", successMessage);
+      response.put("data", signupResponseDto);
+      MDC.put("User", signupRequestDto.getCreatedBy());
+      MDC.put("path", "/user/signup");
+      LOGGER.info("User Controller : signUp method");
+      MDC.clear();
+      LOGGER.info("End User Controller : signUp method");
+      return ResponseEntity.ok(response);
+    } catch (Exception e) {
+      String failureMessage = ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "NOTICE_CREATE_FAILURE".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default failure message if not found");
+
+      response.put("message", failureMessage);
+      LOGGER.info("End User Controller : signUp method");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
   }
 
   // UpdateUser
@@ -143,18 +179,30 @@ public class UserController {
   // Find All User
   @GetMapping("/FindAllUser")
 
-  public ResponseEntity<?> findAllUser() {
-    List<User> userDetails = userServiceImpl.FindAllUser();
+  public ResponseEntity<Map<String, Object>> findAllUser(
+      @RequestParam(required = false, defaultValue = "userName,asc") String sort,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size) {
+    Map<String, Object> response = new HashMap<>();
+    Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+
+    Page<User> userDetails = userServiceImpl.FindAllUser(pageable);
+
+    response.put("count", userDetails.getTotalElements());
+    response.put("data", userDetails.getContent());
     if (userDetails.isEmpty()) {
       // Return a JSON response with a message for data not found
-      return new ResponseEntity<>(ResponseMessagesConstants.messagelist.stream()
+      String emptyMessage = ResponseMessagesConstants.messagelist.stream()
           .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
           .map(ExceptionResponse::getMassage)
           .findFirst()
-          .orElse("Default message if not found"), HttpStatus.OK);
-    }
+          .orElse("Default failure message if not found");
 
-    return new ResponseEntity<>(userDetails, HttpStatus.OK);
+      response.put("message", emptyMessage);
+      return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    // Return the list of notices if data is found
+    return ResponseEntity.ok(response);
   }
 
   @GetMapping("/getByEmail/{email}")
@@ -169,6 +217,18 @@ public class UserController {
           .orElse("Default message if not found"), HttpStatus.OK);
     }
     return ResponseEntity.ok(user);
+  }
+
+  private Sort parseSortString(String sort) {
+    String[] sortParams = sort.split(",");
+    if (sortParams.length == 2) {
+      Sort.Direction direction = sortParams[1].equalsIgnoreCase("desc") ? Sort.Direction.DESC
+          : Sort.Direction.ASC;
+      return Sort.by(new Sort.Order(direction, sortParams[0]));
+    } else {
+      return Sort.by(Sort.Order.asc("userName")); // Default sorting by noticeCreatedDate in ascending
+                                                  // order
+    }
   }
 
 }
