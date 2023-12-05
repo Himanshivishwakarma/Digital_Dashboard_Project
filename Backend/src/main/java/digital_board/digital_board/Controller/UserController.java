@@ -112,18 +112,31 @@ public class UserController {
 
   // UpdateUser
   @PutMapping("/update")
-  public ResponseEntity<Map<String,Object>> updateUser(@RequestBody User user)
+  public ResponseEntity<Map<String, Object>> updateUser(@RequestBody User user)
       throws IOException {
-    // ObjectMapper objectMapper = new ObjectMapper();
-    // User user1 = objectMapper.readValue(user, User.class);
-    Map<String,Object>response = new HashMap<>();
-    response.put("message", ResponseMessagesConstants.messagelist.stream()
-        .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
-        .map(ExceptionResponse::getMassage)
-        .findFirst()
-        .orElse("Default message if not found"));
-    response.put("user", userServiceImpl.UpdateUser(user));
-    return ResponseEntity.ok(response);
+    if (user.getStatus().startsWith("disable")) {
+
+      Map<String, Object> response = new HashMap<>();
+      String successMessage = ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "USER_DELETE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default success message if not found");
+
+      response.put("message", successMessage);
+
+      return ResponseEntity.ok(response);
+    } else {
+
+      Map<String, Object> response = new HashMap<>();
+      response.put("message", ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default message if not found"));
+      response.put("user", userServiceImpl.UpdateUser(user));
+      return ResponseEntity.ok(response);
+    }
 
   }
 
@@ -157,6 +170,5 @@ public class UserController {
     }
     return ResponseEntity.ok(user);
   }
-
 
 }
