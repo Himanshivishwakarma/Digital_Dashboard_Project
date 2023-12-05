@@ -3,6 +3,7 @@ package digital_board.digital_board.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     
     List<User> findByStatusIgnoreCase(String status);
 
-    List<User> findAllByRoleAndStatus(String role, String status);
+    Page<User> findAllByRoleAndStatus(String role, String status,Pageable pageable);
 }

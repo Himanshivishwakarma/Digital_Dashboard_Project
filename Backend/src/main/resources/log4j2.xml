@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="trace">
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level - %msg%n"/>
-        </Console>
-   
+      <Console name="Console">
+      <PatternLayout pattern="%C{1.} %m %level MDC%X%n"/>
+    </Console>
        <File name="File" fileName="application.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
@@ -20,9 +19,15 @@
             <Column name="MESSAGE" pattern="%message" isClob="true" />
             <Column name="EXCEPTION_INFO" pattern="%ex{full}" isClob="true" />
        <Filters>
-            <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL" />
+      
+            <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL" />
+             <!-- <Column name="CLASS_INFO" pattern="%logger" /> -->
+               <RegexFilter regex="Start.*" onMatch="DENY" onMismatch="NEUTRAL" />
+               <RegexFilter regex="End.*" onMatch="DENY" onMismatch="NEUTRAL" /> 
+               <RegexFilter regex="Start User Controller.*" onMatch="DENY" onMismatch="NEUTRAL" />
             <RegexFilter regex="Starting DigitalBoardApplication.*" onMatch="DENY" onMismatch="NEUTRAL" />
             <RegexFilter regex="Started DigitalBoardApplication.*" onMatch="DENY" onMismatch="NEUTRAL" />
+            
        <RegexFilter regex="No active profile set.*" onMatch="DENY" onMismatch="NEUTRAL" />
 </Filters> 
 
@@ -30,13 +35,21 @@
         </JDBC>
     </Appenders> 
     <Loggers>
-        <Logger name="digital_board.digital_board" level="info" additivity="true">
+        <!-- <Logger name="digital_board.digital_board" level="info" additivity="true">
             <AppenderRef ref="Console" />
         </Logger>
-        <Root level="warn">
+        <Root level="info">
             <AppenderRef ref="File"/>
             <AppenderRef ref="dbLogsStore" />
-        </Root>
+        </Root> -->
+           <Logger name="digital_board.digital_board" level="info" additivity="false">
+      <AppenderRef ref="dbLogsStore" />
+    </Logger>
+ 
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="File"/>
+    </Root>
     </Loggers>
 </Configuration>
 
