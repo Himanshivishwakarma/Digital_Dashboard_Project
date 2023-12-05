@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="trace">
     <Appenders>
-      <Console name="Console">
-      <PatternLayout pattern="%C{1.} %m %level MDC%X%n"/>
-    </Console>
+     <Console name="ConsoleOutput" target="SYSTEM_OUT"> 
+
+            <PatternLayout
+
+                pattern="%style{%d{ISO8601}}{blue} %highlight{%-5level} [%style{%t}{bright,yellow}] : %msg%n%throwable"
+
+                disableAnsi="false" /> 
+
+        </Console> 
        <File name="File" fileName="application.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
@@ -44,10 +50,11 @@
         </Root> -->
            <Logger name="digital_board.digital_board" level="info" additivity="false">
       <AppenderRef ref="dbLogsStore" />
+           <appender-ref ref="ConsoleOutput" /> 
     </Logger>
  
-    <Root level="info">
-      <AppenderRef ref="Console"/>
+    <Root level="info" additivity="false">
+      <AppenderRef ref="ConsoleOutput"/>
       <AppenderRef ref="File"/>
     </Root>
     </Loggers>
