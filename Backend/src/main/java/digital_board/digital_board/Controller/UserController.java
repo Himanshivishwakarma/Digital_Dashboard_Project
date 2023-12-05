@@ -159,6 +159,7 @@ public class UserController {
         .findFirst()
         .orElse("Default message if not found"));
     response.put("user", userServiceImpl.UpdateUser(user));
+    response.put("user", userServiceImpl.UpdateUser(user));
     return ResponseEntity.ok(response);
 
   }
