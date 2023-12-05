@@ -12,10 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExceptionResponse
-{
+public class ExceptionResponse {
     @Id
-    private String exceptionId=UUID.randomUUID().toString();
+    private int exceptionId;
     private String ExceptonName;
     private String massage;
 }
