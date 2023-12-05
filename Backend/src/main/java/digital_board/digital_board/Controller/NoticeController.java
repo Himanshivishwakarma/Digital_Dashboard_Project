@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,16 +34,21 @@ import digital_board.digital_board.constants.ResponseMessagesConstants;
 @CrossOrigin("*")
 @RequestMapping("/api/v1/notice")
 public class NoticeController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(NoticeController.class);
 
     @Autowired
     private NoticeServiceImpl noticeServiceImpl;
 
     @PostMapping("/add")
     public ResponseEntity<Map<String, Object>> createNoticeByUser(@RequestBody Notice notice) {
+        LOGGER.info("Start Notic Controller : createNoticeByUser method");
         Map<String, Object> response = new HashMap<>();
         try {
             Notice savedNotice = this.noticeServiceImpl.createNoticeByUser(notice);
-
+            MDC.put("User", "mashid@gmail.com");
+            MDC.put("path", "/public");
+            LOGGER.info("createNoticeByUser method : notice created");
+            MDC.clear();
             String successMessage = ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "NOTICE_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)
@@ -50,6 +58,7 @@ public class NoticeController {
             response.put("message", successMessage);
             response.put("data", savedNotice);
 
+            LOGGER.info("Start Notic Controller : createNoticeByUser method");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             String failureMessage = ResponseMessagesConstants.messagelist.stream()
@@ -59,6 +68,7 @@ public class NoticeController {
                     .orElse("Default failure message if not found");
 
             response.put("message", failureMessage);
+            LOGGER.info("Start Notic Controller : createNoticeByUser method");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -68,28 +78,28 @@ public class NoticeController {
         Map<String, Object> response = new HashMap<>();
         try {
             Notice updatedNotice = this.noticeServiceImpl.updateNotice(notice);
-           if(updatedNotice.getStatus().startsWith("disable")) 
-           {
-              String successMessage = ResponseMessagesConstants.messagelist.stream()
-                       .filter(exceptionResponse -> "NOTICE_DELETE_SUCCESS".equals(exceptionResponse.getExceptonName()))
-                       .map(ExceptionResponse::getMassage)
-                       .findFirst()
-                       .orElse("Default success message if not found");
-   
-               response.put("message", successMessage);
-            //    response.put("data", updatedNotice);
-           }
-           else{
+            if (updatedNotice.getStatus().startsWith("disable")) {
+                String successMessage = ResponseMessagesConstants.messagelist.stream()
+                        .filter(exceptionResponse -> "NOTICE_DELETE_SUCCESS"
+                                .equals(exceptionResponse.getExceptonName()))
+                        .map(ExceptionResponse::getMassage)
+                        .findFirst()
+                        .orElse("Default success message if not found");
 
-               String successMessage = ResponseMessagesConstants.messagelist.stream()
-                       .filter(exceptionResponse -> "NOTICE_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
-                       .map(ExceptionResponse::getMassage)
-                       .findFirst()
-                       .orElse("Default success message if not found");
-   
-               response.put("message", successMessage);
-               response.put("data", updatedNotice);
-           }
+                response.put("message", successMessage);
+                // response.put("data", updatedNotice);
+            } else {
+
+                String successMessage = ResponseMessagesConstants.messagelist.stream()
+                        .filter(exceptionResponse -> "NOTICE_UPDATED_SUCCESS"
+                                .equals(exceptionResponse.getExceptonName()))
+                        .map(ExceptionResponse::getMassage)
+                        .findFirst()
+                        .orElse("Default success message if not found");
+
+                response.put("message", successMessage);
+                response.put("data", updatedNotice);
+            }
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             String failureMessage = ResponseMessagesConstants.messagelist.stream()
@@ -252,18 +262,17 @@ public class NoticeController {
 
     // serching filter
     @GetMapping("/getAll/byfilters")
-    public ResponseEntity<Map<String, Object>> searchNotices(@RequestParam(required = false)List<String> department,
-    @RequestParam(required = false) List<String> categories,
-    @RequestParam(required = false) List<String> admins,
-    @RequestParam(required = false) String status,
-    @RequestParam(name = "page", defaultValue = "0") int page,
-    @RequestParam(name = "size", defaultValue = "5") int size)
-    {
-       Map<String,Object> response=new HashMap<>();
-      Map<String,Object> searchNotices= noticeServiceImpl.filterNotices(department,categories,admins,status,page,size);
-        if(searchNotices.containsKey("count") && (int) searchNotices.get("count") == 0)
-        {
-            searchNotices.put("message",ResponseMessagesConstants.messagelist.stream()
+    public ResponseEntity<Map<String, Object>> searchNotices(@RequestParam(required = false) List<String> department,
+            @RequestParam(required = false) List<String> categories,
+            @RequestParam(required = false) List<String> admins,
+            @RequestParam(required = false) String status,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "5") int size) {
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> searchNotices = noticeServiceImpl.filterNotices(department, categories, admins, status,
+                page, size);
+        if (searchNotices.containsKey("count") && (int) searchNotices.get("count") == 0) {
+            searchNotices.put("message", ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)
                     .findFirst()

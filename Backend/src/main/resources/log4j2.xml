@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="trace">
     <Appenders>
-     <Console name="ConsoleOutput" target="SYSTEM_OUT"> 
+     <!-- <Console name="ConsoleOutput" target="SYSTEM_OUT"> 
 
             <PatternLayout
 
@@ -9,7 +9,12 @@
 
                 disableAnsi="false" /> 
 
-        </Console> 
+        </Console>  -->
+        <Console name="ConsoleOutput" target="SYSTEM_OUT">
+    <PatternLayout
+        pattern="%style{%d{ISO8601}}{blue} %highlight{%-5level} [%style{%t}{bright,yellow}] : %style{%msg}{cyan}%n%throwable"
+        disableAnsi="false" />
+</Console>
        <File name="File" fileName="application.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
