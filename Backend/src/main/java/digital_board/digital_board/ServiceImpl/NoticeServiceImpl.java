@@ -3,8 +3,9 @@ package digital_board.digital_board.ServiceImpl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,7 +69,6 @@ public class NoticeServiceImpl implements NoticeService {
         return this.noticeRepository.getAllNoticeByUserId(email);
     }
 
-
     @Override
     public List<Notice> getAllNotice() {
         List<Notice> notice = this.noticeRepository.findAll();
@@ -76,20 +76,20 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> getAllNoticesSorted(Pageable pageable) {
-        Page<Notice> noticesPage = noticeRepository.findAll(pageable);
-        return noticesPage.getContent();
+    public Page<Notice> getAllNoticesSorted(Pageable pageable) {
+        return noticeRepository.findAll(pageable);
     }
 
     @Override
-    public List<Notice> getNoticesByCategory(List<String> category, Pageable pageable) {
+    public Page<Notice> getNoticesByCategory(List<String> category, Pageable pageable) {
         return noticeRepository.findByCategoryIn(category, pageable);
     }
 
     @Override
-    public List<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable) {
+    public Page<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable) {
         if (departmentName != null && departmentName.contains("All")) {
-            return getAllNoticesSorted(pageable);
+            // return getAllNoticesSorted(pageable);
+            return null;
         } else {
             return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
         }
@@ -102,27 +102,31 @@ public class NoticeServiceImpl implements NoticeService {
         List<String> departmentName = noticeFilterDto.getDepartmentName();
         if (category != null && departmentName != null) {
             if (departmentName.contains("All")) {
-                return getNoticesByCategory(category, pageable);
+                // return getNoticesByCategory(category, pageable);
+                return null;
             } else {
                 return noticeRepository.findByCategoryInAndDepartmentNameIn(category, departmentName, pageable);
             }
         } else if (departmentName == null && category != null) {
 
-            return getNoticesByCategory(category, pageable);
+            // return getNoticesByCategory(category, pageable);
+            return null;
 
         } else if (category == null && departmentName != null) {
 
             if (departmentName.contains("All")) {
-                return getAllNoticesSorted(pageable);
+                // return getAllNoticesSorted(pageable);
+return null;
             } else {
-                return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
+                // return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
+                return null;
             }
         } else {
-            return getAllNoticesSorted(pageable);
+            // return getAllNoticesSorted(pageable);
+            return null;
         }
 
     }
-
 
     @Override
     public Long getTotalNoticeCount() {
@@ -130,8 +134,11 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> searchNotices(String query, Pageable pageable) {
-        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query, pageable);
+    public Page<Notice> searchNotices(String query, Pageable pageable) {
+        List<String> status=new ArrayList<>();
+        status.add("enable");
+         status.add("important");
+        return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query,pageable);
     }
 
     @Override
@@ -167,11 +174,9 @@ public class NoticeServiceImpl implements NoticeService {
 
     // searching filter
 
-    public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> admins,
+    public Map<String, Object> filterNotices(List<String> department, List<String> categories, List<String> admins,
             String status, int page, int size)
-
     {
-
         if (department == null && categories == null) {
             List<Notice> findAllNotDisabled = noticeRepository.findAllNotDisabled();
 
@@ -179,11 +184,15 @@ public class NoticeServiceImpl implements NoticeService {
                 int startIndex = page * size;
                 int endIndex = Math.min(startIndex + size, findAllNotDisabled.size());
                 if (startIndex > endIndex) {
-                    // Page index out of bounds
-                    return Collections.emptyList();
-                }
-
-                return findAllNotDisabled.subList(startIndex, endIndex);
+                    Map<String, Object> response = new HashMap<>();
+                    response.put("data", Collections.emptyList());
+                    response.put("count", findAllNotDisabled.size());
+                    return response;
+                };
+                Map<String, Object> response = new HashMap<>();
+                response.put("data", findAllNotDisabled.subList(startIndex, endIndex));
+                response.put("count", findAllNotDisabled.size());
+                return response;
 
             } else {
                 if (status != null && admins != null) {
@@ -192,17 +201,23 @@ public class NoticeServiceImpl implements NoticeService {
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     && (admins != null && admins.contains(notice.getCreatedBy())))
                             .collect(Collectors.toList());
-
                     int startIndex = page * size;
                     int endIndex = Math.min(startIndex + size, findAllNotDisabled2.size());
-                    if (startIndex > endIndex) {
-                        // Page index out of bounds
-                        return Collections.emptyList();
+                    if (startIndex > endIndex) 
+                    {
+                        Map<String, Object> response = new HashMap<>();
+                        response.put("data", Collections.emptyList());
+                        response.put("count",findAllNotDisabled2.size());
+                        return response;
                     }
+                     Map<String, Object> response = new HashMap<>();
+                     response.put("data",findAllNotDisabled2.subList(startIndex, endIndex));
+                     response.put("count",findAllNotDisabled2.size());
+                     return response;
 
-                    return findAllNotDisabled2.subList(startIndex, endIndex);
-
-                } else {
+                } 
+                else
+                {
                     List<Notice> findAllNotDisabled3 = findAllNotDisabled.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     || (admins != null && admins.contains(notice.getCreatedBy())))
@@ -211,43 +226,45 @@ public class NoticeServiceImpl implements NoticeService {
                     int startIndex = page * size;
                     int endIndex = Math.min(startIndex + size, findAllNotDisabled3.size());
                     if (startIndex > endIndex) {
-                        // Page index out of bounds
-                        return Collections.emptyList();
+                         Map<String, Object> response = new HashMap<>();
+                        response.put("data", Collections.emptyList());
+                        response.put("count",findAllNotDisabled3.size());
+                        return response;
                     }
-
-                    return findAllNotDisabled3.subList(startIndex, endIndex);
-
+                      Map<String, Object> response = new HashMap<>();
+                        response.put("data",findAllNotDisabled3.subList(startIndex, endIndex));
+                        response.put("count",findAllNotDisabled3.size());
+                        return response;
                 }
-
             }
-
-        } else {
+        } 
+        else 
+        {
             List<Notice> findByCreatedByInAndStatusNotDisable = noticeRepository
                     .findBycategoriesInAndStatusNotDisable(categories);
 
             List<Notice> findByDepartmentAndStatusNotDisabled = noticeRepository
                     .findByDepartmentAndStatusNotDisabled(department);
-
             List<Notice> finalListofData = new ArrayList<>();
-
             finalListofData.addAll(findByCreatedByInAndStatusNotDisable);
-
             finalListofData.addAll(findByDepartmentAndStatusNotDisabled);
-
             if (status == null && admins == null) {
-                // return finalListofData;
                 int startIndex = page * size;
                 int endIndex = Math.min(startIndex + size, finalListofData.size());
                 if (startIndex > endIndex) {
-                    // Page index out of bounds
-                    return Collections.emptyList();
+                      Map<String, Object> response = new HashMap<>();
+                        response.put("data", Collections.emptyList());
+                         response.put("count",finalListofData.size());
+                        return response;   
                 }
-
-                return finalListofData.subList(startIndex, endIndex);
-
-            } else {
+                 Map<String, Object> response = new HashMap<>();
+                        response.put("data", finalListofData.subList(startIndex, endIndex));
+                        response.put("count",finalListofData.size());
+                        return response;
+            }
+             else
+              {
                 if (status != null && admins != null) {
-
                     List<Notice> findAllNotDisabled2 = finalListofData.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     && (admins != null && admins.contains(notice.getCreatedBy())))
@@ -255,13 +272,19 @@ public class NoticeServiceImpl implements NoticeService {
                     int startIndex = page * size;
                     int endIndex = Math.min(startIndex + size, findAllNotDisabled2.size());
                     if (startIndex > endIndex) {
-                        // Page index out of bounds
-                        return Collections.emptyList();
+                           Map<String, Object> response = new HashMap<>();
+                         response.put("data", Collections.emptyList());
+                         response.put("count",findAllNotDisabled2.size());
+                         return response;   
                     }
+                       Map<String, Object> response = new HashMap<>();
+                        response.put("data",findAllNotDisabled2.subList(startIndex, endIndex) );
+                        response.put("count",findAllNotDisabled2.size());
+                        return response;
 
-                    return findAllNotDisabled2.subList(startIndex, endIndex);
-
-                } else {
+                } 
+                else
+                 {
                     List<Notice> findAllNotDisabled3 = finalListofData.stream()
                             .filter(notice -> (status != null && status.equals(notice.getStatus()))
                                     || (admins != null && admins.contains(notice.getCreatedBy())))
@@ -269,21 +292,19 @@ public class NoticeServiceImpl implements NoticeService {
                     int startIndex = page * size;
                     int endIndex = Math.min(startIndex + size, findAllNotDisabled3.size());
                     if (startIndex > endIndex) {
-                        // Page index out of bounds
-                        return Collections.emptyList();
+                         Map<String, Object> response = new HashMap<>();
+                         response.put("data", Collections.emptyList());
+                         response.put("count",findAllNotDisabled3.size());
+                         return response;
                     }
-
-                    return findAllNotDisabled3.subList(startIndex, endIndex);
-
+                       Map<String, Object> response = new HashMap<>();
+                         response.put("data",findAllNotDisabled3.subList(startIndex, endIndex));
+                         response.put("count",findAllNotDisabled3.size());
+                         return response;
                 }
-
             }
-
         }
-
     }
-
-
     public Long countByCategory(String category) {
         return noticeRepository.countByCategory(category);
     }

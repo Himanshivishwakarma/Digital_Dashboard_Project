@@ -13,9 +13,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/digital_board
+    url: jdbc:mysql://localhost:3307/digital_board
     username: root
-    # password: root
+    password: root
 
 
 

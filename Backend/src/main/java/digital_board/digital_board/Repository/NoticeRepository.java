@@ -17,10 +17,14 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
       @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId")
       List<Notice> getAllNoticeByUserId(@Param("userId") String userId);
 
-      List<Notice> findByCategoryIn(List<String> category, Pageable pageable);
+      @Query("SELECT n FROM Notice n WHERE n.category IN :category AND n.status <> 'disable'")
+      Page<Notice> findByCategoryIn(List<String> category, Pageable pageable);
 
-      List<Notice> findByDepartmentNameIn(List<String> departmentName, Pageable pageable);
+      // Page<Notice> findByDepartmentNameIn(List<String> departmentName, Pageable pageable);
+      @Query("SELECT n FROM Notice n WHERE n.departmentName IN :departmentName AND n.status <> 'disable'")
+      Page<Notice> findByDepartmentNameIn(List<String> departmentName, Pageable pageable);
 
+      @Query("SELECT n FROM Notice n WHERE n.status <> 'disable'")
       Page<Notice> findAll(Pageable pageable);
 
       List<Notice> findByCategoryInAndDepartmentNameIn(List<String> categories, List<String> departmentNames,
@@ -47,8 +51,13 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
       @Query("SELECT n FROM Notice n WHERE n.status !='disable'")
       List<Notice> findAllNotDisabled();
 
-    List<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description, Pageable pageable);
- 
+    // Page<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description, Pageable pageable);
+    @Query("SELECT n FROM Notice n WHERE " +
+           "(LOWER(n.noticeTitle) LIKE LOWER(CONCAT('%', :title, '%')) OR " +
+           "LOWER(n.description) LIKE LOWER(CONCAT('%', :description, '%'))) " +
+           "AND n.status <> 'disable'")
+    Page<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+            String title, String description, Pageable pageable);
 
     Long countByCategory(String category);
 

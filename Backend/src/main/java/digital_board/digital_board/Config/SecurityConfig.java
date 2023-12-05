@@ -24,9 +24,10 @@ public class SecurityConfig {
         "/v2/api-docs",
         "/swagger-resources/**",
         "/swagger-ui/**",
-        "/webjars/**",
-        "/api/v1/notice/byCategory/**",
-      "/api/v1/notice/byDepartment/**"};
+        "/webjars/**"};
+    //     ,
+    //     "/api/v1/notice/byCategory/**",
+    //   "/api/v1/notice/byDepartment/**"
       @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withJwkSetUri("https://dev-2v6nqrql62h5dwnv.us.auth0.com/.well-known/jwks.json").build();

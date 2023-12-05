@@ -1,6 +1,8 @@
 package digital_board.digital_board.Servies;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.Notice;
@@ -15,11 +17,11 @@ public interface NoticeService {
 
     public List<Notice> getAllNotice();
 
-    public List<Notice> getNoticesByCategory(List<String> category, Pageable pageable);
+    public Page<Notice> getNoticesByCategory(List<String> category, Pageable pageable);
 
-    public List<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable);
+    public Page<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable);
 
-    public List<Notice> getAllNoticesSorted(Pageable pageable);
+    public Page<Notice> getAllNoticesSorted(Pageable pageable);
 
     public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable);
 
@@ -28,14 +30,15 @@ public interface NoticeService {
 
     public Long getTotalNoticeCount();
 
-    public List<Notice> searchNotices(String query, Pageable pageable);
+    public Page<Notice> searchNotices(String query, Pageable pageable);
 
     // update notice
     public Notice updateNotice(Notice notice);
 
     // searching filter
-    public List<Notice> searchNotices(List<String> department, List<String> categories, List<String> createdByList,
-    String status,int page, int size);
+    
+    // public List<Notice> filterNotices(List<String> department, List<String> categories, List<String> admins,
+    // String status, int page, int size);
 
     public Long countByCategory(String category);
 
