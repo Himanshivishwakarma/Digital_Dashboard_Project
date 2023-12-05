@@ -195,6 +195,7 @@ public class UserController {
 
   @GetMapping("/getByEmail/{email}")
   public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    LOGGER.info("Start UserController: getUserByEmail method");
     User user = userServiceImpl.getUserByEmail(email);
 
     if (user == null) {
@@ -204,6 +205,7 @@ public class UserController {
           .findFirst()
           .orElse("Default message if not found"), HttpStatus.OK);
     }
+      LOGGER.info("End UserController: getUserByEmail method");
     return ResponseEntity.ok(user);
   }
 
