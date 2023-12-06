@@ -25,4 +25,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<User> findByStatusIgnoreCase(String status);
 
     Page<User> findAllByRoleAndStatus(String role, String status,Pageable pageable);
+
+    @Query("SELECT u.userName FROM User u" )
+    List<String> findUserNames();
+
 }

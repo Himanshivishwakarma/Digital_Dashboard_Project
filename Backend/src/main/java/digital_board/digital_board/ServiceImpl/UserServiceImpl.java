@@ -95,4 +95,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public List<String> getInfoOfAdmins(){
+       return userRepo.findUserNames();
+    }
 }

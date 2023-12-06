@@ -22,4 +22,6 @@ public interface UserService {
     Page<User> FindAllUser(Pageable pageable);
 
     User getUserByEmail(String email);
+
+   List<String> getInfoOfAdmins();
 }

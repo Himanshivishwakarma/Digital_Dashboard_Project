@@ -209,6 +209,15 @@ public class UserController {
     return ResponseEntity.ok(user);
   }
 
+  @GetMapping("/getAdminNames")
+  public ResponseEntity<?> getInfoOfAdmins() {
+    LOGGER.info("Start UserController: getInfoOfAdmins method");
+    List<String> user = userServiceImpl.getInfoOfAdmins();
+    
+      LOGGER.info("End UserController: getInfoOfAdmins method");
+    return ResponseEntity.ok(user);
+  }
+
   private Sort parseSortString(String sort) {
     String[] sortParams = sort.split(",");
     if (sortParams.length == 2) {
