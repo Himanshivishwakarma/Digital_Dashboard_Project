@@ -26,11 +26,12 @@ public class SecurityConfig {
             "/webjars/**",
             "/api/v1/notice/byCategory/**",
             "/api/v1/notice/byDepartment/**",
+            "/api/v1/notice/important/**",
             "/api/v1/notice/search/**",
             "/api/v1/user/FindAllUser",
             "/api/v1/notice/getAll",
             "/api/v1/notification/create",
-            "/api/v1/notice/important" 
+             
         };
 
     @Bean
@@ -46,7 +47,7 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers(public_urls).permitAll()
                         // .requestMatchers(HttpMethod.POST).permitAll()
-                        .requestMatchers(HttpMethod.GET).permitAll()
+                        // .requestMatchers(HttpMethod.GET).permitAll()
                         // .requestMatchers(HttpMethod.PUT).permitAll()
                         // .requestMatchers("/notice/add").permitAll()
                         // .requestMatchers(HttpMethod.GET).permitAll()
