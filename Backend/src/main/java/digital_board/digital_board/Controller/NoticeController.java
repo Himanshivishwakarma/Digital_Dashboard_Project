@@ -127,14 +127,14 @@ public class NoticeController {
 
     @GetMapping("/getAll/byAdminEmail/{adminEmail}")
     public ResponseEntity<Map<String, Object>> getNoticeByUserEmail(@PathVariable String adminEmail,
-     @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         LOGGER.info("Start NoticeController: getNoticeByUserEmail method");
         Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getNoticeByUserEmail(adminEmail,pageable);
-       response.put("count", notice.getTotalElements());
+        response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
 
         if (notice.isEmpty()) {
@@ -213,7 +213,7 @@ public class NoticeController {
 
     @GetMapping("/getAll")
     public ResponseEntity<Map<String, Object>> getAllNotice(
-            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
                 LOGGER.info("Start NoticeController: getAllNotice method");
@@ -224,7 +224,7 @@ public class NoticeController {
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
 
-         if (notice.isEmpty()) {
+        if (notice.isEmpty()) {
             // Return a JSON response with a message for data not found
             String emptyMessage = ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
@@ -316,7 +316,7 @@ public class NoticeController {
 
     @GetMapping("/search/{query}")
     public ResponseEntity<Map<String, Object>> searchNotices(@PathVariable String query,
-            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Map<String, Object> response = new HashMap<>();
@@ -335,6 +335,24 @@ public class NoticeController {
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
         return ResponseEntity.ok(response);
+
+    }
+
+    //    get important notice by limit
+    @GetMapping("/important")
+    ResponseEntity<List<Notice>> getAllImportantNoticeByLimit(
+            @RequestParam(required = false, defaultValue = "desc") String order,
+            @RequestParam(required = false, defaultValue = "important") String status,
+            @RequestParam(required = false, defaultValue = "3") int limit) {
+        Sort.Direction direction = Sort.Direction.DESC; // Default sorting order
+
+        if ("asc".equalsIgnoreCase(order)) {
+            direction = Sort.Direction.ASC;
+        }
+
+        Sort sort = Sort.by(direction, "noticeCreatedDate");
+
+        return ResponseEntity.ok(noticeServiceImpl.noticefindByStatusImportant(status, sort, limit));
 
     }
 }
