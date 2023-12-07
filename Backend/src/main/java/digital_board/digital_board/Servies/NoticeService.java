@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.Notice;
 
@@ -43,4 +45,7 @@ public interface NoticeService {
     public Long countByCategory(String category);
 
     public Long countByDepartmentName(String departmentName);
+
+    // get important notice by limit
+     public List<Notice> noticefindByStatusImportant(String status, Sort sort, int limit);
 }
