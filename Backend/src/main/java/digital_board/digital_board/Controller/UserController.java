@@ -89,7 +89,7 @@ public class UserController {
 
     // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
     // "Sahil");
-
+    emailServices.sendSimpleMessage("himanshiv.bca2021@ssism.org", "New Notice", "himanshi vishwakarma");
     MDC.clear();
     LOGGER.info("End User Controller : public method");
 

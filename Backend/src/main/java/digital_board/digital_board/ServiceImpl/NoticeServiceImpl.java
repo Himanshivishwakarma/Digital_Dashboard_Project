@@ -65,8 +65,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> getNoticeByUserEmail(String email) {
-        return this.noticeRepository.getAllNoticeByUserId(email);
+    public Page<Notice> getNoticeByUserEmail(String email,Pageable pageable) {
+        return this.noticeRepository.getAllNoticeByUserId(email, pageable);
     }
 
     @Override

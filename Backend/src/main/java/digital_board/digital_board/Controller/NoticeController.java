@@ -121,11 +121,15 @@ public class NoticeController {
     }
 
     @GetMapping("/getAll/byAdminEmail/{adminEmail}")
-    public ResponseEntity<Map<String, Object>> getNoticeByUserEmail(@PathVariable String adminEmail) {
+    public ResponseEntity<Map<String, Object>> getNoticeByUserEmail(@PathVariable String adminEmail,
+     @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         Map<String, Object> response = new HashMap<>();
-        List<Notice> notice = noticeServiceImpl.getNoticeByUserEmail(adminEmail);
-        response.put("count", notice.size());
-        response.put("data", notice);
+        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+        Page<Notice> notice = noticeServiceImpl.getNoticeByUserEmail(adminEmail,pageable);
+       response.put("count", notice.getTotalElements());
+        response.put("data", notice.getContent());
 
         if (notice.isEmpty()) {
             String emptyMessage = ResponseMessagesConstants.messagelist.stream()

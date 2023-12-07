@@ -22,10 +22,10 @@ public class UserNotificationController {
     UserNotificationServiceImpl notificationServiceImpl;
 
     @PostMapping("/create")
-    public ResponseEntity<UserNotification> createNotificationByUser(@RequestBody UserNotification userNotification) {
+    public ResponseEntity<?> createNotificationByUser(@RequestBody UserNotification userNotification) {
         System.out.println("createNotificationByUser");
         boolean t = this.notificationServiceImpl.createNotificationByUser(userNotification);
-        return ResponseEntity.ok(userNotification);
+        return ResponseEntity.ok(t);
     }
 
     @GetMapping("/getAll")

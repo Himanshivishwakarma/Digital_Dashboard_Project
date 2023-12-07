@@ -14,8 +14,8 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
       // @Query("SELECT n FROM Notice n WHERE n.noticeId=noticeId")
       // Notice getNoticeById(@Param("NoticeId") String NoticeId);
 
-      @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId")
-      List<Notice> getAllNoticeByUserId(@Param("userId") String userId);
+      @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId AND n.status <> 'disable'")
+      Page<Notice> getAllNoticeByUserId(@Param("userId") String userId, Pageable pageable);
 
       @Query("SELECT n FROM Notice n WHERE n.category IN :category AND n.status <> 'disable'")
       Page<Notice> findByCategoryIn(List<String> category, Pageable pageable);

@@ -13,7 +13,7 @@ public interface NoticeService {
 
     public Notice getNoticeByNoticeId(String noticeId);
 
-    public List<Notice> getNoticeByUserEmail(String email);
+    public Page<Notice> getNoticeByUserEmail(String email,Pageable pageable);
 
     public List<Notice> getAllNotice();
 
