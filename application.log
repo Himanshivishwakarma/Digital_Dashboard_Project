@@ -16847,3 +16847,8 @@ Caused by: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: In
 2023-12-07 10:17:54,597 INFO o.a.c.c.C.[.[.[/] [http-nio-9090-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
 2023-12-07 10:17:54,602 INFO o.s.w.s.DispatcherServlet [http-nio-9090-exec-2] Initializing Servlet 'dispatcherServlet'
 2023-12-07 10:17:54,608 INFO o.s.w.s.DispatcherServlet [http-nio-9090-exec-2] Completed initialization in 4 ms
+2023-12-07 10:35:26,360 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2023-12-07 10:35:26,613 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-07 10:35:26,615 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-07 10:35:29,251 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-07 10:35:29,785 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 509 ms. Found 7 JPA repository interfaces.
