@@ -3,6 +3,7 @@ package digital_board.digital_board.ServiceImpl;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import digital_board.digital_board.Dto.UserDTO;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
 import digital_board.digital_board.Exception.ResourceNotFoundException;
@@ -31,7 +34,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepo;
     @Autowired
     private Cloudinary cloudinary;
-
+   
     // for testing purpose argument constructer
     public UserServiceImpl(UserRepository userRepo) {
 
@@ -96,7 +99,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> getInfoOfAdmins(){
-       return userRepo.findUserNames();
+    public List<UserDTO> getInfoOfAdmins(){
+    List<UserDTO> userDTOs = userRepo.findUserNames();
+    return userDTOs;
     }
 }

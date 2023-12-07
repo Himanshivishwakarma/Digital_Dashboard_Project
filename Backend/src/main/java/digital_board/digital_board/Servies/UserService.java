@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import digital_board.digital_board.Dto.UserDTO;
 import digital_board.digital_board.Entity.User;
 
 public interface UserService {
@@ -23,5 +24,5 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
-   List<String> getInfoOfAdmins();
+   List<UserDTO> getInfoOfAdmins();
 }

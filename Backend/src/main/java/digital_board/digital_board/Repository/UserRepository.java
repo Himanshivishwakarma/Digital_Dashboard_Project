@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-
+import digital_board.digital_board.Dto.UserDTO;
 
 // import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -26,7 +26,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Page<User> findAllByRoleAndStatus(String role, String status,Pageable pageable);
 
-    @Query("SELECT u.userName FROM User u" )
-    List<String> findUserNames();
+    // @Query("SELECT u.id,u.email,u.userName FROM User u")
+    @Query("SELECT new digital_board.digital_board.Dto.UserDTO(u.id, u.email, u.userName) FROM User u where u.status != 'disable'")
+    List<UserDTO> findUserNames();
 
 }
