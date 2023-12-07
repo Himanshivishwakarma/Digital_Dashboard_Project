@@ -29,12 +29,15 @@ import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.ServiceImpl.NoticeServiceImpl;
+import digital_board.digital_board.ServiceImpl.UserServiceImpl;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/v1/notice")
 public class NoticeController {
+    // private static final Logger LOGGER = LoggerFactory.getLogger(NoticeController.class);
+
     private static final Logger LOGGER = LoggerFactory.getLogger(NoticeController.class);
 
     @Autowired
@@ -116,7 +119,9 @@ public class NoticeController {
 
     @GetMapping("/get/byNoticeId/{noticeId}")
     public ResponseEntity<Notice> getNoticeByNoticeId(@PathVariable String noticeId) {
+        LOGGER.info("Start NoticeController: getNoticeByNoticeId method");
         Notice notice = noticeServiceImpl.getNoticeByNoticeId(noticeId);
+         LOGGER.info("Start NoticeController: getNoticeByNoticeId method");
         return ResponseEntity.ok(notice);
     }
 
@@ -125,6 +130,7 @@ public class NoticeController {
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
+        LOGGER.info("Start NoticeController: getNoticeByUserEmail method");
         Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getNoticeByUserEmail(adminEmail,pageable);
@@ -139,8 +145,10 @@ public class NoticeController {
                     .orElse("Default failure message if not found");
 
             response.put("message", emptyMessage);
+             LOGGER.info("End NoticeController: getNoticeByUserEmail method");
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
+           LOGGER.info("End NoticeController: getNoticeByUserEmail method");
         return ResponseEntity.ok(response);
     }
 
@@ -149,6 +157,7 @@ public class NoticeController {
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
+                LOGGER.info("Start NoticeController: getNoticesByCategory method");
         Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getNoticesByCategory(category, pageable);
@@ -164,9 +173,11 @@ public class NoticeController {
                     .orElse("Default failure message if not found");
 
             response.put("message", emptyMessage);
+             LOGGER.info("End NoticeController: getNoticesByCategory method");
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
         // Return the list of notices if data is found
+         LOGGER.info("End NoticeController: getNoticesByCategory method");
         return ResponseEntity.ok(response);
     }
 
@@ -176,6 +187,7 @@ public class NoticeController {
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
+                LOGGER.info("Start NoticeController: getNoticesByDepartment method");
         Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size);
         Page<Notice> notice = noticeServiceImpl.getNoticesByDepartment(departmentName, pageable);
@@ -191,9 +203,11 @@ public class NoticeController {
                     .orElse("Default failure message if not found");
 
             response.put("message", emptyMessage);
+             LOGGER.info("End NoticeController: getNoticesByDepartment method");
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
         // Return the list of notices if data is found
+         LOGGER.info("End NoticeController: getNoticesByDepartment method");
         return ResponseEntity.ok(response);
     }
 
@@ -202,6 +216,7 @@ public class NoticeController {
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
+                LOGGER.info("Start NoticeController: getAllNotice method");
         Map<String, Object> response = new HashMap<>();
 
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
@@ -218,9 +233,11 @@ public class NoticeController {
                     .orElse("Default failure message if not found");
 
             response.put("message", emptyMessage);
+             LOGGER.info("End NoticeController: getAllNotice method");
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
         // Return the list of notices if data is found
+         LOGGER.info("End NoticeController: getAllNotice method");
         return ResponseEntity.ok(response);
     }
 
