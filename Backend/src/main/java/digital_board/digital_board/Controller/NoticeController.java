@@ -299,7 +299,7 @@ public class NoticeController {
 
     @GetMapping("/search/{query}")
     public ResponseEntity<Map<String, Object>> searchNotices(@PathVariable String query,
-            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Map<String, Object> response = new HashMap<>();
