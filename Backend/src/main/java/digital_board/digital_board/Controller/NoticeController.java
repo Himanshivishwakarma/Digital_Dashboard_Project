@@ -199,7 +199,7 @@ public class NoticeController {
 
     @GetMapping("/getAll")
     public ResponseEntity<Map<String, Object>> getAllNotice(
-            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Map<String, Object> response = new HashMap<>();

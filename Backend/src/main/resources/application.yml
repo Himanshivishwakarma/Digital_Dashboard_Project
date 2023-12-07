@@ -17,6 +17,9 @@ spring:
    username: digital_board_user
    password: mibjZBLOiXsEXSUi4pr8iP4MVBDQbLn6
    driver-class-name: org.postgresql.Driver
+  #  url: jdbc:mysql://localhost:3307/digital_board
+  #   username: root
+  #   password: ****
 
 
 
