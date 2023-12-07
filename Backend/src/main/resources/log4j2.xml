@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="trace">
     <Appenders>
+     <!-- <Console name="ConsoleOutput" target="SYSTEM_OUT"> 
+
+            <PatternLayout
+
+                pattern="%style{%d{ISO8601}}{blue} %highlight{%-5level} [%style{%t}{bright,yellow}] : %msg%n%throwable"
+
+                disableAnsi="false" /> 
+
+        </Console>  -->
+        <Console name="ConsoleOutput" target="SYSTEM_OUT">
+    <PatternLayout
+        pattern="%style{%d{ISO8601}}{blue} %highlight{%-5level} [%style{%t}{bright,yellow}] : %style{%msg}{cyan}%n%throwable"
+        disableAnsi="false" />
+</Console>
        <File name="File" fileName="application.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
 
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a} %level %c - %m %n" />
-         <!-- <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a} %level %c - USER=%X{User} - %m %n" />  -->
-
-        </Console>
         <JDBC name="dbLogsStore" tableName="digital_board.event_logs">
             <ConnectionFactory class="digital_board.digital_board.Config.ConnectionFactory" method="getDatabaseConnection" />
             <Column name="ID" pattern="%u" />
@@ -21,9 +30,15 @@
             <Column name="MESSAGE" pattern="%message" isClob="true" />
             <Column name="EXCEPTION_INFO" pattern="%ex{full}" isClob="true" />
        <Filters>
-    <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL" />
-    <RegexFilter regex="Starting DigitalBoardApplication.*" onMatch="DENY" onMismatch="NEUTRAL" />
-    <RegexFilter regex="Started DigitalBoardApplication.*" onMatch="DENY" onMismatch="NEUTRAL" />
+      
+            <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL" />
+             <!-- <Column name="CLASS_INFO" pattern="%logger" /> -->
+               <RegexFilter regex="Start.*" onMatch="DENY" onMismatch="NEUTRAL" />
+               <RegexFilter regex="End.*" onMatch="DENY" onMismatch="NEUTRAL" /> 
+               <RegexFilter regex="Start User Controller.*" onMatch="DENY" onMismatch="NEUTRAL" />
+            <RegexFilter regex="Starting DigitalBoardApplication.*" onMatch="DENY" onMismatch="NEUTRAL" />
+            <RegexFilter regex="Started DigitalBoardApplication.*" onMatch="DENY" onMismatch="NEUTRAL" />
+            
        <RegexFilter regex="No active profile set.*" onMatch="DENY" onMismatch="NEUTRAL" />
 </Filters> 
 
@@ -31,13 +46,22 @@
         </JDBC>
     </Appenders> 
     <Loggers>
-        <Logger name="digital_board.digital_board" level="info">
+        <!-- <Logger name="digital_board.digital_board" level="info" additivity="true">
             <AppenderRef ref="Console" />
         </Logger>
-        <Root level="warn">
+        <Root level="info">
             <AppenderRef ref="File"/>
             <AppenderRef ref="dbLogsStore" />
-        </Root>
+        </Root> -->
+           <Logger name="digital_board.digital_board" level="info" additivity="false">
+      <AppenderRef ref="dbLogsStore" />
+           <appender-ref ref="ConsoleOutput" /> 
+    </Logger>
+ 
+    <Root level="info" additivity="false">
+      <AppenderRef ref="ConsoleOutput"/>
+      <AppenderRef ref="File"/>
+    </Root>
     </Loggers>
 </Configuration>
 

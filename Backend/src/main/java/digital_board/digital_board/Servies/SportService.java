@@ -1,23 +1,27 @@
 package digital_board.digital_board.Servies;
 
-import java.util.List;
+import digital_board.digital_board.Entity.Sport;
 
 import org.springframework.data.domain.Sort;
 
-import digital_board.digital_board.Entity.Sport;
+
+import java.util.*;
 
 public interface SportService {
+    
+    Sport addSport(Sport sport);
 
-    public Sport createSportByUser(Sport sport);
+    Sport getSportById(String sportId);
+    
+   List<Sport> getAllSport();
 
-    public Sport getSportBySportId(String sportId);
-
-    public List<Sport> getSportByCreatedUserName(String userName);
-
-    public List<Sport> getAllSport();
-
+    Sport updateSport(Sport sport,String sportName);
+    
     public List<Sport> getSportsByName(String sportName, Sort sort);
 
     public List<Sport> getAllSportsSorted(Sort sort);
 
+   
+
 }
+

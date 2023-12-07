@@ -1,25 +1,24 @@
 package digital_board.digital_board.Entity;
 
-
-import java.util.Date;
-import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
-
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+import java.util.Date;
+
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Sport{
+@NoArgsConstructor
+public class Sport {
     @Id
-    private String sprotId = UUID.randomUUID().toString();
+    private String sportId = UUID.randomUUID().toString();
     private String sportName;
     private String sportDescription;
     private String sportStartDate;
@@ -29,11 +28,14 @@ public class Sport{
     private Date sportCreatedDate;
 
     private String createdBy;
-    private Boolean status;
 
 
     @PrePersist
     protected void onCreate() {
         this.sportCreatedDate = new Date();
     }
+
+   
+
 }
+

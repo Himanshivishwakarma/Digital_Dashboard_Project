@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import digital_board.digital_board.Entity.UserNotification;
@@ -14,19 +15,20 @@ import digital_board.digital_board.ServiceImpl.UserNotificationServiceImpl;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("/api/v1/notification")
 public class UserNotificationController {
 
     @Autowired
     UserNotificationServiceImpl notificationServiceImpl;
 
-    @PostMapping("/Create/Notification")
-    public ResponseEntity<UserNotification> createNotificationByUser(@RequestBody UserNotification userNotification) {
+    @PostMapping("/create")
+    public ResponseEntity<?> createNotificationByUser(@RequestBody UserNotification userNotification) {
         System.out.println("createNotificationByUser");
         boolean t = this.notificationServiceImpl.createNotificationByUser(userNotification);
-        return ResponseEntity.ok(userNotification);
+        return ResponseEntity.ok(t);
     }
 
-    @GetMapping("/GetAll/Notification")
+    @GetMapping("/getAll")
     public List<UserNotification> getAllUserNotification() {
         List<UserNotification> userNotification = this.notificationServiceImpl.getAllUserNotification();
         return userNotification;

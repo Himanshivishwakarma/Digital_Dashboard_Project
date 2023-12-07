@@ -3,13 +3,20 @@
 # com.auth0.domain: dev-11fo0ea2adho6vqb.us.auth0.com
 # com.auth0.clientId: SQ6iT4W1K8p4QYiXd484d9bCRdGEGTdX
 # com.auth0.clientSecret: baKE4CV4_hXBGDfw2DaEQWkCJ_JskRhEo5a3kLRtWz3ER5w5C2lv01zCGZ9Ig43J
+cloudinary:
+  cloud-name: da5nk7puw
+  api-key: 669222358553156
+  api-secret: wJalgphAjGLYXpyhn4OK83NzDCY
+
 server:
-  port: 9000 
+  port: 9090 
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/digital_board
     username: root
     # password: root
+
 
 
     
