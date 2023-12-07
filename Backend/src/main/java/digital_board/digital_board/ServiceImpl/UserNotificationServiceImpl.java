@@ -23,7 +23,7 @@ public class UserNotificationServiceImpl implements UserNotificationService {
         boolean t = false;
         try {
             UserNotification user = userNotificationRepository.getbyemail(userNotification.getUserEmail());
-            if (user != null) {
+            if (user == null) {
                 this.userNotificationRepository.save(userNotification);
                 t = true;
             }

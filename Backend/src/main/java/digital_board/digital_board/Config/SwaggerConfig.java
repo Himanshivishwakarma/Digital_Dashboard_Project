@@ -42,11 +42,11 @@ public class SwaggerConfig {
         )
         )
         .info(new Info()
-        .title("Digital Board API")
-        .description(("This is digital Board Application"))
+        .title("Digital Dashboard API")
+        .description(("This is digital dashboard Application"))
         .version("1.0")
-        .contact(new Contact().name("digital Board").email("digitalboard@ssism.org").url("digitalboard.com"))
+        .contact(new Contact().name("digital dashboard").email("digitaldashboard@ssism.org").url("digitaldashboard.com"))
         .license(new License().name("Apache"))
-        ).externalDocs(new ExternalDocumentation().url(" digitalboard.com").description("this is external url"));
+        ).externalDocs(new ExternalDocumentation().url(" digitalashboard.com").description("this is external url"));
     }
 }

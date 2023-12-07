@@ -75,10 +75,10 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> getNoticeByUserEmail(String email) {
+    public Page<Notice> getNoticeByUserEmail(String email,Pageable pageable) {
          LOGGER.info("Start NoticeServiceImpl: getNoticeByUserEmail method");
            LOGGER.info("End NoticeServiceImpl: getNoticeByUserEmail method");
-        return this.noticeRepository.getAllNoticeByUserId(email);
+        return this.noticeRepository.getAllNoticeByUserId(email, pageable);
     }
 
     @Override
@@ -94,6 +94,7 @@ public class NoticeServiceImpl implements NoticeService {
          LOGGER.info("Start NoticeServiceImpl: getAllNoticesSorted method");
            LOGGER.info("End NoticeServiceImpl: getAllNoticesSorted method");
         return noticeRepository.findAll(pageable);
+        
     }
 
     @Override
@@ -119,40 +120,34 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable) {
-         LOGGER.info("Start NoticeServiceImpl: filterNotices method");
-        List<String> category = noticeFilterDto.getCategory();
-        List<String> departmentName = noticeFilterDto.getDepartmentName();
-        if (category != null && departmentName != null) {
-            if (departmentName.contains("All")) {
-                // return getNoticesByCategory(category, pageable);
-                 LOGGER.info("End NoticeServiceImpl: filterNotices method");
-                return null;
-            } else {
-                 LOGGER.info("End NoticeServiceImpl: filterNotices method");
-                return noticeRepository.findByCategoryInAndDepartmentNameIn(category, departmentName, pageable);
-            }
-        } else if (departmentName == null && category != null) {
 
-            // return getNoticesByCategory(category, pageable);
-             LOGGER.info("End NoticeServiceImpl: filterNotices method");
+//         List<String> category = noticeFilterDto.getCategory();
+//         List<String> departmentName = noticeFilterDto.getDepartmentName();
+//         if (category != null && departmentName != null) {
+//             if (departmentName.contains("All")) {
+//                 // return getNoticesByCategory(category, pageable);
+//                 return null;
+//             } else {
+//                 return noticeRepository.findByCategoryInAndDepartmentNameIn(category, departmentName, pageable);
+//             }
+//         } else if (departmentName == null && category != null) {
+
+//             // return getNoticesByCategory(category, pageable);
+//             return null;
+
+//         // } else if (category == null && departmentName != null) {
+
+//             if (departmentName.contains("All")) {
+//                 // return getAllNoticesSorted(pageable);
+// return null;
+//             } else {
+//                 // return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
+//                 return null;
+//             }
+//         } else {
+//             // return getAllNoticesSorted(pageable);
             return null;
-
-        } else if (category == null && departmentName != null) {
-
-            if (departmentName.contains("All")) {
-                 LOGGER.info("End NoticeServiceImpl: filterNotices method");
-                // return getAllNoticesSorted(pageable);
-return null;
-            } else {
-                 LOGGER.info("End NoticeServiceImpl: filterNotices method");
-                // return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
-                return null;
-            }
-        } else {
-            // return getAllNoticesSorted(pageable);
-             LOGGER.info("End NoticeServiceImpl: filterNotices method");
-            return null;
-        }
+        // }
 
     }
 
@@ -165,11 +160,9 @@ return null;
 
     @Override
     public Page<Notice> searchNotices(String query, Pageable pageable) {
-         LOGGER.info("Start NoticeServiceImpl: searchNotices method");
         List<String> status=new ArrayList<>();
         status.add("enable");
          status.add("important");
-           LOGGER.info("End NoticeServiceImpl: searchNotices method");
         return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query,pageable);
     }
 
