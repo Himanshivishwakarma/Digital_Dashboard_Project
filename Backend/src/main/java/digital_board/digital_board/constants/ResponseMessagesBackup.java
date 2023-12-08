@@ -46,7 +46,11 @@ public class ResponseMessagesBackup {
                 new ExceptionResponse(21, "EVENT_UPDATED_SUCCESS", "Event Updated Successfully"),
                  new ExceptionResponse(22, "NOTICE_CREATE_FAILURE", "Notice Created Failure!"),
                  new ExceptionResponse(23, "NOTICE_UPDATE_FAILURE", "Notice update Failure!"),
-                  new ExceptionResponse(24, "NOT_SUPERADMIN", "User Must be Super Admin!")
+                  new ExceptionResponse(24, "NOT_SUPERADMIN", "User Must be Super Admin!"),
+                  new ExceptionResponse(25, "NOTIFICATION_CREATED_SUCCESSFULLY", "Email Notification Added successfully"),
+                  new ExceptionResponse(26, "FAILED_TO_CREATE_NOTIFICATION", "Failed to Add Email Notification!"),
+                 new ExceptionResponse(27, "EMAIL_ALREADY_EXISTS", "User with this email already exists")
+
         ));//NOTICE_CREATE_FAILURE
         exceptionResponseRepository.saveAll(messagelist);
     }
