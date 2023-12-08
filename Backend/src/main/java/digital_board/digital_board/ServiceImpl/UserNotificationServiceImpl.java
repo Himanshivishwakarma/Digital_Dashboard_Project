@@ -51,15 +51,13 @@ public class UserNotificationServiceImpl implements UserNotificationService {
             return response;
 
       } catch (Exception e) {
-    // String errormessage = ResponseMessagesConstants.messagelist.stream()
-    //         .filter(exceptionResponse -> "FAILED_TO_CREATE_NOTIFICATION".equals(exceptionResponse.getExceptonName()))
-    //         .map(ExceptionResponse::getMassage)
-    //         .findFirst()
-    //         .orElse("Default failure message if not found");
-
-    // throw new ResourceNotFoundException(errormessage); 
+    throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+            .filter(exceptionResponse -> "FAILED_TO_CREATE_NOTIFICATION".equals(exceptionResponse.getExceptonName()))
+            .map(ExceptionResponse::getMassage)
+            .findFirst()
+            .orElse("Default failure message if not found")); 
 }
-         return response;
+        //  return response;
     }
 
     @Override
