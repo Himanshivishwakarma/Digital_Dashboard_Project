@@ -321,9 +321,9 @@ public class NoticeController {
 
     }
 
-    //    get important notice by limit
+    // get important notice by limit
     @GetMapping("/important")
-    ResponseEntity<List<Notice>> getAllImportantNoticeByLimit(
+    ResponseEntity<Map<String, Object>> getAllImportantNoticeByLimit(
             @RequestParam(required = false, defaultValue = "desc") String order,
             @RequestParam(required = false, defaultValue = "important") String status,
             @RequestParam(required = false, defaultValue = "3") int limit) {
@@ -335,7 +335,19 @@ public class NoticeController {
 
         Sort sort = Sort.by(direction, "noticeCreatedDate");
 
-        return ResponseEntity.ok(noticeServiceImpl.noticefindByStatusImportant(status, sort, limit));
+        Map<String, Object> response = new HashMap<>();
+        List<Notice> resultofnotice = noticeServiceImpl.noticefindByStatusImportant(status, sort, limit);
+        response.put("data", noticeServiceImpl.noticefindByStatusImportant(status, sort, limit));
+        if (resultofnotice.isEmpty()) {
+            response.put("message", ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default failure message if not found"));
+
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.ok(response);
 
     }
 }
