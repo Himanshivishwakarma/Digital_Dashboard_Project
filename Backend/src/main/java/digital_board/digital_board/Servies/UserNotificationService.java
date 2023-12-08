@@ -2,12 +2,13 @@ package digital_board.digital_board.Servies;
 
 
 import java.util.List;
+import java.util.Map;
 
 import digital_board.digital_board.Entity.UserNotification;
 
 public interface UserNotificationService {
 
-    public boolean createNotificationByUser(UserNotification userNotification);
+    public Map<String,Object> createNotificationByUser(UserNotification userNotification);
 
     public  List<UserNotification> getAllUserNotification();
 

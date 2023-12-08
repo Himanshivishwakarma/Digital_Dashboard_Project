@@ -1,6 +1,9 @@
 package digital_board.digital_board.Controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,9 +26,7 @@ public class UserNotificationController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createNotificationByUser(@RequestBody UserNotification userNotification) {
-        System.out.println("createNotificationByUser");
-        boolean t = this.notificationServiceImpl.createNotificationByUser(userNotification);
-        return ResponseEntity.ok(t);
+        return ResponseEntity.ok(this.notificationServiceImpl.createNotificationByUser(userNotification));
     }
 
     @GetMapping("/getAll")
