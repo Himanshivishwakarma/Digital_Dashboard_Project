@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User UpdateUser(User user) throws IOException {
-        System.out.println("sultan id" + user.getId());
         userRepo.findById(user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
                         .filter(exceptionResponse -> "USER_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
