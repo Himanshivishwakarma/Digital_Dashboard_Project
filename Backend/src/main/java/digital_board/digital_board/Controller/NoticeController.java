@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Exception.ResourceNotFoundException;
@@ -242,29 +243,29 @@ public class NoticeController {
     }
 
     // getAllNoticesSorted
-    // @PostMapping("/getAll/byfilter")
-    // public ResponseEntity<?> getAllNoticeByDepartmentAndCategory(@RequestBody
-    // NoticeFilterDto noticeFilterDto,
-    // @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc")
-    // String sort,
-    // @RequestParam(defaultValue = "0") int page,
-    // @RequestParam(defaultValue = "10") int size) {
+    @PostMapping("/getAll/byfilter")
+    public ResponseEntity<?> getAllNoticeByDepartmentAndCategory(@RequestBody
+    NoticeFilterDto noticeFilterDto,
+    @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc")
+    String sort,
+    @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "10") int size) {
 
-    // Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
-    // List<Notice> notice = noticeServiceImpl.filterNotices(noticeFilterDto,
-    // pageable);
+    Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+    List<Notice> notice = noticeServiceImpl.filterNotices(noticeFilterDto,
+    pageable);
 
-    // if (notice.isEmpty()) {
-    // throw new
-    // ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-    // .filter(exceptionResponse ->
-    // "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-    // .map(ExceptionResponse::getMassage)
-    // .findFirst()
-    // .orElse("Default message if not found"));
-    // }
-    // return ResponseEntity.ok(notice);
-    // }
+    if (notice.isEmpty()) {
+    throw new
+    ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
+    .filter(exceptionResponse ->
+    "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+    .map(ExceptionResponse::getMassage)
+    .findFirst()
+    .orElse("Default message if not found"));
+    }
+    return ResponseEntity.ok(notice);
+    }
 
     @GetMapping("/count")
     public ResponseEntity<Long> countNoticesByCriteria(@RequestParam(required = false) String category,

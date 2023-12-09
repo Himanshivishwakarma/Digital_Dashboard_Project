@@ -229,23 +229,21 @@ public class UserController {
     List<UserDTO> activeAdminList = userServiceImpl.getInfoOfAdmins();
 
     Map<String, Object> response = new HashMap<>();
-    
-    response.put("count", activeAdminList.size());
-    response.put("data", activeAdminList);
-    if (activeAdminList.isEmpty()) {
-      // Return a JSON response with a message for data not found
-      String emptyMessage = ResponseMessagesConstants.messagelist.stream()
-          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-          .map(ExceptionResponse::getMassage)
-          .findFirst()
-          .orElse("Default failure message if not found");
+response.put("count", activeAdminList.size());
+response.put("data", activeAdminList);
 
-      response.put("message", emptyMessage);
-      return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-    // Return the list of notices if data is found
-    return ResponseEntity.ok(response);
-    
+if (activeAdminList.isEmpty()) {
+    // Return a JSON response with a message for data not found
+    String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+            .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+            .map(ExceptionResponse::getMassage)
+            .findFirst()
+            .orElse("Default failure message if not found");
+
+    response.put("message", emptyMessage);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
+} 
+   return ResponseEntity.ok(response);
       // LOGGER.info("End UserController: getInfoOfAdmins method");
     // return ResponseEntity.ok(activeAdminList);
   }
@@ -261,5 +259,5 @@ public class UserController {
                                                   // order
     }
   }
-
+  
 }
