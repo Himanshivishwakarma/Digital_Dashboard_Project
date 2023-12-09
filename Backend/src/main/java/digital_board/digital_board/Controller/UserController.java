@@ -223,7 +223,7 @@ public class UserController {
     return ResponseEntity.ok(user);
   }
 
-  @GetMapping("/getAdminNames")
+  @GetMapping("/admin-list")
   public ResponseEntity<Map<String, Object>> getInfoOfAdmins() {
     LOGGER.info("Start UserController: getInfoOfAdmins method");
     List<UserDTO> activeAdminList = userServiceImpl.getInfoOfAdmins();
