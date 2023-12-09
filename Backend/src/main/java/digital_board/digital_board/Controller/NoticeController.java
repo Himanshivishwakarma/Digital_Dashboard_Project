@@ -128,7 +128,7 @@ public class NoticeController {
         Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getNoticeByUserEmail(adminEmail, pageable);
-        response.put("count", notice.getTotalElements());
+       response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
 
         if (notice.isEmpty()) {
@@ -199,7 +199,7 @@ public class NoticeController {
 
     @GetMapping("/getAll")
     public ResponseEntity<Map<String, Object>> getAllNotice(
-            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Map<String, Object> response = new HashMap<>();
@@ -299,7 +299,7 @@ public class NoticeController {
 
     @GetMapping("/search/{query}")
     public ResponseEntity<Map<String, Object>> searchNotices(@PathVariable String query,
-            @RequestParam(required = false, defaultValue = "noticeCreatedDate,asc") String sort,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Map<String, Object> response = new HashMap<>();
