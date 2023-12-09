@@ -2,14 +2,26 @@ package digital_board.digital_board.Config;
 
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import digital_board.digital_board.Entity.ExceptionResponse;
+import digital_board.digital_board.constants.ResponseMessagesConstants;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -31,8 +43,8 @@ public class SecurityConfig {
             "/api/v1/user/FindAllUser",
             "/api/v1/notice/getAll",
             "/api/v1/notification/create",
-             
-        };
+
+    };
 
     @Bean
     public JwtDecoder jwtDecoder() {
@@ -40,20 +52,29 @@ public class SecurityConfig {
                 .build();
     }
 
+     
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.cors().and().csrf().disable()
+        return ((HttpSecurity) http.cors(withDefaults())).csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/").permitAll()
                         .requestMatchers(public_urls).permitAll()
-                        // .requestMatchers(HttpMethod.POST).permitAll()
-                        // .requestMatchers(HttpMethod.GET).permitAll()
-                        // .requestMatchers(HttpMethod.PUT).permitAll()
-                        // .requestMatchers("/notice/add").permitAll()
-                        // .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(
                         oauth2ResourceServer -> oauth2ResourceServer.jwt(jwt -> jwt.decoder(jwtDecoder())))
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                            Map<String, Object> errorDetails = new HashMap<>();
+                            errorDetails.put("message", "Unauthorized Access");
+                            errorDetails.put("details", ResponseMessagesConstants.messagelist.stream()
+                                    .filter(exceptionResponse -> "UNAUTHORIZED_ACCESS"
+                                            .equals(exceptionResponse.getExceptonName()))
+                                    .map(ExceptionResponse::getMassage)
+                                    .findFirst()
+                                    .orElse("Default message if not found"));
+                            response.getWriter().write("error: " + errorDetails);
+                        }))
                 .build();
     }
 

@@ -47,7 +47,7 @@ public class ResponseMessagesBackup {
                  new ExceptionResponse(22, "NOTICE_CREATE_FAILURE", "Notice Created Failure!"),
                  new ExceptionResponse(23, "NOTICE_UPDATE_FAILURE", "Notice update Failure!"),
                   new ExceptionResponse(24, "NOT_SUPERADMIN", "User Must be Super Admin!")
-        ));//NOTICE_CREATE_FAILURE
+        ));
         exceptionResponseRepository.saveAll(messagelist);
     }
 
