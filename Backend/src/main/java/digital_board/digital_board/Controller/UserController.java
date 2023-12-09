@@ -155,7 +155,7 @@ public class UserController {
 
       Map<String, Object> response = new HashMap<>();
       String successMessage = ResponseMessagesConstants.messagelist.stream()
-          .filter(exceptionResponse -> "USER_DELETE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+          .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
           .map(ExceptionResponse::getMassage)
           .findFirst()
           .orElse("Default success message if not found");
