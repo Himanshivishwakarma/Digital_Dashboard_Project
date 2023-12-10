@@ -23,12 +23,14 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Sort;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -220,34 +222,38 @@ public class NoticeServiceImplTest {
                 List<Notice> resultNotices = noticeService.getAllImportantNotice(limit);
                 assertEquals(myNoticesList, resultNotices);
         }
+
         @Test
         public void testgGetTotalNoticeCount() {
                 long expectedCount = 10L;
-          when(noticeRepository.count()).thenReturn(expectedCount);
-         long number = noticeService.getTotalNoticeCount();
-         assertEquals(expectedCount, number);
-                        }
-         @Test
+                when(noticeRepository.count()).thenReturn(expectedCount);
+                long number = noticeService.getTotalNoticeCount();
+                assertEquals(expectedCount, number);
+        }
+
+        @Test
         public void testCountByCategory() {
                 long expectedCount = 10L;
                 String category = "sport";
-          when(noticeRepository.countByCategory(anyString())).thenReturn(expectedCount);
-         long number = noticeService.countByCategory(category);
-         assertEquals(expectedCount, number);
-}
-  @Test
+                when(noticeRepository.countByCategory(anyString())).thenReturn(expectedCount);
+                long number = noticeService.countByCategory(category);
+                assertEquals(expectedCount, number);
+        }
+
+        @Test
         public void testCountByDepartmentName() {
                 long expectedCount = 10L;
                 String departmentName = "iteg";
-          when(noticeRepository.countByDepartmentName(anyString())).thenReturn(expectedCount);
-         long number = noticeService.countByDepartmentName(departmentName);
-         assertEquals(expectedCount, number);
-}
-  @Test
-  public void testNoticefindByStatusImportant(){
-        String status = "enable";
-        Sort sort = Sort.by("desc");
- List<Notice> myNoticesList = Arrays.asList(
+                when(noticeRepository.countByDepartmentName(anyString())).thenReturn(expectedCount);
+                long number = noticeService.countByDepartmentName(departmentName);
+                assertEquals(expectedCount, number);
+        }
+
+        @Test
+        public void testNoticefindByStatusImportant() {
+                String status = "enable";
+                Sort sort = Sort.by("desc");
+                List<Notice> myNoticesList = Arrays.asList(
                                 new Notice(noticeId, "This is an important announcement.",
                                                 "this is notice descriptions", "General",
                                                 "HR Department", "2023-11-01", "2023-11-10", new Date(), userId,
@@ -256,8 +262,32 @@ public class NoticeServiceImplTest {
                                                 "this is notice descriptions", "General",
                                                 "HR Department", "2023-11-01", "2023-11-10", new Date(), userId,
                                                 status));
-     when(noticeRepository.findByStatus(anyString(),any(Sort.class),any(PageRequest.class))).thenReturn(myNoticesList);
-   List<Notice>  result = noticeService.noticefindByStatusImportant(status,sort,5);
-   assertEquals(myNoticesList, result);
-}
+                when(noticeRepository.findByStatus(anyString(), any(Sort.class), any(PageRequest.class)))
+                                .thenReturn(myNoticesList);
+                List<Notice> result = noticeService.noticefindByStatusImportant(status, sort, 5);
+                assertEquals(myNoticesList, result);
+        }
+
+        @Test
+        public void testUpdateNotice() {
+                String noticeId = "1";
+        Notice originalNotice = new Notice();
+        originalNotice.setNoticeId(noticeId);
+
+        when(noticeRepository.findById(noticeId)).thenReturn(Optional.of(originalNotice));
+        when(noticeRepository.save(originalNotice)).thenReturn(originalNotice);
+
+        Notice result = noticeService.updateNotice(originalNotice);
+
+        assertNotNull(result);
+        assertEquals(originalNotice, result);
+
+        verify(noticeRepository).findById(noticeId);
+        verify(noticeRepository).save(originalNotice);
+               
+        }
+
+        
+
+
 }
