@@ -2359,3 +2359,47 @@ Caused by: org.hibernate.HibernateException: Unable to determine Dialect without
 2023-12-10 00:21:37,743 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-12-10 00:21:37,761 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
 2023-12-10 00:21:40,673 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-12-10 13:20:07,055 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [main] Could not detect default configuration classes for test class [digital_board.digital_board.Services.NoticeServiceImplTest]: NoticeServiceImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-12-10 13:20:07,304 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [main] Found @SpringBootConfiguration digital_board.digital_board.DigitalBoardApplication for test class digital_board.digital_board.Services.NoticeServiceImplTest
+2023-12-10 13:20:07,710 INFO o.s.b.d.r.RestartApplicationListener [main] Restart disabled due to context in which it is running
+2023-12-10 13:20:08,599 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2023-12-10 13:20:12,814 INFO o.s.d.r.c.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-10 13:20:13,044 INFO o.s.d.r.c.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 209 ms. Found 7 JPA repository interfaces.
+2023-12-10 13:20:14,826 INFO o.h.j.i.u.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-10 13:20:15,120 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 6.2.13.Final
+2023-12-10 13:20:15,136 INFO o.h.c.Environment [main] HHH000406: Using bytecode reflection optimizer
+2023-12-10 13:20:16,068 INFO o.s.o.j.p.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-10 13:20:16,146 INFO c.z.h.HikariDataSource [main] HikariPool-1 - Starting...
+2023-12-10 13:20:20,182 INFO c.z.h.p.HikariPool [main] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4f2b1e9f
+2023-12-10 13:20:20,182 INFO c.z.h.HikariDataSource [main] HikariPool-1 - Start completed.
+2023-12-10 13:20:24,031 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-10 13:20:25,409 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-10 13:20:26,151 INFO o.s.d.j.r.q.QueryEnhancerFactory [main] Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-12-10 13:20:29,836 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-10 13:20:31,149 INFO o.s.b.a.e.w.EndpointLinksResolver [main] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-10 13:20:31,197 INFO o.s.s.w.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@63214338, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5eea3f69, org.springframework.security.web.context.SecurityContextHolderFilter@3bdc9461, org.springframework.security.web.header.HeaderWriterFilter@359a972e, org.springframework.web.filter.CorsFilter@27178dd5, org.springframework.security.web.authentication.logout.LogoutFilter@63d478a7, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@2f6acdcc, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2e13c72b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@cdf67f1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@48fc2397, org.springframework.security.web.access.ExceptionTranslationFilter@3672ba7d, org.springframework.security.web.access.intercept.AuthorizationFilter@4de37f33]
+2023-12-10 13:20:36,922 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-10 13:20:36,938 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-12-10 13:20:39,461 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-12-10 13:33:03,514 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [main] Could not detect default configuration classes for test class [digital_board.digital_board.Services.NoticeServiceImplTest]: NoticeServiceImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-12-10 13:33:03,756 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [main] Found @SpringBootConfiguration digital_board.digital_board.DigitalBoardApplication for test class digital_board.digital_board.Services.NoticeServiceImplTest
+2023-12-10 13:33:04,097 INFO o.s.b.d.r.RestartApplicationListener [main] Restart disabled due to context in which it is running
+2023-12-10 13:33:04,968 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2023-12-10 13:33:08,396 INFO o.s.d.r.c.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-10 13:33:08,594 INFO o.s.d.r.c.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 181 ms. Found 7 JPA repository interfaces.
+2023-12-10 13:33:09,944 INFO o.h.j.i.u.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-10 13:33:10,116 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 6.2.13.Final
+2023-12-10 13:33:10,132 INFO o.h.c.Environment [main] HHH000406: Using bytecode reflection optimizer
+2023-12-10 13:33:11,067 INFO o.s.o.j.p.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-10 13:33:11,161 INFO c.z.h.HikariDataSource [main] HikariPool-1 - Starting...
+2023-12-10 13:33:15,326 INFO c.z.h.p.HikariPool [main] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4af84a76
+2023-12-10 13:33:15,326 INFO c.z.h.HikariDataSource [main] HikariPool-1 - Start completed.
+2023-12-10 13:33:19,384 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-10 13:33:20,955 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-10 13:33:21,775 INFO o.s.d.j.r.q.QueryEnhancerFactory [main] Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-12-10 13:33:24,855 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-10 13:33:26,576 INFO o.s.b.a.e.w.EndpointLinksResolver [main] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-10 13:33:26,623 INFO o.s.s.w.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7459002d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7343df40, org.springframework.security.web.context.SecurityContextHolderFilter@647b7f63, org.springframework.security.web.header.HeaderWriterFilter@64ed6bc8, org.springframework.web.filter.CorsFilter@1e1e77ed, org.springframework.security.web.authentication.logout.LogoutFilter@5b11b6c8, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@59c68ed3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@e06d647, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5e232d07, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@157eac27, org.springframework.security.web.access.ExceptionTranslationFilter@159d2313, org.springframework.security.web.access.intercept.AuthorizationFilter@443d8d4d]
+2023-12-10 13:33:31,273 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-10 13:33:31,292 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-12-10 13:33:33,520 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
