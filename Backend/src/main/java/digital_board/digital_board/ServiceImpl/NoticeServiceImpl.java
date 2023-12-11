@@ -375,11 +375,10 @@ public class NoticeServiceImpl implements NoticeService {
     // Handle the scenario where "DepartmentName = All"
     if (departmentNames != null && departmentNames.contains("All")) {
         departmentNames.remove("All");
-        departmentNames.addAll(Arrays.asList("Iteg", "Meg", "Beg"));
+        departmentNames.addAll(Arrays.asList("Iteg", "Meg", "Beg", "All"));
     }
     List<String> statusList = (status == null) ? Arrays.asList("enable", "important") : Collections.singletonList(status);
-    
-    // List<String> createdByList = (createdBy == null) ? Collections.emptyList() : createdBy;
+
     return noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(
         categories, departmentNames, statusList, createdBy, pageable);
 }
