@@ -44,39 +44,44 @@ public class NoticeController {
     @Autowired
     private NoticeServiceImpl noticeServiceImpl;
 
-    @PostMapping("/add")
-    public ResponseEntity<Map<String, Object>> createNoticeByUser(@RequestBody Notice notice) {
-        LOGGER.info("Start Notic Controller : createNoticeByUser method");
-        Map<String, Object> response = new HashMap<>();
-        try {
-            Notice savedNotice = this.noticeServiceImpl.createNoticeByUser(notice);
-            MDC.put("User", "mashid@gmail.com");
-            MDC.put("path", "/public");
-            LOGGER.info("createNoticeByUser method : notice created");
-            MDC.clear();
-            String successMessage = ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "NOTICE_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
-                    .map(ExceptionResponse::getMassage)
-                    .findFirst()
-                    .orElse("Default success message if not found");
-
-            response.put("message", successMessage);
-            response.put("data", savedNotice);
-
-            LOGGER.info("Start Notic Controller : createNoticeByUser method");
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            String failureMessage = ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "NOTICE_CREATE_FAILURE".equals(exceptionResponse.getExceptonName()))
-                    .map(ExceptionResponse::getMassage)
-                    .findFirst()
-                    .orElse("Default failure message if not found");
-
-            response.put("message", failureMessage);
-            LOGGER.info("Start Notic Controller : createNoticeByUser method");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+    @PostMapping("/addnotice")
+    public Notice createNoticeByUser(@RequestBody Notice noticeDto) {
+      return noticeServiceImpl.createNoticeByUser(noticeDto);
     }
+
+    // @PostMapping("/add")
+    // public ResponseEntity<Map<String, Object>> createNoticeByUser(@RequestBody Notice notice) {
+    //     LOGGER.info("Start Notic Controller : createNoticeByUser method");
+    //     Map<String, Object> response = new HashMap<>();
+    //     try {
+    //         Notice savedNotice = this.noticeServiceImpl.createNoticeByUser(notice);
+    //         MDC.put("User", "mashid@gmail.com");
+    //         MDC.put("path", "/public");
+    //         LOGGER.info("createNoticeByUser method : notice created");
+    //         MDC.clear();
+    //         String successMessage = ResponseMessagesConstants.messagelist.stream()
+    //                 .filter(exceptionResponse -> "NOTICE_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+    //                 .map(ExceptionResponse::getMassage)
+    //                 .findFirst()
+    //                 .orElse("Default success message if not found");
+
+    //         response.put("message", successMessage);
+    //         response.put("data", savedNotice);
+
+    //         LOGGER.info("Start Notic Controller : createNoticeByUser method");
+    //         return ResponseEntity.ok(response);
+    //     } catch (Exception e) {
+    //         String failureMessage = ResponseMessagesConstants.messagelist.stream()
+    //                 .filter(exceptionResponse -> "NOTICE_CREATE_FAILURE".equals(exceptionResponse.getExceptonName()))
+    //                 .map(ExceptionResponse::getMassage)
+    //                 .findFirst()
+    //                 .orElse("Default failure message if not found");
+
+    //         response.put("message", failureMessage);
+    //         LOGGER.info("Start Notic Controller : createNoticeByUser method");
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    //     }
+    // }
 
     @PutMapping("/update")
     public ResponseEntity<Map<String, Object>> updateNoticeByNoticeId(@RequestBody Notice notice) {
