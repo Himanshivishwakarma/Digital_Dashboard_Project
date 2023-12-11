@@ -46,6 +46,7 @@ public class SecurityConfig {
             "/api/v1/user/admin-list"
     };
 
+
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withJwkSetUri("https://dev-2v6nqrql62h5dwnv.us.auth0.com/.well-known/jwks.json")

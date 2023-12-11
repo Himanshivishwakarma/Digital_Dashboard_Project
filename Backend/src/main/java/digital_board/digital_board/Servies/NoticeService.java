@@ -15,15 +15,17 @@ public interface NoticeService {
 
     public Notice getNoticeByNoticeId(String noticeId);
 
-    public Page<Notice> getNoticeByUserEmail(String email, Pageable pageable);
+    public Page<Notice> getNoticeByUserEmail(String email,Pageable pageable);
 
     public List<Notice> getAllNotice();
 
-    public Page<Notice> getNoticesByCategory(List<String> category, Pageable pageable);
+    public Page<Notice> getNoticesByCategory(List<String> category, List<String> department,Pageable pageable);
 
-    public Page<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable);
+    public Page<Notice> getNoticesByDepartment(List<String> departmentName,List<String> categories, Pageable pageable);
 
     public Page<Notice> getAllNoticesSorted(Pageable pageable);
+
+    public List<Notice> filterNotices(NoticeFilterDto noticeFilterDto, Pageable pageable);
 
     // Get ALl important notice
     public List<Notice> getAllImportantNotice(int limit);
@@ -35,14 +37,15 @@ public interface NoticeService {
     // update notice
     public Notice updateNotice(Notice notice);
 
+    // searching filter
+    
+    // public List<Notice> filterNotices(List<String> department, List<String> categories, List<String> admins,
+    // String status, int page, int size);
+
     public Long countByCategory(String category);
 
     public Long countByDepartmentName(String departmentName);
 
     // get important notice by limit
-    public List<Notice> noticefindByStatusImportant(String status, Sort sort, int limit);
-
-    public Page<Notice> getNoticesWithFilter(List<String> categories, List<String> departmentNames,
-            List<String> createdBy,
-            String status, Pageable pageable);
+     public List<Notice> noticefindByStatusImportant(String status, Sort sort, int limit);
 }
