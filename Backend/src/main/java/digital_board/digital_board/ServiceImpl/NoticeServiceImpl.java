@@ -1,6 +1,7 @@
 package digital_board.digital_board.ServiceImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -366,5 +367,20 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> noticefindByStatusImportant(String status, Sort sort, int limit){
         return noticeRepository.findByStatus(status, sort, PageRequest.of(0, limit));
     }
+
+
+    @Override
+    public Page<Notice> getAllNoticesByfilter(List<String> categories, List<String> departmentNames, List<String> createdBy,
+    String status, Pageable pageable) {
+    // Handle the scenario where "DepartmentName = All"
+    if (departmentNames != null && departmentNames.contains("All")) {
+        departmentNames.remove("All");
+        departmentNames.addAll(Arrays.asList("Iteg", "Meg", "Beg", "All"));
+    }
+    List<String> statusList = (status == null) ? Arrays.asList("enable", "important") : Collections.singletonList(status);
+
+    return noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(
+        categories, departmentNames, statusList, createdBy, pageable);
+}
 
 }
