@@ -82,16 +82,17 @@ public class UserController {
   public String publicTest() {
     LOGGER.info("Start User Controller : public method");
 
-    MDC.put("User", "mashid@gmail.com");
-    MDC.put("path", "/public");
-    LOGGER.info("WelcomeMsg action called..");
+    // MDC.put("User", "mashid@gmail.com");
+    // MDC.put("path", "/public");
+    // LOGGER.info("WelcomeMsg action called..");
     // MDC.remove("User");
     // MDC.remove("path");
 
     // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
     // "Sahil");
-    emailServices.sendSimpleMessage("himanshiv.bca2021@ssism.org", "New Notice", "himanshi vishwakarma");
-    MDC.clear();
+    // emailServices.sendSimpleMessage("himanshiv.bca2021@ssism.org", "New Notice", "himanshi vishwakarma");
+    // MDC.clear();
+    //  auth0Service.deleteUser();
     LOGGER.info("End User Controller : public method");
 
     return "working";
@@ -155,7 +156,7 @@ public class UserController {
 
       Map<String, Object> response = new HashMap<>();
       String successMessage = ResponseMessagesConstants.messagelist.stream()
-          .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
+          .filter(exceptionResponse -> "USER_DELETE_SUCCESS".equals(exceptionResponse.getExceptonName()))
           .map(ExceptionResponse::getMassage)
           .findFirst()
           .orElse("Default success message if not found");

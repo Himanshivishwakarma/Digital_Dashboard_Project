@@ -19,7 +19,7 @@
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
 
-        <JDBC name="dbLogsStore" tableName="digital_board.event_logs">
+        <JDBC name="dbLogsStore" tableName="digital_board.logs">
             <ConnectionFactory class="digital_board.digital_board.Config.ConnectionFactory" method="getDatabaseConnection" />
             <Column name="ID" pattern="%u" />
             <Column name="DATE_TIME" isEventTimestamp="true" />
