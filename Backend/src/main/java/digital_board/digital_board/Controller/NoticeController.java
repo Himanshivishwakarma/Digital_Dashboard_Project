@@ -243,26 +243,7 @@ public class NoticeController {
         return ResponseEntity.ok(response);
     }
 
-    // // getAllNoticesSorted
-    // @PostMapping("/getAll/byfilter")
-    // public ResponseEntity<?> getAllNoticeByDepartmentAndCategory(@RequestBody NoticeFilterDto noticeFilterDto,
-    //         @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
-    //         @RequestParam(defaultValue = "0") int page,
-    //         @RequestParam(defaultValue = "10") int size) {
 
-    //     Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
-    //     List<Notice> notice = noticeServiceImpl.filterNotices(noticeFilterDto,
-    //             pageable);
-
-    //     if (notice.isEmpty()) {
-    //         throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-    //                 .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-    //                 .map(ExceptionResponse::getMassage)
-    //                 .findFirst()
-    //                 .orElse("Default message if not found"));
-    //     }
-    //     return ResponseEntity.ok(notice);
-    // }u
 
     @GetMapping("/count")
     public ResponseEntity<Long> countNoticesByCriteria(@RequestParam(required = false) String category,
@@ -292,25 +273,25 @@ public class NoticeController {
     }
 
     // serching filter
-    @GetMapping("/getAll/byfilter")
-    public ResponseEntity<Map<String, Object>> searchNotices(@RequestParam(required = false) List<String> department,
-            @RequestParam(required = false) List<String> categories,
-            @RequestParam(required = false) List<String> admins,
-            @RequestParam(required = false) String status,
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "5") int size) {
-        Map<String, Object> response = new HashMap<>();
-        Map<String, Object> searchNotices = noticeServiceImpl.filterNotices(department, categories, admins, status,
-                page, size);
-        if (searchNotices.containsKey("count") && (int) searchNotices.get("count") == 0) {
-            searchNotices.put("message", ResponseMessagesConstants.messagelist.stream()
-                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-                    .map(ExceptionResponse::getMassage)
-                    .findFirst()
-                    .orElse("Default failure message if not found"));
-        }
-        return ResponseEntity.ok(searchNotices);
-    }
+    // @GetMapping("/getAll/byfilter")
+    // public ResponseEntity<Map<String, Object>> searchNotices(@RequestParam(required = false) List<String> department,
+    //         @RequestParam(required = false) List<String> categories,
+    //         @RequestParam(required = false) List<String> admins,
+    //         @RequestParam(required = false) String status,
+    //         @RequestParam(name = "page", defaultValue = "0") int page,
+    //         @RequestParam(name = "size", defaultValue = "5") int size) {
+    //     Map<String, Object> response = new HashMap<>();
+    //     Map<String, Object> searchNotices = noticeServiceImpl.filterNotices(department, categories, admins, status,
+    //             page, size);
+    //     if (searchNotices.containsKey("count") && (int) searchNotices.get("count") == 0) {
+    //         searchNotices.put("message", ResponseMessagesConstants.messagelist.stream()
+    //                 .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+    //                 .map(ExceptionResponse::getMassage)
+    //                 .findFirst()
+    //                 .orElse("Default failure message if not found"));
+    //     }
+    //     return ResponseEntity.ok(searchNotices);
+    // }
 
     @GetMapping("/search/{query}")
     public ResponseEntity<Map<String, Object>> searchNotices(@PathVariable String query,
@@ -364,5 +345,22 @@ public class NoticeController {
         }
         return ResponseEntity.ok(response);
 
+    }
+
+    @GetMapping("/getAll/byfilter")
+    public ResponseEntity<Map<String, Object>> filterNoticesV2(
+            @RequestParam(required = false) List<String> department,
+            @RequestParam(required = false) List<String> categories,
+            @RequestParam(name = "createdBy", required = false) List<String> admins,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Map<String, Object> response = new HashMap<>();
+        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+        Page<Notice> notice = noticeServiceImpl.getNoticesWithFilter(categories, department, admins, status, pageable);
+        response.put("count", notice.getTotalElements());
+        response.put("data", notice.getContent());
+        return ResponseEntity.ok(response);
     }
 }
