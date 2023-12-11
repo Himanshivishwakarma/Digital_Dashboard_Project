@@ -67,4 +67,15 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
 //    get important notice by limit
     List<Notice> findByStatus(String status, Sort sort, PageRequest of);
+
+    @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
+    "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
+    "AND n.status IN :status " +
+    "AND (:createdBy IS NULL OR n.createdBy IN :createdBy)")
+Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(
+    @Param("categories") List<String> categories,
+    @Param("departmentNames") List<String> departmentNames,
+    @Param("status") List<String> status,
+    @Param("createdBy") List<String> createdBy,
+    Pageable pageable);
 }
