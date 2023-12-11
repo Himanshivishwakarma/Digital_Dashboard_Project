@@ -157,13 +157,14 @@ public class NoticeController {
 
     @GetMapping("/byCategory/{category}")
     public ResponseEntity<Map<String, Object>> getNoticesByCategory(@PathVariable List<String> category,
+    @RequestParam(required = false) List<String> department,
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         LOGGER.info("Start NoticeController: getNoticesByCategory method");
         Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
-        Page<Notice> notice = noticeServiceImpl.getNoticesByCategory(category, pageable);
+        Page<Notice> notice = noticeServiceImpl.getNoticesByCategory(category,department, pageable);
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
 
@@ -187,13 +188,14 @@ public class NoticeController {
     // http://localhost:8080/notices/byDepartment/iteg?sort=asc
     @GetMapping("/byDepartment/{departmentName}")
     public ResponseEntity<Map<String, Object>> getNoticesByDepartment(@PathVariable List<String> departmentName,
+            @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         LOGGER.info("Start NoticeController: getNoticesByDepartment method");
         Map<String, Object> response = new HashMap<>();
         Pageable pageable = PageRequest.of(page, size);
-        Page<Notice> notice = noticeServiceImpl.getNoticesByDepartment(departmentName, pageable);
+        Page<Notice> notice = noticeServiceImpl.getNoticesByDepartment(departmentName,categories,pageable);
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
 

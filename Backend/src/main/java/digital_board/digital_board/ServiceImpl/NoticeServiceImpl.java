@@ -101,14 +101,14 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public Page<Notice> getNoticesByCategory(List<String> category, Pageable pageable) {
+    public Page<Notice> getNoticesByCategory(List<String> category,List<String> department, Pageable pageable) {
          LOGGER.info("Start NoticeServiceImpl: getNoticesByCategory method");
            LOGGER.info("End NoticeServiceImpl: getNoticesByCategory method");
-        return noticeRepository.findByCategoryIn(category, pageable);
+        return noticeRepository.findByCategoryInDepartmentNameInAndStatusNotDisable(category,department, pageable);
     }
 
     @Override
-    public Page<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable) {
+    public Page<Notice> getNoticesByDepartment(List<String> departmentName,List<String> categories ,Pageable pageable) {
          LOGGER.info("Start NoticeServiceImpl: getNoticesByCategory method");
         if (departmentName != null && departmentName.contains("All")) {
             // return getAllNoticesSorted(pageable);
@@ -116,7 +116,7 @@ public class NoticeServiceImpl implements NoticeService {
             return null;
         } else {
              LOGGER.info("End NoticeServiceImpl: getNoticesByCategory method");
-            return noticeRepository.findByDepartmentNameIn(departmentName, pageable);
+            return noticeRepository.findByDepartmentNameInANDcategoriesInAndStatusNotDisable(departmentName,categories, pageable);
         }
         
     }
