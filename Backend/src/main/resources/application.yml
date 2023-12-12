@@ -4,9 +4,9 @@
 # com.auth0.clientId: SQ6iT4W1K8p4QYiXd484d9bCRdGEGTdX
 # com.auth0.clientSecret: baKE4CV4_hXBGDfw2DaEQWkCJ_JskRhEo5a3kLRtWz3ER5w5C2lv01zCGZ9Ig43J
 cloudinary:
-  cloud-name: da5nk7puw
-  api-key: 669222358553156
-  api-secret: wJalgphAjGLYXpyhn4OK83NzDCY
+  cloud-name: dkbdo9top
+  api-key: 465288312492294
+  api-secret: 8HfiX-QJgKg0SytpxMtuu5t5irE
 
 server:
   port: 9090

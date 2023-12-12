@@ -11,7 +11,9 @@ import digital_board.digital_board.Entity.Notice;
 
 public interface NoticeService {
 
-    public Notice createNoticeByUser(Notice notice);
+    // public Notice createNoticeByUser(Notice notice);
+
+    public Notice createNoticeByUser(Notice noticeDto);
 
     public Notice getNoticeByNoticeId(String noticeId);
 
