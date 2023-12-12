@@ -12,4 +12,7 @@ public interface UserNotificationService {
     public  List<UserNotification> getAllUserNotification();
 
     public  List<UserNotification> getUserNotificationByDepartment();
+
+    // get users by filter
+    public List<UserNotification> getUserByFilter(String userName);
 }
