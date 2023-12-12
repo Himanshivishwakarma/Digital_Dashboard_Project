@@ -13,7 +13,7 @@ public interface NoticeService {
 
     // public Notice createNoticeByUser(Notice notice);
 
-    public Notice createNoticeByUser(Notice noticeDto);
+    public Notice createNoticeByUser(Notice notice);
 
     public Notice getNoticeByNoticeId(String noticeId);
 

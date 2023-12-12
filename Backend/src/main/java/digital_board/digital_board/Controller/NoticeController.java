@@ -45,8 +45,8 @@ public class NoticeController {
     private NoticeServiceImpl noticeServiceImpl;
 
     @PostMapping("/addnotice")
-    public Notice createNoticeByUser(@RequestBody Notice noticeDto) {
-      return noticeServiceImpl.createNoticeByUser(noticeDto);
+    public Notice createNoticeByUser(@RequestBody Notice notice) {
+      return noticeServiceImpl.createNoticeByUser(notice);
     }
 
     // @PostMapping("/add")
