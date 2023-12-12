@@ -260,9 +260,9 @@ public class NoticeController {
     // @RequestParam(defaultValue = "0") int page,
     // @RequestParam(defaultValue = "10") int size) {
 
-    Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
-    List<Notice> notice = noticeServiceImpl.filterNotices(noticeFilterDto,
-    pageable);
+    // Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+    // List<Notice> notice = noticeServiceImpl.filterNotices(noticeFilterDto,
+    // pageable);
 
     // if (notice.isEmpty()) {
     // throw new
