@@ -52,6 +52,7 @@ public class ResponseMessagesBackup {
                  new ExceptionResponse(27, "EMAIL_ALREADY_EXISTS", "User with this email already exists")
 
         ));//NOTICE_CREATE_FAILURE
+
         exceptionResponseRepository.saveAll(messagelist);
     }
 

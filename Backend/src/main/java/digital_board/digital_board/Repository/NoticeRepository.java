@@ -19,12 +19,12 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
       @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId AND n.status <> 'disable'")
       Page<Notice> getAllNoticeByUserId(@Param("userId") String userId, Pageable pageable);
 
-      @Query("SELECT n FROM Notice n WHERE n.category IN :category AND n.status <> 'disable'")
-      Page<Notice> findByCategoryIn(List<String> category, Pageable pageable);
+      @Query("SELECT n FROM Notice n WHERE n.category IN :category AND (:department IS NULL OR n.departmentName IN :department) AND n.status <> 'disable'")
+      Page<Notice> findByCategoryInDepartmentNameInAndStatusNotDisable(List<String> category,@Param("department") List<String> department,Pageable pageable);
 
       // Page<Notice> findByDepartmentNameIn(List<String> departmentName, Pageable pageable);
-      @Query("SELECT n FROM Notice n WHERE n.departmentName IN :departmentName AND n.status <> 'disable'")
-      Page<Notice> findByDepartmentNameIn(List<String> departmentName, Pageable pageable);
+      @Query("SELECT n FROM Notice n WHERE n.departmentName IN :departmentName AND (:categories IS NULL OR n.category IN :categories) AND n.status <> 'disable'")
+      Page<Notice> findByDepartmentNameInANDcategoriesInAndStatusNotDisable(List<String> departmentName, @Param("categories") List<String> categories, Pageable pageable);
 
       @Query("SELECT n FROM Notice n WHERE n.status <> 'disable'")
       Page<Notice> findAll(Pageable pageable);
@@ -67,4 +67,15 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
 //    get important notice by limit
     List<Notice> findByStatus(String status, Sort sort, PageRequest of);
+
+    @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
+    "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
+    "AND n.status IN :status " +
+    "AND (:createdBy IS NULL OR n.createdBy IN :createdBy)")
+Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(
+    @Param("categories") List<String> categories,
+    @Param("departmentNames") List<String> departmentNames,
+    @Param("status") List<String> status,
+    @Param("createdBy") List<String> createdBy,
+    Pageable pageable);
 }

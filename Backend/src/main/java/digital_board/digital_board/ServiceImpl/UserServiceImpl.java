@@ -23,6 +23,7 @@ import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
 import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.Repository.UserRepository;
+import digital_board.digital_board.Servies.Auth0Service;
 import digital_board.digital_board.Servies.UserService;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
 
@@ -34,7 +35,10 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepo;
     @Autowired
     private Cloudinary cloudinary;
-   
+
+    @Autowired
+    private Auth0Service auth0Service;
+
     // for testing purpose argument constructer
     public UserServiceImpl(UserRepository userRepo) {
 
@@ -44,13 +48,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User CreateUser(User user) {
         LOGGER.info("Start UserServiceImpl: CreateUser method");
-         LOGGER.info("End UserServiceImpl: CreateUser method");
+        LOGGER.info("End UserServiceImpl: CreateUser method");
         return userRepo.save(user);
     }
 
     @Override
     public User UpdateUser(User user) throws IOException {
-          LOGGER.info("Start UserServiceImpl: UpdateUser method");
+        LOGGER.info("Start UserServiceImpl: UpdateUser method");
         System.out.println("sultan id" + user.getId());
         userRepo.findById(user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
@@ -70,7 +74,11 @@ public class UserServiceImpl implements UserService {
                 }
 
             }
-             LOGGER.info("End UserServiceImpl: UpdateUser method");
+            LOGGER.info("End UserServiceImpl: UpdateUser method");
+            if (user.getStatus().equals("disable")) {
+                boolean deleteResponse = auth0Service.deleteUser(user.getEmail());
+               
+            }
             return userRepo.save(user);
         } catch (Exception e) {
             throw new ResourceNotFoundException("Image should be unber 10MB");
@@ -80,15 +88,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> FindAllUser(Pageable pageable) {
-           LOGGER.info("Start UserServiceImpl: FindAllUser method");
-            LOGGER.info("End UserServiceImpl: FindAllUser method");
-        return userRepo.findAllByRoleAndStatus("Admin", "enable",pageable);
+        LOGGER.info("Start UserServiceImpl: FindAllUser method");
+        LOGGER.info("End UserServiceImpl: FindAllUser method");
+        return userRepo.findAllByRoleAndStatus("Admin", "enable", pageable);
 
     }
 
     @Override
     public User getUserByEmail(String email) {
-           LOGGER.info("Start UserServiceImpl: getUserByEmail method");
+        LOGGER.info("Start UserServiceImpl: getUserByEmail method");
         return userRepo.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
                         .filter(exceptionResponse -> "USER_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
@@ -99,10 +107,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getInfoOfAdmins(){
-    List<UserDTO> userDTOs = userRepo.findUserNames();
-    return userDTOs;
+    public List<UserDTO> getInfoOfAdmins() {
+        List<UserDTO> userDTOs = userRepo.findUserNames();
+        return userDTOs;
     }
 
-    
 }

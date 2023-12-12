@@ -21,9 +21,9 @@ public interface NoticeService {
 
     public List<Notice> getAllNotice();
 
-    public Page<Notice> getNoticesByCategory(List<String> category, Pageable pageable);
+    public Page<Notice> getNoticesByCategory(List<String> category, List<String> department,Pageable pageable);
 
-    public Page<Notice> getNoticesByDepartment(List<String> departmentName, Pageable pageable);
+    public Page<Notice> getNoticesByDepartment(List<String> departmentName,List<String> categories, Pageable pageable);
 
     public Page<Notice> getAllNoticesSorted(Pageable pageable);
 
@@ -50,4 +50,7 @@ public interface NoticeService {
 
     // get important notice by limit
      public List<Notice> noticefindByStatusImportant(String status, Sort sort, int limit);
+
+     public Page<Notice> getAllNoticesByfilter(List<String> categories, List<String> departmentNames, List<String> createdBy,
+     String status, Pageable pageable);
 }
