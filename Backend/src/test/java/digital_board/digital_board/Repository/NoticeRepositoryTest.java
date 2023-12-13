@@ -26,7 +26,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import digital_board.digital_board.Entity.Notice;
-import jakarta.persistence.TableGenerator;
 
 @ExtendWith(MockitoExtension.class)
 public class NoticeRepositoryTest {
