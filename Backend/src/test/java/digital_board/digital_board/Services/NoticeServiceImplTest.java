@@ -15,8 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -31,14 +29,10 @@ import com.cloudinary.Uploader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -145,54 +139,45 @@ public class NoticeServiceImplTest {
 
         }
 
-        // @Test
-        // public void testGetNoticesByCategory() {
-        //         List<String> myNotices = Arrays.asList("General", "General", "General");
+        @Test
+        public void testGetNoticesByDepartment() {
+                List<String> myNotices = Arrays.asList("Sports", "Sports", "Sports");
 
-        //         List<Notice> noticeList = myNotices.stream()
-        //                         .map(content -> new Notice("1", "This is an important announcement.",
-        //                                         "this is notice descriptions", content,
-        //                                         "HR Department", "2023-11-01", "2023-11-10", null, new Date(), userId,
-        //                                         "enable"))
-        //                         .collect(Collectors.toList());
+                List<Notice> noticeList = myNotices.stream()
+                                .map(content -> new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions", content,
+                                                "HR Department", "2023-11-01", "2023-11-10", null, new Date(), userId,
+                                                "enable"))
+                                .collect(Collectors.toList());
 
-        //         Page<Notice> noticePage = new PageImpl<>(noticeList);
-        //         Mockito.when(noticeRepository.findByCategoryIn(anyList(), any(Pageable.class))).thenReturn(noticePage);
+                Page<Notice> noticePage = new PageImpl<>(noticeList);
+                Mockito.when(noticeRepository.findByDepartmentNameInANDcategoriesInAndStatusNotDisable(anyList(), anyList(),any(Pageable.class))).thenReturn(noticePage);
 
-        //         Page<Notice> result = noticeService.getNoticesByCategory(myNotices, PageRequest.of(0, 10));
+                Page<Notice> result = noticeService.getNoticesByDepartment(Arrays.asList("Sports", "Sports", "Sports"),Arrays.asList("Sports", "Sports", "Sports"), PageRequest.of(0, 10));
 
-        //         assertEquals(noticePage, result);
+                assertEquals(noticePage, result);
 
-        // }
+        }
 
-//      @Test
-//     public void testGetNoticesByDepartment() {
-      
-//         List<String> myDepartments = Arrays.asList("HR Department", "IT Department");
+ @Test
+        public void testGetNoticesByCategory() {
+                List<String> myNotices = Arrays.asList("Sports", "Sports", "Sports");
 
-//         List<Notice> departmentNotices = Arrays.asList(
-//                 new Notice("1", "Notice 1", "Description 1", "HR Department", "Content 1", "2023-11-01", "2023-11-10", null, new Date(), "User1", "enable"),
-//                 new Notice("2", "Notice 2", "Description 2", "IT Department", "Content 2", "2023-11-01", "2023-11-10", null, new Date(), "User2", "enable")
-//         );
+                List<Notice> noticeList = myNotices.stream()
+                                .map(content -> new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions", content,
+                                                "HR Department", "2023-11-01", "2023-11-10", null, new Date(), userId,
+                                                "enable"))
+                                .collect(Collectors.toList());
 
-//         Page<Notice> departmentNoticesPage = new PageImpl<>(departmentNotices);
+                Page<Notice> noticePage = new PageImpl<>(noticeList);
+                Mockito.when(noticeRepository.findByCategoryInDepartmentNameInAndStatusNotDisable(anyList(), anyList(),any(Pageable.class))).thenReturn(noticePage);
 
-//         when(noticeRepository.findByDepartmentNameIn(eq(myDepartments), any(Pageable.class)))
-//                 .thenReturn(departmentNoticesPage);
+                Page<Notice> result = noticeService.getNoticesByCategory(Arrays.asList("Sports", "Sports", "Sports"),Arrays.asList("Sports", "Sports", "Sports"), PageRequest.of(0, 10));
 
-//         Page<Notice> result = noticeService.getNoticesByDepartment(myDepartments, PageRequest.of(0, 10));
+                assertEquals(noticePage, result);
 
-//         assertNotNull(result);
-//         assertEquals(2, result.getTotalElements());
-//         assertEquals(departmentNotices, result.getContent());
-
-//         verify(noticeRepository, times(1)).findByDepartmentNameIn(eq(myDepartments), any(Pageable.class));
-
-//         List<String> allDepartments = Collections.singletonList("All");
-//         Page<Notice> resultAllDepartments = noticeService.getNoticesByDepartment(allDepartments, PageRequest.of(0, 10));
-
-//         assertNull(resultAllDepartments);
-//     }
+        }
 
         @Test
         public void getAllNoticesSorted() {
