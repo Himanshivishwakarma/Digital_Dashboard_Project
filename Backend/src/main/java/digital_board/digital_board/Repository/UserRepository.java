@@ -14,6 +14,7 @@ import digital_board.digital_board.Dto.UserDTO;
 // import org.springframework.data.jpa.repository.JpaRepository;
 
 import digital_board.digital_board.Entity.User;
+import digital_board.digital_board.Entity.UserNotification;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
@@ -29,5 +30,10 @@ public interface UserRepository extends JpaRepository<User, String> {
     // @Query("SELECT u.id,u.email,u.userName FROM User u")
     @Query("SELECT new digital_board.digital_board.Dto.UserDTO(u.id, u.email, u.userName) FROM User u where u.status != 'disable'")
     List<UserDTO> findUserNames();
+
+    // get admin by searching
+    @Query("SELECT u FROM User u WHERE LOWER(u.userName) LIKE LOWER(CONCAT('%', :username, '%')) OR LOWER(u.email) LIKE LOWER(CONCAT('%', :username, '%'))")
+    List<User> findAdminByNameOrEmail(@Param("username") String username);
+
 
 }
