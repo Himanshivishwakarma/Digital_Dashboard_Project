@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
+@AllArgsConstructor
 public class UserNotification {
    @Id
    private String id = UUID.randomUUID().toString();
