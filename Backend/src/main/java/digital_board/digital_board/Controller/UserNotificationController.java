@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import digital_board.digital_board.Entity.UserNotification;
 import digital_board.digital_board.ServiceImpl.UserNotificationServiceImpl;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin("*")
@@ -41,5 +43,10 @@ public class UserNotificationController {
         return userNotification;
 
     }
+    @GetMapping("/search/user/{userName}")
+    public ResponseEntity<List<UserNotification>> getMethodName(@RequestParam String userName) {
+        return ResponseEntity.ok(notificationServiceImpl.getUserByFilter(userName));
+    }
+    
 
 }
