@@ -151,15 +151,17 @@ public class NoticeServiceImplTest {
                                 .collect(Collectors.toList());
 
                 Page<Notice> noticePage = new PageImpl<>(noticeList);
-                Mockito.when(noticeRepository.findByDepartmentNameInANDcategoriesInAndStatusNotDisable(anyList(), anyList(),any(Pageable.class))).thenReturn(noticePage);
+                Mockito.when(noticeRepository.findByDepartmentNameInANDcategoriesInAndStatusNotDisable(anyList(),
+                                anyList(), any(Pageable.class))).thenReturn(noticePage);
 
-                Page<Notice> result = noticeService.getNoticesByDepartment(Arrays.asList("Sports", "Sports", "Sports"),Arrays.asList("Sports", "Sports", "Sports"), PageRequest.of(0, 10));
+                Page<Notice> result = noticeService.getNoticesByDepartment(Arrays.asList("Sports", "Sports", "Sports"),
+                                Arrays.asList("Sports", "Sports", "Sports"), PageRequest.of(0, 10));
 
                 assertEquals(noticePage, result);
 
         }
 
- @Test
+        @Test
         public void testGetNoticesByCategory() {
                 List<String> myNotices = Arrays.asList("Sports", "Sports", "Sports");
 
@@ -171,9 +173,11 @@ public class NoticeServiceImplTest {
                                 .collect(Collectors.toList());
 
                 Page<Notice> noticePage = new PageImpl<>(noticeList);
-                Mockito.when(noticeRepository.findByCategoryInDepartmentNameInAndStatusNotDisable(anyList(), anyList(),any(Pageable.class))).thenReturn(noticePage);
+                Mockito.when(noticeRepository.findByCategoryInDepartmentNameInAndStatusNotDisable(anyList(), anyList(),
+                                any(Pageable.class))).thenReturn(noticePage);
 
-                Page<Notice> result = noticeService.getNoticesByCategory(Arrays.asList("Sports", "Sports", "Sports"),Arrays.asList("Sports", "Sports", "Sports"), PageRequest.of(0, 10));
+                Page<Notice> result = noticeService.getNoticesByCategory(Arrays.asList("Sports", "Sports", "Sports"),
+                                Arrays.asList("Sports", "Sports", "Sports"), PageRequest.of(0, 10));
 
                 assertEquals(noticePage, result);
 
@@ -304,6 +308,26 @@ public class NoticeServiceImplTest {
                 verify(noticeRepository).findById(noticeId);
                 verify(noticeRepository).save(originalNotice);
 
+        }
+
+        @Test
+        void testGetAllNoticesByfilter() {
+                List<Notice> mockNotices = List.of(
+                                new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                "enable"),
+                                new Notice("1", "z",
+                                                "z",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                "disable"));
+                Page<Notice> pageNotice = new PageImpl<>(mockNotices);
+                when(noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(anyList(), anyList(),
+                                anyList(), anyList(), any(Pageable.class))).thenReturn(pageNotice);
+          Page<Notice> result  =    noticeService.getAllNoticesByfilter(Arrays.asList("General","General","General"), Arrays.asList("General","General","General"), Arrays.asList("General","General","General"), "enable", PageRequest.of(0, 10));
+          assertEquals(pageNotice, result);
         }
 
 }
