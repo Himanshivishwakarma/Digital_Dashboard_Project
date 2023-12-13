@@ -22,6 +22,7 @@ public class ConnectionFactory {
 
     private ConnectionFactory() {
         Properties properties = new Properties();
+
         properties.setProperty("user", "digital_board_user");
         properties.setProperty("password", "mibjZBLOiXsEXSUi4pr8iP4MVBDQbLn6"); // or get properties from some configuration file
 

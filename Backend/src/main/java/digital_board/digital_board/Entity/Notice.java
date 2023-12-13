@@ -1,6 +1,7 @@
 package digital_board.digital_board.Entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +29,7 @@ public class Notice {
     private String departmentName;
     private String noticeStartDate;
     private String noticeEndDate;
+    private List<String> images_url;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -40,11 +40,14 @@ public class SecurityConfig {
             "/api/v1/notice/byDepartment/**",
             "/api/v1/notice/important/**",
             "/api/v1/notice/search/**",
+            "/api/v1/notice/get/byNoticeId/**",
             "/api/v1/user/FindAllUser",
-            "/api/v1/notice/getAll",
             "/api/v1/notification/create",
-
+            "/api/v1/notice/getAll/**",
+            "/api/v1/user/admin-list",
+            
     };
+
 
     @Bean
     public JwtDecoder jwtDecoder() {
