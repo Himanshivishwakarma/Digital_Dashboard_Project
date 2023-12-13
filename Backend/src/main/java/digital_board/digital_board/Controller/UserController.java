@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,20 +23,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import digital_board.digital_board.Dto.AuthResponse;
 import digital_board.digital_board.Dto.SignupRequestDto;
 import digital_board.digital_board.Dto.SignupResponseDto;
 import digital_board.digital_board.Dto.UserDTO;
 import digital_board.digital_board.Entity.ExceptionResponse;
-import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Entity.User;
-import digital_board.digital_board.Repository.UserRepository;
 import digital_board.digital_board.ServiceImpl.EmailServiceImpl;
 import digital_board.digital_board.ServiceImpl.UserServiceImpl;
 import digital_board.digital_board.Servies.Auth0Service;
@@ -61,57 +52,38 @@ public class UserController {
   @Autowired
   EmailServiceImpl emailServices;
 
-  @Autowired
-  private Cloudinary cloudinary;
-
-  @Autowired
-  private UserRepository userRepo;
-
-  // @Autowired
-  // private EVENT_LOGSRepository eVENT_LOGSRepository;
-
-  @GetMapping("/test")
-  public ResponseEntity<AuthResponse> home(@AuthenticationPrincipal OidcUser principal) {
-    AuthResponse authResponse = new AuthResponse();
-    authResponse.setName(principal.getEmail());
-    authResponse.setToken(principal.getIdToken().getTokenValue());
-    return ResponseEntity.ok(authResponse);
-  }
+  // @GetMapping("/test")
+  // public ResponseEntity<AuthResponse> home(@AuthenticationPrincipal OidcUser
+  // principal) {
+  // AuthResponse authResponse = new AuthResponse();
+  // authResponse.setName(principal.getEmail());
+  // authResponse.setToken(principal.getIdToken().getTokenValue());
+  // return ResponseEntity.ok(authResponse);
+  // }
 
   @GetMapping("/public")
   public String publicTest() {
     LOGGER.info("Start User Controller : public method");
 
-    // MDC.put("User", "mashid@gmail.com");
-    // MDC.put("path", "/public");
-    // LOGGER.info("WelcomeMsg action called..");
-    // MDC.remove("User");
-    // MDC.remove("path");
-
-    // emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "email test",
-    // "Sahil");
-    // emailServices.sendSimpleMessage("himanshiv.bca2021@ssism.org", "New Notice", "himanshi vishwakarma");
-    // MDC.clear();
-    //  auth0Service.deleteUser();
+    MDC.put("useremail", "mashid@gmail.com");
+    MDC.put("path", "/public");
+    LOGGER.info("Welcome action called..");
+    MDC.clear();
     LOGGER.info("End User Controller : public method");
 
     return "working";
   }
 
-  // create user
-  // @PostMapping("/CreatUser")
-  // ResponseEntity<?> CreateUser(@RequestBody User user) {
+  @GetMapping("/public/mailtest")
+  public String publicMailTest() {
+    LOGGER.info("Start User Controller : public mail test method");
 
-  // Map<String,Object> response = new HashMap<>();
-  // response.put("Massage",ResponseMessagesConstants.messagelist.stream()
-  // .filter(exceptionResponse ->
-  // "USER_CREATE_SUCCESS".equals(exceptionResponse.getExceptonName()))
-  // .map(ExceptionResponse::getMassage)
-  // .findFirst()
-  // .orElse("Default message if not found"));
-  // response.put("User", userServiceImpl.CreateUser(user));
-  // return ResponseEntity.ok(response);
-  // }
+    emailServices.sendSimpleMessage("sahilkhanskkhan4@gmail.com", "New Notice", "himanshi vishwakarma");
+
+    LOGGER.info("End User Controller : public mail test method");
+
+    return "working";
+  }
 
   @PostMapping("/signup")
   public ResponseEntity<Map<String, Object>> signUp(@RequestBody SignupRequestDto signupRequestDto) {
@@ -128,7 +100,7 @@ public class UserController {
 
       response.put("message", successMessage);
       response.put("data", signupResponseDto);
-      MDC.put("User", signupRequestDto.getCreatedBy());
+      MDC.put("useremail", signupRequestDto.getCreatedBy());
       MDC.put("path", "/user/signup");
       LOGGER.info("User Controller : signUp method");
       MDC.clear();
@@ -152,6 +124,7 @@ public class UserController {
   @PutMapping("/update")
   public ResponseEntity<Map<String, Object>> updateUser(@RequestBody User user)
       throws IOException {
+    LOGGER.info("Start User Controller : updateUser method");
     if (user.getStatus().startsWith("disable")) {
 
       Map<String, Object> response = new HashMap<>();
@@ -163,7 +136,11 @@ public class UserController {
 
       response.put("message", successMessage);
       response.put("user", userServiceImpl.UpdateUser(user));
-
+      MDC.put("useremail", user.getEmail());
+      MDC.put("path", "/user/update/delete");
+      LOGGER.info("User Controller : delete method");
+      MDC.clear();
+      LOGGER.info("End User Controller : updateUser method");
       return ResponseEntity.ok(response);
     } else {
 
@@ -174,6 +151,11 @@ public class UserController {
           .findFirst()
           .orElse("Default message if not found"));
       response.put("user", userServiceImpl.UpdateUser(user));
+      MDC.put("useremail", user.getEmail());
+      MDC.put("path", "/user/update");
+      LOGGER.info("User Controller : update method");
+      MDC.clear();
+      LOGGER.info("End User Controller : updateUser method");
       return ResponseEntity.ok(response);
     }
 
@@ -186,6 +168,7 @@ public class UserController {
       @RequestParam(required = false, defaultValue = "userName,asc") String sort,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
+    LOGGER.info("Start User Controller : findAllUser method");
     Map<String, Object> response = new HashMap<>();
     Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
 
@@ -202,9 +185,11 @@ public class UserController {
           .orElse("Default failure message if not found");
 
       response.put("message", emptyMessage);
+      LOGGER.info("End User Controller : findAllUser method");
       return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     // Return the list of notices if data is found
+    LOGGER.info("End User Controller : findAllUser method");
     return ResponseEntity.ok(response);
   }
 
@@ -220,7 +205,7 @@ public class UserController {
           .findFirst()
           .orElse("Default message if not found"), HttpStatus.OK);
     }
-      LOGGER.info("End UserController: getUserByEmail method");
+    LOGGER.info("End UserController: getUserByEmail method");
     return ResponseEntity.ok(user);
   }
 
@@ -230,23 +215,24 @@ public class UserController {
     List<UserDTO> activeAdminList = userServiceImpl.getInfoOfAdmins();
 
     Map<String, Object> response = new HashMap<>();
-response.put("count", activeAdminList.size());
-response.put("data", activeAdminList);
+    response.put("count", activeAdminList.size());
+    response.put("data", activeAdminList);
 
-if (activeAdminList.isEmpty()) {
-    // Return a JSON response with a message for data not found
-    String emptyMessage = ResponseMessagesConstants.messagelist.stream()
-            .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
-            .map(ExceptionResponse::getMassage)
-            .findFirst()
-            .orElse("Default failure message if not found");
+    if (activeAdminList.isEmpty()) {
+      // Return a JSON response with a message for data not found
+      String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default failure message if not found");
 
-    response.put("message", emptyMessage);
-    return ResponseEntity.status(HttpStatus.OK).body(response);
-} 
-   return ResponseEntity.ok(response);
-      // LOGGER.info("End UserController: getInfoOfAdmins method");
-    // return ResponseEntity.ok(activeAdminList);
+      response.put("message", emptyMessage);
+      LOGGER.info("End User Controller : getInfoOfAdmins method");
+      return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    LOGGER.info("End User Controller : getInfoOfAdmins method");
+    return ResponseEntity.ok(response);
+
   }
 
   private Sort parseSortString(String sort) {
@@ -260,5 +246,5 @@ if (activeAdminList.isEmpty()) {
                                                   // order
     }
   }
-  
+
 }
