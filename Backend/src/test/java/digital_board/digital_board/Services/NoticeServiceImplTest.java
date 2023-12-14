@@ -1,5 +1,6 @@
 package digital_board.digital_board.Services;
 
+import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Repository.NoticeRepository;
 import digital_board.digital_board.ServiceImpl.NoticeServiceImpl;
@@ -326,8 +327,22 @@ public class NoticeServiceImplTest {
                 Page<Notice> pageNotice = new PageImpl<>(mockNotices);
                 when(noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(anyList(), anyList(),
                                 anyList(), anyList(), any(Pageable.class))).thenReturn(pageNotice);
-          Page<Notice> result  =    noticeService.getAllNoticesByfilter(Arrays.asList("General","General","General"), Arrays.asList("General","General","General"), Arrays.asList("General","General","General"), "enable", PageRequest.of(0, 10));
-          assertEquals(pageNotice, result);
+                Page<Notice> result = noticeService.getAllNoticesByfilter(
+                                Arrays.asList("General", "General", "General"),
+                                Arrays.asList("General", "General", "General"),
+                                Arrays.asList("General", "General", "General"), "enable", PageRequest.of(0, 10));
+                assertEquals(pageNotice, result);
         }
 
+        @Test
+        void testCountAllEnableNotices() {
+                long count = 2;
+                List<NoticeDto> mockNotices = Arrays.asList(new NoticeDto("Iteg", count),
+                                new NoticeDto("Iteg", count));
+
+                when(noticeRepository.countAllEnableNotices()).thenReturn(mockNotices);
+                List<NoticeDto> result = noticeService.countAllEnableNotices();
+                assertEquals(mockNotices, result);
+
+        }
 }
