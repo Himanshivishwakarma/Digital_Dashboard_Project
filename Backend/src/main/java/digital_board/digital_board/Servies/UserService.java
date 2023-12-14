@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import digital_board.digital_board.Dto.UserDTO;
 import digital_board.digital_board.Entity.User;
+import digital_board.digital_board.Entity.UserNotification;
 
 public interface UserService {
     
@@ -25,4 +26,7 @@ public interface UserService {
     User getUserByEmail(String email);
 
    List<UserDTO> getInfoOfAdmins();
+  
+//    get admin by searching
+   public List<User> getAdminBySearching(String userName);
 }

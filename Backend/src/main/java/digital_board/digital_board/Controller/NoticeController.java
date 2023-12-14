@@ -304,7 +304,6 @@ public class NoticeController {
 
     }
 
-   
     // get important notice by limit
     @GetMapping("/important")
     ResponseEntity<Map<String, Object>> getAllImportantNoticeByLimit(
@@ -319,7 +318,6 @@ public class NoticeController {
         }
 
         Sort sort = Sort.by(direction, "noticeCreatedDate");
-
 
         Map<String, Object> response = new HashMap<>();
         List<Notice> resultofnotice = noticeServiceImpl.noticefindByStatusImportant(status, sort, limit);
