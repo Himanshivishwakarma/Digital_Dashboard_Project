@@ -371,12 +371,12 @@ public class NoticeServiceImpl implements NoticeService {
   }
 
   @Override
-  public List<NoticeDto> countAllEnableDepartmentNotices() {
+  public List<NoticeDto> getCountAllEnableDepartmentNotices() {
      return noticeRepository.countAllEnableDepartmentNotices();
   }
 
    @Override
-  public List<CategoryNoticeDto> countAllEnableCategoryNotices() {
+  public List<CategoryNoticeDto> getCountAllEnableCategoryNotices() {
      return noticeRepository.countAllEnableCategoryNotices();
   }
 

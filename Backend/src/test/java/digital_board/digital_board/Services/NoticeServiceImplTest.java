@@ -336,25 +336,25 @@ public class NoticeServiceImplTest {
         }
 
         @Test
-        void testCountAllEnableNotices() {
+        void testGetCountAllEnableNotices() {
                 long count = 2;
                 List<NoticeDto> mockNotices = Arrays.asList(new NoticeDto("Iteg", count),
                                 new NoticeDto("Iteg", count));
 
                 when(noticeRepository.countAllEnableDepartmentNotices()).thenReturn(mockNotices);
-                List<NoticeDto> result = noticeService.countAllEnableDepartmentNotices();
+                List<NoticeDto> result = noticeService.getCountAllEnableDepartmentNotices();
                 assertEquals(mockNotices, result);
 
         }
 
         @Test
-        void testCountAllcategoryNotices() {
+        void testGetCountAllcategoryNotices() {
                 long count = 2;
                 List<CategoryNoticeDto> mockNotices = Arrays.asList(new CategoryNoticeDto("Iteg", count),
                                 new CategoryNoticeDto("Iteg", count));
 
                 when(noticeRepository.countAllEnableCategoryNotices()).thenReturn(mockNotices);
-                List<CategoryNoticeDto> result = noticeService.countAllEnableCategoryNotices();
+                List<CategoryNoticeDto> result = noticeService.getCountAllEnableCategoryNotices();
                 assertEquals(mockNotices, result);
 
         }
