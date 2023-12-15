@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,10 +22,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.Notice;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class NoticeRepositoryTest {
 
         @Mock
@@ -371,13 +374,25 @@ public class NoticeRepositoryTest {
         // }
 
         @Test
-        void testCountAllEnableNotices() {
+        void testCountAllEnableDepartmentNotices() {
                 long count = 2;
                 List<NoticeDto> mockNotices = Arrays.asList(new NoticeDto("Iteg", count),
                                 new NoticeDto("Iteg", count));
 
                 when(noticeRepository.countAllEnableDepartmentNotices()).thenReturn(mockNotices);
                 List<NoticeDto> result = noticeRepository.countAllEnableDepartmentNotices();
+                assertEquals(mockNotices, result);
+        }
+
+         @Test
+        void testCountAllEnableCategoryNotices() {
+                long count = 2;
+                List<CategoryNoticeDto> mockNotices = Arrays.asList(new CategoryNoticeDto("Iteg", count),
+                                new CategoryNoticeDto("Iteg", count));
+
+                when(noticeRepository.countAllEnableCategoryNotices()).thenReturn(mockNotices);
+                
+                List<CategoryNoticeDto> result = noticeRepository.countAllEnableCategoryNotices();
                 assertEquals(mockNotices, result);
         }
 

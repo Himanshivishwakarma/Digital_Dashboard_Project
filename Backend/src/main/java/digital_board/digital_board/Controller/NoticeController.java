@@ -374,12 +374,12 @@ public class NoticeController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/activeNoticeCount")
+    @GetMapping("/activeNoticeDepartmentCount")
     public ResponseEntity<Map<String, Object>> countAllEnableNotices() {
         LOGGER.info("Start NoticeController: countAllEnableNotices method");
         Map<String, Object> response = new HashMap<>();
 
-        List<NoticeDto> noticeDto = noticeServiceImpl.countAllEnableDepartmentNotices();
+        List<NoticeDto> noticeDto = noticeServiceImpl.getCountAllEnableDepartmentNotices();
         response.put("data", noticeDto);
         if (noticeDto.isEmpty()) {
             // Return a JSON response with a message for data not found
@@ -392,12 +392,12 @@ public class NoticeController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/activeNoticeCountCategory")
+    @GetMapping("/activeNoticeCategoryCount")
     public ResponseEntity<Map<String, Object>> countAllCategoryNotices() {
         LOGGER.info("Start NoticeController: countAllCategoryNotices method");
         Map<String, Object> response = new HashMap<>();
 
-        List<CategoryNoticeDto>  categoryNoticeDtos = noticeServiceImpl.countAllEnableCategoryNotices();
+        List<CategoryNoticeDto>  categoryNoticeDtos = noticeServiceImpl.getCountAllEnableCategoryNotices();
         response.put("data", categoryNoticeDtos);
         if (categoryNoticeDtos.isEmpty()) {
             // Return a JSON response with a message for data not found

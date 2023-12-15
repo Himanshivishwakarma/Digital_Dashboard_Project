@@ -52,7 +52,7 @@ public interface NoticeService {
             List<String> createdBy,
             String status, Pageable pageable);
 
-      List<NoticeDto> countAllEnableDepartmentNotices();
+      List<NoticeDto> getCountAllEnableDepartmentNotices();
       
-      List<CategoryNoticeDto> countAllEnableCategoryNotices();
+      List<CategoryNoticeDto> getCountAllEnableCategoryNotices();
 }
