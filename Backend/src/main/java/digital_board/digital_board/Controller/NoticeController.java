@@ -196,7 +196,7 @@ public class NoticeController {
             @RequestParam(defaultValue = "10") int size) {
         LOGGER.info("Start NoticeController: getNoticesByDepartment method");
         Map<String, Object> response = new HashMap<>();
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size,parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getNoticesByDepartment(departmentName, categories, pageable);
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
@@ -307,8 +307,8 @@ public class NoticeController {
     ResponseEntity<Map<String, Object>> getAllImportantNoticeByLimit(
 
             @RequestParam(required = false, defaultValue = "desc") String order,
-            @RequestParam(required = false, defaultValue = "important") String status,
             @RequestParam(required = false, defaultValue = "3") int limit) {
+              
         Sort.Direction direction = Sort.Direction.DESC; // Default sorting order
         LOGGER.info("Start NoticeController: getAllImportantNoticeByLimit method");
         if ("asc".equalsIgnoreCase(order)) {
@@ -318,8 +318,8 @@ public class NoticeController {
         Sort sort = Sort.by(direction, "noticeCreatedDate");
 
         Map<String, Object> response = new HashMap<>();
-        List<Notice> resultofnotice = noticeServiceImpl.noticefindByStatusImportant(status, sort, limit);
-        response.put("data", noticeServiceImpl.noticefindByStatusImportant(status, sort, limit));
+        List<Notice> resultofnotice = noticeServiceImpl.noticefindByStatusImportant(sort, limit);
+        response.put("data", noticeServiceImpl.noticefindByStatusImportant(sort, limit));
         if (resultofnotice.isEmpty()) {
             response.put("message", ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
@@ -339,7 +339,7 @@ public class NoticeController {
             @RequestParam(required = false) List<String> department,
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false) List<String> admins,
-            @RequestParam(required = false) String status,
+            @RequestParam(required = false ) String status,
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {

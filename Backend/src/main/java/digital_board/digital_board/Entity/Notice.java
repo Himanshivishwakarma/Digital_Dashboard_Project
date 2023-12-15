@@ -6,8 +6,12 @@ import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -29,13 +33,18 @@ public class Notice {
     private String departmentName;
     private String noticeStartDate;
     private String noticeEndDate;
-    private List<String> images_url;
+
+    @ElementCollection
+    @CollectionTable(name = "notice_images", joinColumns = @JoinColumn(name = "notice_id"))
+    @Column(name = "image_url")
+    private List<String> Images_url;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date noticeCreatedDate;
 
     private String createdBy;
+    private boolean important;
     private String status;
 
     @PrePersist
