@@ -87,7 +87,7 @@ public class NoticeController {
                         .orElse("Default success message if not found");
 
                 response.put("message", successMessage);
-                MDC.put("useremail", notice.getCreatedBy());
+                MDC.put("useremail", updatedNotice.getCreatedBy());
                 MDC.put("path", "notice/update/delete");
                 LOGGER.info("updateNoticeByNoticeId method : notice deleted");
                 MDC.clear();
@@ -102,9 +102,12 @@ public class NoticeController {
                         .orElse("Default success message if not found");
 
                 response.put("message", successMessage);
+
+                response.put("message", successMessage);
                 response.put("data", updatedNotice);
+                
                 MDC.put("useremail", notice.getCreatedBy());
-                MDC.put("path", "notice/update");
+                MDC.put("path", "notice/update/");
                 LOGGER.info("updateNoticeByNoticeId method : notice update");
                 MDC.clear();
             }
@@ -196,7 +199,7 @@ public class NoticeController {
             @RequestParam(defaultValue = "10") int size) {
         LOGGER.info("Start NoticeController: getNoticesByDepartment method");
         Map<String, Object> response = new HashMap<>();
-        Pageable pageable = PageRequest.of(page, size,parseSortString(sort));
+        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getNoticesByDepartment(departmentName, categories, pageable);
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
@@ -308,7 +311,7 @@ public class NoticeController {
 
             @RequestParam(required = false, defaultValue = "desc") String order,
             @RequestParam(required = false, defaultValue = "3") int limit) {
-              
+
         Sort.Direction direction = Sort.Direction.DESC; // Default sorting order
         LOGGER.info("Start NoticeController: getAllImportantNoticeByLimit method");
         if ("asc".equalsIgnoreCase(order)) {
@@ -339,7 +342,7 @@ public class NoticeController {
             @RequestParam(required = false) List<String> department,
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false) List<String> admins,
-            @RequestParam(required = false ) String status,
+            @RequestParam(required = false) String status,
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
