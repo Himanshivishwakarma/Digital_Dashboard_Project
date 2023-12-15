@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
+import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Dto.NoticeFilterDto;
 import digital_board.digital_board.Entity.Notice;
 
@@ -49,4 +51,8 @@ public interface NoticeService {
     public Page<Notice> getAllNoticesByfilter(List<String> categories, List<String> departmentNames,
             List<String> createdBy,
             String status, Pageable pageable);
+
+      List<NoticeDto> countAllEnableDepartmentNotices();
+      
+      List<CategoryNoticeDto> countAllEnableCategoryNotices();
 }

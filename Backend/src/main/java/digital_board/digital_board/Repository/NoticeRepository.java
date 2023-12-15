@@ -9,6 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import digital_board.digital_board.Dto.CategoryNoticeDto;
+import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.Notice;
 
 public interface NoticeRepository extends JpaRepository<Notice, String> {
@@ -60,9 +63,9 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
         List<Notice> findByImportantTrueAndStatusIs(String status, Sort sort, PageRequest of);
 
-        @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
-                        "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
-                        "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) "+
+            @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
+                                    "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
+                                    "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) "+
                         "And n.status <> 'disable' AND n.status <> 'completed'")
         Page<Notice> findByCategoryInAndDepartmentNameInAndAndCreatedByIn(
                         @Param("categories") List<String> categories,
@@ -73,13 +76,26 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
         @Query("SELECT n FROM Notice n " +
                         "WHERE (:categories IS NULL OR n.category IN :categories) " +
                         "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +   
-                        "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) " +
+                                    "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) " +
                         "AND (n.important IS NULL OR n.important = true) " + 
                         "And n.status <> 'disable' AND n.status <> 'completed'")
-        Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
-                        @Param("categories") List<String> categories,
-                        @Param("departmentNames") List<String> departmentNames,
-                  
-                        @Param("createdBy") List<String> createdBy,
-                        Pageable pageable);
+            Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
+                                    @Param("categories") List<String> categories,
+                                    @Param("departmentNames") List<String> departmentNames,
+                              
+                                    @Param("createdBy") List<String> createdBy,
+                                    Pageable pageable);
+
+        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n)) " +
+                        "FROM Notice n " +
+                        "WHERE n.status = 'enable' " +
+                        "GROUP BY n.departmentName")
+        List<NoticeDto> countAllEnableDepartmentNotices();
+
+        @Query("SELECT NEW digital_board.digital_board.Dto.CategoryNoticeDto(n.category, COUNT(n)) " +
+                        "FROM Notice n " +
+                        "WHERE n.status = 'enable' " +
+                        "GROUP BY n.category")
+        List<CategoryNoticeDto> countAllEnableCategoryNotices();
+
 }
