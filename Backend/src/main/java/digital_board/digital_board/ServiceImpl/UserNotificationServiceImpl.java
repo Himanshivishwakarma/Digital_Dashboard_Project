@@ -76,4 +76,6 @@ public class UserNotificationServiceImpl implements UserNotificationService {
         throw new UnsupportedOperationException("Unimplemented method 'getUserNotificationByDepartment'");
     }
 
+   
+
 }
