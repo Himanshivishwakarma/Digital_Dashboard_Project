@@ -1,6 +1,5 @@
 package digital_board.digital_board.Dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -3,25 +3,17 @@ package digital_board.digital_board.ServiceImpl;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import digital_board.digital_board.Dto.UserDTO;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
-import digital_board.digital_board.Entity.UserNotification;
 import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.Repository.UserRepository;
 import digital_board.digital_board.Servies.Auth0Service;

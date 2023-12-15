@@ -1,6 +1,5 @@
 package digital_board.digital_board.Entity;
 
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
