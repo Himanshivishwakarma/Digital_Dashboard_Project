@@ -1,5 +1,6 @@
 package digital_board.digital_board.Services;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.Notice;
 import digital_board.digital_board.Repository.NoticeRepository;
@@ -340,8 +341,20 @@ public class NoticeServiceImplTest {
                 List<NoticeDto> mockNotices = Arrays.asList(new NoticeDto("Iteg", count),
                                 new NoticeDto("Iteg", count));
 
-                when(noticeRepository.countAllEnableNotices()).thenReturn(mockNotices);
-                List<NoticeDto> result = noticeService.countAllEnableNotices();
+                when(noticeRepository.countAllEnableDepartmentNotices()).thenReturn(mockNotices);
+                List<NoticeDto> result = noticeService.countAllEnableDepartmentNotices();
+                assertEquals(mockNotices, result);
+
+        }
+
+        @Test
+        void testCountAllcategoryNotices() {
+                long count = 2;
+                List<CategoryNoticeDto> mockNotices = Arrays.asList(new CategoryNoticeDto("Iteg", count),
+                                new CategoryNoticeDto("Iteg", count));
+
+                when(noticeRepository.countAllEnableCategoryNotices()).thenReturn(mockNotices);
+                List<CategoryNoticeDto> result = noticeService.countAllEnableCategoryNotices();
                 assertEquals(mockNotices, result);
 
         }

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.Notice;
 
@@ -72,6 +73,12 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
                         "FROM Notice n " +
                         "WHERE n.status = 'enable' " +
                         "GROUP BY n.departmentName")
-        List<NoticeDto> countAllEnableNotices();
+        List<NoticeDto> countAllEnableDepartmentNotices();
+
+        @Query("SELECT NEW digital_board.digital_board.Dto.CategoryNoticeDto(n.category, COUNT(n)) " +
+                        "FROM Notice n " +
+                        "WHERE n.status = 'enable' " +
+                        "GROUP BY n.category")
+        List<CategoryNoticeDto> countAllEnableCategoryNotices();
 
 }

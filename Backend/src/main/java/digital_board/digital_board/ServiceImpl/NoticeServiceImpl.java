@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
@@ -370,8 +371,13 @@ public class NoticeServiceImpl implements NoticeService {
   }
 
   @Override
-  public List<NoticeDto> countAllEnableNotices() {
-     return noticeRepository.countAllEnableNotices();
+  public List<NoticeDto> countAllEnableDepartmentNotices() {
+     return noticeRepository.countAllEnableDepartmentNotices();
+  }
+
+   @Override
+  public List<CategoryNoticeDto> countAllEnableCategoryNotices() {
+     return noticeRepository.countAllEnableCategoryNotices();
   }
 
   

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
@@ -373,7 +374,7 @@ public class NoticeController {
         LOGGER.info("Start NoticeController: countAllEnableNotices method");
         Map<String, Object> response = new HashMap<>();
 
-        List<NoticeDto> noticeDto = noticeServiceImpl.countAllEnableNotices();
+        List<NoticeDto> noticeDto = noticeServiceImpl.countAllEnableDepartmentNotices();
         response.put("data", noticeDto);
         if (noticeDto.isEmpty()) {
             // Return a JSON response with a message for data not found
@@ -383,6 +384,24 @@ public class NoticeController {
         }
         // Return the list of notices if data is found
         LOGGER.info("End NoticeController: countAllEnableNotices method");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/activeNoticeCountCategory")
+    public ResponseEntity<Map<String, Object>> countAllCategoryNotices() {
+        LOGGER.info("Start NoticeController: countAllCategoryNotices method");
+        Map<String, Object> response = new HashMap<>();
+
+        List<CategoryNoticeDto>  categoryNoticeDtos = noticeServiceImpl.countAllEnableCategoryNotices();
+        response.put("data", categoryNoticeDtos);
+        if (categoryNoticeDtos.isEmpty()) {
+            // Return a JSON response with a message for data not found
+            response.put("count", categoryNoticeDtos.size());
+            LOGGER.info("End NoticeController: countAllCategoryNotices method");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        // Return the list of notices if data is found
+        LOGGER.info("End NoticeController: countAllCategoryNotices method");
         return ResponseEntity.ok(response);
     }
 

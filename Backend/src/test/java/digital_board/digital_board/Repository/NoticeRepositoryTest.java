@@ -375,8 +375,8 @@ public class NoticeRepositoryTest {
                 List<NoticeDto> mockNotices = Arrays.asList(new NoticeDto("Iteg", count),
                                 new NoticeDto("Iteg", count));
 
-                when(noticeRepository.countAllEnableNotices()).thenReturn(mockNotices);
-                List<NoticeDto> result = noticeRepository.countAllEnableNotices();
+                when(noticeRepository.countAllEnableDepartmentNotices()).thenReturn(mockNotices);
+                List<NoticeDto> result = noticeRepository.countAllEnableDepartmentNotices();
                 assertEquals(mockNotices, result);
         }
 
