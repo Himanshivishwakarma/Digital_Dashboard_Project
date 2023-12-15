@@ -1,9 +1,11 @@
 package digital_board.digital_board.ServiceImpl;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
@@ -50,18 +53,20 @@ public class NoticeServiceImpl implements NoticeService {
   public Notice createNoticeByUser(Notice notice) {
     LOGGER.info("Start NoticeServiceImpl: createNoticeByUser method");
     List<String> base64ImageStrings = notice.getImages_url();
-
+    LOGGER.info("Start NoticeServiceImpl: createNoticeByUser method ");
     List<String> listofdata = new ArrayList<>();
-    try {
-      for (String base64Image : base64ImageStrings) {
+    if (base64ImageStrings != null) {
+      try {
+        for (String base64Image : base64ImageStrings) {
 
-        Map uploadResult = this.cloudinary.uploader().upload("data:image/png;base64," + base64Image,
-            ObjectUtils.emptyMap());
-        String imageUrl = (String) uploadResult.get("url");
-        listofdata.add(imageUrl);
+          Map uploadResult = this.cloudinary.uploader().upload(base64Image,
+              ObjectUtils.emptyMap());
+          String imageUrl = (String) uploadResult.get("url");
+          listofdata.add(imageUrl);
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
       }
-    } catch (IOException e) {
-      e.printStackTrace();
     }
     notice.setImages_url(listofdata);
     Notice saveNotice = this.noticeRepository.save(notice);
@@ -70,7 +75,7 @@ public class NoticeServiceImpl implements NoticeService {
 
       for (UserNotification user : userNotification) {
         emailServices.sendSimpleMessage(user.getUserEmail(), "New Notice",
-            user.getUserName());
+        user.getUserName());
       }
     } catch (Exception e) {
       LOGGER.info("End NoticeServiceImpl: createNoticeByUser method ! mail sending error");
@@ -111,11 +116,11 @@ public class NoticeServiceImpl implements NoticeService {
 
   @Override
   public Page<Notice> getAllNoticesSorted(Pageable pageable) {
-    LOGGER.info("Start NoticeServiceImpl: getAllNoticesSorted method");
-    LOGGER.info("End NoticeServiceImpl: getAllNoticesSorted method");
-    return noticeRepository.findAll(pageable);
-
+  LOGGER.info("Start NoticeServiceImpl: getAllNoticesSorted method");
+  LOGGER.info("End NoticeServiceImpl: getAllNoticesSorted method");
+  return noticeRepository.findAll(pageable);
   }
+
 
   @Override
   public Page<Notice> getNoticesByCategory(List<String> category, List<String> department, Pageable pageable) {
@@ -345,33 +350,45 @@ public class NoticeServiceImpl implements NoticeService {
   }
 
   // get important notice by limit
-  public List<Notice> noticefindByStatusImportant(String status, Sort sort, int limit) {
-    return noticeRepository.findByStatus(status, sort, PageRequest.of(0, limit));
+  @Override
+  public List<Notice> noticefindByStatusImportant(Sort sort, int limit) {
+    return noticeRepository.findByImportantTrueAndStatusIs("enable", sort, PageRequest.of(0, limit));
   }
 
   @Override
   public Page<Notice> getAllNoticesByfilter(List<String> categories, List<String> departmentNames,
       List<String> createdBy,
       String status, Pageable pageable) {
+
     LOGGER.info("Start NoticeServiceImpl: getAllNoticesByfilter method");
     // Handle the scenario where "DepartmentName = All"
     if (departmentNames != null) {
       if (departmentNames.contains("Iteg") || departmentNames.contains("Meg") || departmentNames.contains("Beg")) {
-
         departmentNames.addAll(Arrays.asList("All"));
-
       }
     }
-    List<String> statusList = (status == null) ? Arrays.asList("enable", "important")
-        : Collections.singletonList(status);
-    LOGGER.info("Start NoticeServiceImpl: getAllNoticesByfilter method");
-    return noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(
-        categories, departmentNames, statusList, createdBy, pageable);
+    if ("false".equals(status) || status == null) {
+      LOGGER.info("End NoticeServiceImpl: getAllNoticesByfilter method");
+      return noticeRepository.findByCategoryInAndDepartmentNameInAndAndCreatedByIn(
+          categories, departmentNames, createdBy, pageable);
+    } else {
+      LOGGER.info("End NoticeServiceImpl: getAllNoticesByfilter method");
+      return noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
+          categories, departmentNames, createdBy, pageable);
+
+    }
+
   }
 
+  // {http://res.cloudinary.com/dkbdo9top/image/upload/v1702543503/etfonrrzdhazanffusj6.png,http://res.cloudinary.com/dkbdo9top/image/upload/v1702543505/yxnlttu9ejjcs5g6igvv.png}
   @Override
-  public List<NoticeDto> countAllEnableNotices() {
-     return noticeRepository.countAllEnableNotices();
+  public List<NoticeDto> countAllEnableDepartmentNotices() {
+     return noticeRepository.countAllEnableDepartmentNotices();
+  }
+
+   @Override
+  public List<CategoryNoticeDto> countAllEnableCategoryNotices() {
+     return noticeRepository.countAllEnableCategoryNotices();
   }
 
   

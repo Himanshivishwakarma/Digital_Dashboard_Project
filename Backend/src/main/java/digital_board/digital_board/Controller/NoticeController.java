@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
@@ -88,7 +89,7 @@ public class NoticeController {
                         .orElse("Default success message if not found");
 
                 response.put("message", successMessage);
-                MDC.put("useremail", notice.getCreatedBy());
+                MDC.put("useremail", updatedNotice.getCreatedBy());
                 MDC.put("path", "notice/update/delete");
                 LOGGER.info("updateNoticeByNoticeId method : notice deleted");
                 MDC.clear();
@@ -103,9 +104,12 @@ public class NoticeController {
                         .orElse("Default success message if not found");
 
                 response.put("message", successMessage);
+
+                response.put("message", successMessage);
                 response.put("data", updatedNotice);
+                
                 MDC.put("useremail", notice.getCreatedBy());
-                MDC.put("path", "notice/update");
+                MDC.put("path", "notice/update/");
                 LOGGER.info("updateNoticeByNoticeId method : notice update");
                 MDC.clear();
             }
@@ -197,8 +201,8 @@ public class NoticeController {
             @RequestParam(defaultValue = "10") int size) {
         LOGGER.info("Start NoticeController: getNoticesByDepartment method");
         Map<String, Object> response = new HashMap<>();
-        Pageable pageable = PageRequest.of(page, size);
 
+        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getNoticesByDepartment(departmentName, categories, pageable);
 
         response.put("count", notice.getTotalElements());
@@ -310,8 +314,8 @@ public class NoticeController {
     ResponseEntity<Map<String, Object>> getAllImportantNoticeByLimit(
 
             @RequestParam(required = false, defaultValue = "desc") String order,
-            @RequestParam(required = false, defaultValue = "important") String status,
             @RequestParam(required = false, defaultValue = "3") int limit) {
+
         Sort.Direction direction = Sort.Direction.DESC; // Default sorting order
         LOGGER.info("Start NoticeController: getAllImportantNoticeByLimit method");
         if ("asc".equalsIgnoreCase(order)) {
@@ -321,8 +325,8 @@ public class NoticeController {
         Sort sort = Sort.by(direction, "noticeCreatedDate");
 
         Map<String, Object> response = new HashMap<>();
-        List<Notice> resultofnotice = noticeServiceImpl.noticefindByStatusImportant(status, sort, limit);
-        response.put("data", noticeServiceImpl.noticefindByStatusImportant(status, sort, limit));
+        List<Notice> resultofnotice = noticeServiceImpl.noticefindByStatusImportant(sort, limit);
+        response.put("data", noticeServiceImpl.noticefindByStatusImportant(sort, limit));
         if (resultofnotice.isEmpty()) {
             response.put("message", ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
@@ -375,7 +379,7 @@ public class NoticeController {
         LOGGER.info("Start NoticeController: countAllEnableNotices method");
         Map<String, Object> response = new HashMap<>();
 
-        List<NoticeDto> noticeDto = noticeServiceImpl.countAllEnableNotices();
+        List<NoticeDto> noticeDto = noticeServiceImpl.countAllEnableDepartmentNotices();
         response.put("data", noticeDto);
         if (noticeDto.isEmpty()) {
             // Return a JSON response with a message for data not found
@@ -385,6 +389,24 @@ public class NoticeController {
         }
         // Return the list of notices if data is found
         LOGGER.info("End NoticeController: countAllEnableNotices method");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/activeNoticeCountCategory")
+    public ResponseEntity<Map<String, Object>> countAllCategoryNotices() {
+        LOGGER.info("Start NoticeController: countAllCategoryNotices method");
+        Map<String, Object> response = new HashMap<>();
+
+        List<CategoryNoticeDto>  categoryNoticeDtos = noticeServiceImpl.countAllEnableCategoryNotices();
+        response.put("data", categoryNoticeDtos);
+        if (categoryNoticeDtos.isEmpty()) {
+            // Return a JSON response with a message for data not found
+            response.put("count", categoryNoticeDtos.size());
+            LOGGER.info("End NoticeController: countAllCategoryNotices method");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        // Return the list of notices if data is found
+        LOGGER.info("End NoticeController: countAllCategoryNotices method");
         return ResponseEntity.ok(response);
     }
 

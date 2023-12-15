@@ -82,4 +82,6 @@ public class UserNotificationServiceImpl implements UserNotificationService {
         return userNotificationRepository.findByUserNameOrEmail(userName);
     }
 
+   
+
 }

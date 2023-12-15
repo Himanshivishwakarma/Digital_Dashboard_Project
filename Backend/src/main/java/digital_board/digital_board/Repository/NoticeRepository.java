@@ -10,23 +10,27 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.Notice;
 
 public interface NoticeRepository extends JpaRepository<Notice, String> {
-        @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId AND n.status <> 'disable'")
+        @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId")
         Page<Notice> getAllNoticeByUserId(@Param("userId") String userId, Pageable pageable);
 
-        @Query("SELECT n FROM Notice n WHERE n.category IN :category AND (:department IS NULL OR n.departmentName IN :department) AND n.status <> 'disable'")
+        @Query("SELECT n FROM Notice n WHERE n.category IN :category AND (:department IS NULL OR n.departmentName IN :department) AND n.status <> 'disable' AND n.status <> 'completed'")
         Page<Notice> findByCategoryInDepartmentNameInAndStatusNotDisable(List<String> category,
                         @Param("department") List<String> department, Pageable pageable);
 
-        @Query("SELECT n FROM Notice n WHERE n.departmentName IN :departmentName AND (:categories IS NULL OR n.category IN :categories) AND n.status <> 'disable'")
+        @Query("SELECT n FROM Notice n WHERE n.departmentName IN :departmentName AND (:categories IS NULL OR n.category IN :categories) AND n.status <> 'disable' AND n.status <> 'completed'")
         Page<Notice> findByDepartmentNameInANDcategoriesInAndStatusNotDisable(List<String> departmentName,
                         @Param("categories") List<String> categories, Pageable pageable);
 
-        @Query("SELECT n FROM Notice n WHERE n.status <> 'disable'")
+        @Query("SELECT n FROM Notice n WHERE n.status <> 'disable' AND n.status <> 'completed'")
+        // @Query("SELECT * FROM notice WHERE status <> 'disable' AND status <> 'completed' AND COALESCE(images_url, '{}') <> '{}'")
         Page<Notice> findAll(Pageable pageable);
+        @Query(value = "SELECT * FROM notice WHERE status <> 'disable' AND status <> 'completed'", nativeQuery = true)
+        List<Object[]> findAllNotDisabledOrCompleted();
 
         List<Notice> findByCategoryInAndDepartmentNameIn(List<String> categories, List<String> departmentNames,
                         Pageable pageable);
@@ -46,7 +50,7 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
         @Query("SELECT n FROM Notice n WHERE " +
                         "(LOWER(n.noticeTitle) LIKE LOWER(CONCAT('%', :title, '%')) OR " +
                         "LOWER(n.description) LIKE LOWER(CONCAT('%', :description, '%'))) " +
-                        "AND n.status <> 'disable'")
+                        "AND n.status <> 'disable' AND n.status <> 'completed'")
         Page<Notice> findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
                         String title, String description, Pageable pageable);
 
@@ -57,21 +61,41 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
         // get important notice by limit
         List<Notice> findByStatus(String status, Sort sort, PageRequest of);
 
-        @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
-                        "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
-                        "AND n.status IN :status " +
-                        "AND (:createdBy IS NULL OR n.createdBy IN :createdBy)")
-        Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(
+        List<Notice> findByImportantTrueAndStatusIs(String status, Sort sort, PageRequest of);
+
+            @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
+                                    "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
+                                    "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) "+
+                        "And n.status <> 'disable' AND n.status <> 'completed'")
+        Page<Notice> findByCategoryInAndDepartmentNameInAndAndCreatedByIn(
                         @Param("categories") List<String> categories,
                         @Param("departmentNames") List<String> departmentNames,
-                        @Param("status") List<String> status,
                         @Param("createdBy") List<String> createdBy,
                         Pageable pageable);
+
+        @Query("SELECT n FROM Notice n " +
+                        "WHERE (:categories IS NULL OR n.category IN :categories) " +
+                        "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +   
+                                    "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) " +
+                        "AND (n.important IS NULL OR n.important = true) " + 
+                        "And n.status <> 'disable' AND n.status <> 'completed'")
+            Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
+                                    @Param("categories") List<String> categories,
+                                    @Param("departmentNames") List<String> departmentNames,
+                              
+                                    @Param("createdBy") List<String> createdBy,
+                                    Pageable pageable);
 
         @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n)) " +
                         "FROM Notice n " +
                         "WHERE n.status = 'enable' " +
                         "GROUP BY n.departmentName")
-        List<NoticeDto> countAllEnableNotices();
+        List<NoticeDto> countAllEnableDepartmentNotices();
+
+        @Query("SELECT NEW digital_board.digital_board.Dto.CategoryNoticeDto(n.category, COUNT(n)) " +
+                        "FROM Notice n " +
+                        "WHERE n.status = 'enable' " +
+                        "GROUP BY n.category")
+        List<CategoryNoticeDto> countAllEnableCategoryNotices();
 
 }
