@@ -62,7 +62,7 @@ public class NoticeServiceImplTest {
                 Notice myNotice = new Notice("123", "This is an important announcement.",
                                 "this is notice descriptions",
                                 "General", "HR Department", "2023-11-01", "2023-11-10", images, new Date(), "John Doe",
-                                "enable");
+                                false, "enable");
 
                 Map<String, Object> mockUploadResult = Collections.singletonMap("url", "mockImageUrl");
                 Mockito.when(uploader.upload(Mockito.any(Object.class), Mockito.anyMap()))
@@ -83,7 +83,7 @@ public class NoticeServiceImplTest {
                 Notice myNotice = new Notice(noticeId, "This is an important announcement.",
                                 "this is notice descriptions",
                                 "General", "HR Department", "2023-11-01", "2023-11-10", null, new Date(), "John Doe",
-                                "enable");
+                                false, "enable");
 
                 Mockito.when(noticeRepository.findById(eq(noticeId))).thenReturn(Optional.of(myNotice));
 
@@ -101,12 +101,12 @@ public class NoticeServiceImplTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice(noticeId, "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
+                                                false, "enable"));
 
                 Page<Notice> noticePage = new PageImpl<>(myNotices);
                 Mockito.when(noticeRepository.getAllNoticeByUserId(Mockito.any(String.class),
@@ -126,12 +126,12 @@ public class NoticeServiceImplTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice(noticeId, "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
+                                                false, "enable"));
 
                 Mockito.when(noticeRepository.findAll()).thenReturn(myNotice);
 
@@ -149,7 +149,7 @@ public class NoticeServiceImplTest {
                                 .map(content -> new Notice("1", "This is an important announcement.",
                                                 "this is notice descriptions", content,
                                                 "HR Department", "2023-11-01", "2023-11-10", null, new Date(), userId,
-                                                "enable"))
+                                                false, "enable"))
                                 .collect(Collectors.toList());
 
                 Page<Notice> noticePage = new PageImpl<>(noticeList);
@@ -171,7 +171,7 @@ public class NoticeServiceImplTest {
                                 .map(content -> new Notice("1", "This is an important announcement.",
                                                 "this is notice descriptions", content,
                                                 "HR Department", "2023-11-01", "2023-11-10", null, new Date(), userId,
-                                                "enable"))
+                                                false, "enable"))
                                 .collect(Collectors.toList());
 
                 Page<Notice> noticePage = new PageImpl<>(noticeList);
@@ -192,12 +192,12 @@ public class NoticeServiceImplTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice(noticeId, "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
+                                                false, "enable"));
                 Page<Notice> noticePage = new PageImpl<>(myNoticesList);
                 when(noticeRepository.findAll(any(Pageable.class))).thenReturn(noticePage);
 
@@ -212,12 +212,12 @@ public class NoticeServiceImplTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice(noticeId, "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
+                                                false, "enable"));
                 Page<Notice> noticePages = new PageImpl<>(myNoticesList);
                 when(noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
                                 anyString(), anyString(), any(Pageable.class))).thenReturn(noticePages);
@@ -235,12 +235,12 @@ public class NoticeServiceImplTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice(noticeId, "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
+                                                false, "enable"));
                 when(noticeRepository.findNoticesWithLimit(limit, status)).thenReturn(myNoticesList);
                 List<Notice> resultNotices = noticeService.getAllImportantNotice(limit);
                 assertEquals(myNoticesList, resultNotices);
@@ -274,22 +274,22 @@ public class NoticeServiceImplTest {
 
         @Test
         public void testNoticefindByStatusImportant() {
-                String status = "enable";
+                // String status = "enable";
                 Sort sort = Sort.by("desc");
                 List<Notice> myNoticesList = Arrays.asList(
                                 new Notice(noticeId, "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice(noticeId, "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
-                when(noticeRepository.findByStatus(anyString(), any(Sort.class), any(PageRequest.class)))
+                                                false, "enable"));
+                when(noticeRepository.findByImportantTrueAndStatusIs(anyString(), any(Sort.class), any(PageRequest.class)))
                                 .thenReturn(myNoticesList);
-                List<Notice> result = noticeService.noticefindByStatusImportant(status, sort, 5);
+                List<Notice> result = noticeService.noticefindByStatusImportant(sort, 5);
                 assertEquals(myNoticesList, result);
         }
 
@@ -319,15 +319,15 @@ public class NoticeServiceImplTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "z",
                                                 "z",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
                 Page<Notice> pageNotice = new PageImpl<>(mockNotices);
-                when(noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(anyList(), anyList(),
-                                anyList(), anyList(), any(Pageable.class))).thenReturn(pageNotice);
+                when(noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(anyList(), anyList(),
+                                anyList(), any(Pageable.class))).thenReturn(pageNotice);
                 Page<Notice> result = noticeService.getAllNoticesByfilter(
                                 Arrays.asList("General", "General", "General"),
                                 Arrays.asList("General", "General", "General"),

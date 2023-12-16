@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -40,12 +39,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
 
                 // Mock the behavior of the repository method
                 when(noticeRepository.getAllNoticeByUserId("testUser", PageRequest.of(0, 10)))
@@ -71,12 +70,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
 
                 // Mock the behavior of the repository method
                 when(noticeRepository.findByCategoryInDepartmentNameInAndStatusNotDisable(
@@ -106,12 +105,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
 
                 // Mock the behavior of the repository method
                 when(noticeRepository.findByDepartmentNameInANDcategoriesInAndStatusNotDisable(
@@ -139,12 +138,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("2", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
                 Page<Notice> pageNotices = new PageImpl<>(mockNotices);
 
                 when(noticeRepository.findAll(any(Pageable.class))).thenReturn(pageNotices);
@@ -160,12 +159,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("2", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
 
                 when(noticeRepository.findByCategoryInAndDepartmentNameIn(anyList(), anyList(), any(Pageable.class)))
                                 .thenReturn(mockNotices);
@@ -184,12 +183,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("2", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
+                                                false, "enable"));
                 when(noticeRepository.findNoticesWithLimit(anyInt(), anyString())).thenReturn(mockNotices);
 
                 List<Notice> result = noticeRepository.findNoticesWithLimit(1, "enable");
@@ -204,12 +203,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("2", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
+                                                false, "enable"));
                 when(noticeRepository.findBycategoriesInAndStatusNotDisable(anyList())).thenReturn(mockNotices);
                 List<Notice> result = noticeRepository
                                 .findBycategoriesInAndStatusNotDisable(Arrays.asList("General", "General"));
@@ -223,12 +222,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("2", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"));
+                                                false, "enable"));
                 when(noticeRepository.findBycategoriesInAndStatusNotDisable(anyList())).thenReturn(mockNotices);
                 List<Notice> result = noticeRepository
                                 .findBycategoriesInAndStatusNotDisable(Arrays.asList("HR Department", "HR Department"));
@@ -243,12 +242,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
 
                 // Mock the behavior of the repository method
                 when(noticeRepository.findAllNotDisabled()).thenReturn(mockNotices);
@@ -268,12 +267,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "z",
                                                 "z",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
                 Page<Notice> pageNotice = new PageImpl<>(mockNotices);
 
                 when(noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
@@ -293,12 +292,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "z",
                                                 "z",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
 
                 when(noticeRepository.countByCategory(anyString())).thenReturn(a);
 
@@ -316,12 +315,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "z",
                                                 "z",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
 
                 when(noticeRepository.countByCategory(anyString())).thenReturn(a);
 
@@ -336,12 +335,12 @@ public class NoticeRepositoryTest {
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "z",
                                                 "z",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
 
                 when(noticeRepository.findByStatus(anyString(), any(Sort.class), any(PageRequest.class)))
                                 .thenReturn(mockNotices);
@@ -350,25 +349,24 @@ public class NoticeRepositoryTest {
         }
 
         @Test
-        void testFindByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn() {
+        void testFindByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant() {
                 List<Notice> mockNotices = List.of(
                                 new Notice("1", "This is an important announcement.",
                                                 "this is notice descriptions",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "enable"),
+                                                false, "enable"),
                                 new Notice("1", "z",
                                                 "z",
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
-                                                "disable"));
+                                                false, "disable"));
                 Page<Notice> pageNotice = new PageImpl<>(mockNotices);
-                when(noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(anyList(), anyList(),
-                                anyList(), anyList(), any(Pageable.class))).thenReturn(pageNotice);
-                Page<Notice> result = noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByIn(
+                when(noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(anyList(), anyList(),
+                                anyList(), any(Pageable.class))).thenReturn(pageNotice);
+                Page<Notice> result = noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
                                 Arrays.asList("categories", "categories"), Arrays.asList("categories", "categories"),
-                                Arrays.asList("categories", "categories"), Arrays.asList("categories", "categories"),
-                                PageRequest.of(0, 10));
+                                Arrays.asList("categories", "categories"), PageRequest.of(0, 10));
                 assertEquals(pageNotice, result);
         }
 
