@@ -76,6 +76,12 @@ public class UserNotificationServiceImpl implements UserNotificationService {
         throw new UnsupportedOperationException("Unimplemented method 'getUserNotificationByDepartment'");
     }
 
+    @Override
+    public List<UserNotification> getUserByFilter(String userName) {
+        
+        return userNotificationRepository.findByUserNameOrEmail(userName);
+    }
+
    
 
 }

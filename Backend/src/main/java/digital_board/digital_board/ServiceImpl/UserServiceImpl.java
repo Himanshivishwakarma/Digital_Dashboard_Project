@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import digital_board.digital_board.Dto.UserDTO;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.User;
+import digital_board.digital_board.Entity.UserNotification;
 import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.Repository.UserRepository;
 import digital_board.digital_board.Servies.Auth0Service;
@@ -110,6 +111,12 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> getInfoOfAdmins() {
         List<UserDTO> userDTOs = userRepo.findUserNames();
         return userDTOs;
+    }
+
+    @Override
+    public List<User> getAdminBySearching(String userName) {
+        
+        return userRepo.findAdminByNameOrEmail(userName);
     }
 
     

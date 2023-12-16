@@ -129,7 +129,7 @@ public class UserController {
 
       Map<String, Object> response = new HashMap<>();
       String successMessage = ResponseMessagesConstants.messagelist.stream()
-          .filter(exceptionResponse -> "USER_DELETE_SUCCESS".equals(exceptionResponse.getExceptonName()))
+          .filter(exceptionResponse -> "USER_UPDATED_SUCCESS".equals(exceptionResponse.getExceptonName()))
           .map(ExceptionResponse::getMassage)
           .findFirst()
           .orElse("Default success message if not found");
@@ -245,6 +245,27 @@ public class UserController {
       return Sort.by(Sort.Order.asc("userName")); // Default sorting by noticeCreatedDate in ascending
                                                   // order
     }
+  }
+
+  // get admin by searching
+  @GetMapping("searching/admin/{name}")
+  public ResponseEntity<Map<String, Object>> getAdminBySearching(@PathVariable String name) {
+    LOGGER.info("Start UserController: getAdminBySearching method");
+    List<User> listOfAdmin = userServiceImpl.getAdminBySearching(name);
+    Map<String, Object> response = new HashMap<>();
+    if (listOfAdmin.isEmpty()) {
+      response.put("message", ResponseMessagesConstants.messagelist.stream()
+          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+          .map(ExceptionResponse::getMassage)
+          .findFirst()
+          .orElse("Default failure message if not found"));
+      response.put("data", listOfAdmin);
+      LOGGER.info("End UserController: getAdminBySearching method");
+      return ResponseEntity.ok(response);
+    }
+    response.put("data", listOfAdmin);
+    LOGGER.info("End UserController: getAdminBySearching method");
+    return ResponseEntity.ok(response);
   }
 
 }

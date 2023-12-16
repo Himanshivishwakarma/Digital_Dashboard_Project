@@ -46,7 +46,7 @@ public interface NoticeService {
     public Long countByDepartmentName(String departmentName);
 
     // get important notice by limit
-    public List<Notice> noticefindByStatusImportant(String status, Sort sort, int limit);
+    public List<Notice> noticefindByStatusImportant( Sort sort, int limit);
 
     public Page<Notice> getAllNoticesByfilter(List<String> categories, List<String> departmentNames,
             List<String> createdBy,
