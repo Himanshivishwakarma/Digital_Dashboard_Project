@@ -13,6 +13,8 @@ import digital_board.digital_board.Servies.NoticeService;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -276,11 +278,29 @@ public class NoticeServiceImpl implements NoticeService {
             )
             .map(ExceptionResponse::getMassage)
             .findFirst()
-            .orElse("Default message if not found")
-        )
-      );
+            .orElse("Default message if not found")));
+    List<String> listofdata = new ArrayList<>();
+    List<String> base64ImageStrings = notice.getImages_url();
+    if (base64ImageStrings != null) {
+      try {
+        for (String base64Image : base64ImageStrings) {
+
+          if (!base64Image.startsWith("https://res.cloudinary.com")) {
+            Map uploadResult = this.cloudinary.uploader().upload(base64Image,
+                ObjectUtils.emptyMap());
+            String imageUrl = (String) uploadResult.get("url");
+            listofdata.add(imageUrl);
+          }
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    notice.setImages_url(listofdata);
+    Notice saveNotice = this.noticeRepository.save(notice);
     LOGGER.info("End NoticeServiceImpl: updateNotice method");
-    return noticeRepository.save(notice);
+    return saveNotice;
+
   }
 
   // searching filter
@@ -522,6 +542,15 @@ public class NoticeServiceImpl implements NoticeService {
       );
     }
   }
+
+  // today created notice count
+  @Override
+  public List<Notice> todayCreatedNoticeCount() {
+  
+      return noticeRepository.findByNoticeCreatedDateIsCurrentDate();
+  }
+
+
 
   // {http://res.cloudinary.com/dkbdo9top/image/upload/v1702543503/etfonrrzdhazanffusj6.png,http://res.cloudinary.com/dkbdo9top/image/upload/v1702543505/yxnlttu9ejjcs5g6igvv.png}
   @Override

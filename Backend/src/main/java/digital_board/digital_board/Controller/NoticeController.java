@@ -372,6 +372,34 @@ public class NoticeController {
         return ResponseEntity.ok(response);
     }
 
+    // today created notice count
+
+    @GetMapping("/today/created/notice/count")
+    public ResponseEntity<Map<String, Object>> todayCreatedNotice() {
+        Map<String, Object> response = new HashMap<>();
+        List<Notice> todayCreatedNoticeCount = noticeServiceImpl.todayCreatedNoticeCount();
+        System.out.println(todayCreatedNoticeCount);
+        if (todayCreatedNoticeCount.isEmpty()) {
+            response.put("message", ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "TODAY_NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
+        } 
+        else 
+        {
+            response.put("message", ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "TODAY_NOTICE".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
+            response.put("count", todayCreatedNoticeCount.size());
+
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/activeNoticeCount")
     public ResponseEntity<Map<String, Object>> countAllEnableNotices() {
         LOGGER.info("Start NoticeController: countAllEnableNotices method");

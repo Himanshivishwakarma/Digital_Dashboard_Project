@@ -49,7 +49,10 @@ public class ResponseMessagesBackup {
                   new ExceptionResponse(24, "NOT_SUPERADMIN", "User Must be Super Admin!"),
                   new ExceptionResponse(25, "NOTIFICATION_CREATED_SUCCESSFULLY", "Email Notification Added successfully"),
                   new ExceptionResponse(26, "FAILED_TO_CREATE_NOTIFICATION", "Failed to Add Email Notification!"),
-                 new ExceptionResponse(27, "EMAIL_ALREADY_EXISTS", "User with this email already exists")
+                 new ExceptionResponse(27, "EMAIL_ALREADY_EXISTS", "User with this email already exists"),
+                 new ExceptionResponse(28, "UNAUTHORIZED_ACCESS", "To access this API, please log in with valid credentials."),
+                 new ExceptionResponse(29, "TODAY_NOTICE", "Notices created today.."),
+                 new ExceptionResponse(30, "TODAY_NOTICE_NOT_FOUND", "No notices were created today..")
 
         ));//NOTICE_CREATE_FAILURE
 
