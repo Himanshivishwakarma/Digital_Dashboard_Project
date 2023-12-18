@@ -427,7 +427,8 @@ public class NoticeController {
 
         List<CategoryNoticeDto>  categoryNoticeDtos = noticeServiceImpl.getCountAllEnableCategoryNotices();
         response.put("data", categoryNoticeDtos);
-        if (categoryNoticeDtos.isEmpty()) {
+        if (categoryNoticeDtos.isEmpty()) 
+        {
             // Return a JSON response with a message for data not found
             response.put("count", categoryNoticeDtos.size());
             LOGGER.info("End NoticeController: countAllCategoryNotices method");
