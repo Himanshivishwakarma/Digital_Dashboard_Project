@@ -43,6 +43,7 @@ public class SecurityConfig {
             "/api/v1/notification/create",
             "/api/v1/notice/getAll/**",
             "/api/v1/user/admin-list",
+            "/api/v1/notice/today/created/notice/count",
             
     };
 
