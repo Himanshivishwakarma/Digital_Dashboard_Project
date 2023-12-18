@@ -1,5 +1,7 @@
 package digital_board.digital_board.Repository;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -24,8 +26,10 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
                         @Param("categories") List<String> categories, Pageable pageable);
 
         @Query("SELECT n FROM Notice n WHERE n.status <> 'disable' AND n.status <> 'completed'")
-        // @Query("SELECT * FROM notice WHERE status <> 'disable' AND status <> 'completed' AND COALESCE(images_url, '{}') <> '{}'")
+        // @Query("SELECT * FROM notice WHERE status <> 'disable' AND status <>
+        // 'completed' AND COALESCE(images_url, '{}') <> '{}'")
         Page<Notice> findAll(Pageable pageable);
+
         @Query(value = "SELECT * FROM notice WHERE status <> 'disable' AND status <> 'completed'", nativeQuery = true)
         List<Object[]> findAllNotDisabledOrCompleted();
 
@@ -62,7 +66,7 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
         @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
                         "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
-                        "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) "+
+                        "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) " +
                         "And n.status <> 'disable' AND n.status <> 'completed'")
         Page<Notice> findByCategoryInAndDepartmentNameInAndAndCreatedByIn(
                         @Param("categories") List<String> categories,
@@ -72,14 +76,18 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
         @Query("SELECT n FROM Notice n " +
                         "WHERE (:categories IS NULL OR n.category IN :categories) " +
-                        "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +   
+                        "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
                         "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) " +
-                        "AND (n.important IS NULL OR n.important = true) " + 
+                        "AND (n.important IS NULL OR n.important = true) " +
                         "And n.status <> 'disable' AND n.status <> 'completed'")
         Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
                         @Param("categories") List<String> categories,
                         @Param("departmentNames") List<String> departmentNames,
-                  
+
                         @Param("createdBy") List<String> createdBy,
                         Pageable pageable);
+
+        // today created notice count
+        @Query(value = "SELECT n FROM Notice n WHERE CAST(n.noticeCreatedDate AS date) = current_date")
+        List<Notice> findByNoticeCreatedDateIsCurrentDate();
 }

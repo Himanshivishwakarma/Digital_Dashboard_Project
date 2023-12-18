@@ -196,7 +196,7 @@ public class NoticeController {
             @RequestParam(defaultValue = "10") int size) {
         LOGGER.info("Start NoticeController: getNoticesByDepartment method");
         Map<String, Object> response = new HashMap<>();
-        Pageable pageable = PageRequest.of(page, size,parseSortString(sort));
+        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getNoticesByDepartment(departmentName, categories, pageable);
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
@@ -308,7 +308,7 @@ public class NoticeController {
 
             @RequestParam(required = false, defaultValue = "desc") String order,
             @RequestParam(required = false, defaultValue = "3") int limit) {
-              
+
         Sort.Direction direction = Sort.Direction.DESC; // Default sorting order
         LOGGER.info("Start NoticeController: getAllImportantNoticeByLimit method");
         if ("asc".equalsIgnoreCase(order)) {
@@ -339,7 +339,7 @@ public class NoticeController {
             @RequestParam(required = false) List<String> department,
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false) List<String> admins,
-            @RequestParam(required = false ) String status,
+            @RequestParam(required = false) String status,
             @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -364,6 +364,34 @@ public class NoticeController {
         }
         // Return the list of notices if data is found
         LOGGER.info("End NoticeController: getAllNoticesByfilter method");
+        return ResponseEntity.ok(response);
+    }
+
+    // today created notice count
+
+    @GetMapping("/today/created/notice/count")
+    public ResponseEntity<Map<String, Object>> todayCreatedNotice() {
+        Map<String, Object> response = new HashMap<>();
+        List<Notice> todayCreatedNoticeCount = noticeServiceImpl.todayCreatedNoticeCount();
+        System.out.println(todayCreatedNoticeCount);
+        if (todayCreatedNoticeCount.isEmpty()) {
+            response.put("message", ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "TODAY_NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
+        } 
+        else 
+        {
+            response.put("message", ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "TODAY_NOTICE".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
+            response.put("count", todayCreatedNoticeCount.size());
+
+        }
+
         return ResponseEntity.ok(response);
     }
 

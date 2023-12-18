@@ -2,6 +2,8 @@ package digital_board.digital_board.ServiceImpl;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,7 +75,7 @@ public class NoticeServiceImpl implements NoticeService {
 
       for (UserNotification user : userNotification) {
         emailServices.sendSimpleMessage(user.getUserEmail(), "New Notice",
-        user.getUserName());
+            user.getUserName());
       }
     } catch (Exception e) {
       LOGGER.info("End NoticeServiceImpl: createNoticeByUser method ! mail sending error");
@@ -114,11 +116,10 @@ public class NoticeServiceImpl implements NoticeService {
 
   @Override
   public Page<Notice> getAllNoticesSorted(Pageable pageable) {
-  LOGGER.info("Start NoticeServiceImpl: getAllNoticesSorted method");
-  LOGGER.info("End NoticeServiceImpl: getAllNoticesSorted method");
-  return noticeRepository.findAll(pageable);
+    LOGGER.info("Start NoticeServiceImpl: getAllNoticesSorted method");
+    LOGGER.info("End NoticeServiceImpl: getAllNoticesSorted method");
+    return noticeRepository.findAll(pageable);
   }
-
 
   @Override
   public Page<Notice> getNoticesByCategory(List<String> category, List<String> department, Pageable pageable) {
@@ -185,8 +186,27 @@ public class NoticeServiceImpl implements NoticeService {
             .map(ExceptionResponse::getMassage)
             .findFirst()
             .orElse("Default message if not found")));
+    List<String> listofdata = new ArrayList<>();
+    List<String> base64ImageStrings = notice.getImages_url();
+    if (base64ImageStrings != null) {
+      try {
+        for (String base64Image : base64ImageStrings) {
+
+          if (!base64Image.startsWith("https://res.cloudinary.com")) {
+            Map uploadResult = this.cloudinary.uploader().upload(base64Image,
+                ObjectUtils.emptyMap());
+            String imageUrl = (String) uploadResult.get("url");
+            listofdata.add(imageUrl);
+          }
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    notice.setImages_url(listofdata);
+    Notice saveNotice = this.noticeRepository.save(notice);
     LOGGER.info("End NoticeServiceImpl: updateNotice method");
-    return noticeRepository.save(notice);
+    return saveNotice;
 
   }
 
@@ -376,6 +396,13 @@ public class NoticeServiceImpl implements NoticeService {
 
     }
 
+  }
+
+  // today created notice count
+  @Override
+  public List<Notice> todayCreatedNoticeCount() {
+  
+      return noticeRepository.findByNoticeCreatedDateIsCurrentDate();
   }
 
   // {http://res.cloudinary.com/dkbdo9top/image/upload/v1702543503/etfonrrzdhazanffusj6.png,http://res.cloudinary.com/dkbdo9top/image/upload/v1702543505/yxnlttu9ejjcs5g6igvv.png}

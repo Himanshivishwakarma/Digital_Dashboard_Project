@@ -44,9 +44,12 @@ public interface NoticeService {
     public Long countByDepartmentName(String departmentName);
 
     // get important notice by limit
-    public List<Notice> noticefindByStatusImportant( Sort sort, int limit);
+    public List<Notice> noticefindByStatusImportant(Sort sort, int limit);
 
     public Page<Notice> getAllNoticesByfilter(List<String> categories, List<String> departmentNames,
             List<String> createdBy,
             String status, Pageable pageable);
+
+    // today created notice count
+   public List<Notice> todayCreatedNoticeCount();
 }
