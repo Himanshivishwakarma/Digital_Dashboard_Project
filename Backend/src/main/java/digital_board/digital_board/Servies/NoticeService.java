@@ -55,7 +55,7 @@ public interface NoticeService {
     // today created notice count
    public List<Notice> todayCreatedNoticeCount();
 
-      List<NoticeDto> countAllEnableDepartmentNotices();
+      List<NoticeDto> getCountAllEnableDepartmentNotices();
       
-      List<CategoryNoticeDto> countAllEnableCategoryNotices();
+      List<CategoryNoticeDto> getCountAllEnableCategoryNotices();
 }

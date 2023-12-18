@@ -554,12 +554,12 @@ public class NoticeServiceImpl implements NoticeService {
 
   // {http://res.cloudinary.com/dkbdo9top/image/upload/v1702543503/etfonrrzdhazanffusj6.png,http://res.cloudinary.com/dkbdo9top/image/upload/v1702543505/yxnlttu9ejjcs5g6igvv.png}
   @Override
-  public List<NoticeDto> countAllEnableDepartmentNotices() {
-    return noticeRepository.countAllEnableDepartmentNotices();
+  public List<NoticeDto> getCountAllEnableDepartmentNotices() {
+     return noticeRepository.countAllEnableDepartmentNotices();
   }
 
-  @Override
-  public List<CategoryNoticeDto> countAllEnableCategoryNotices() {
-    return noticeRepository.countAllEnableCategoryNotices();
+   @Override
+  public List<CategoryNoticeDto> getCountAllEnableCategoryNotices() {
+     return noticeRepository.countAllEnableCategoryNotices();
   }
 }
