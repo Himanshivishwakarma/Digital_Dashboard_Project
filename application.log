@@ -2278,3 +2278,115 @@ java.net.SocketException: Connection reset
 	at java.lang.Thread.run(Thread.java:833) [?:?]
 2023-12-16 16:33:51,560 WARN c.z.h.p.PoolBase [http-nio-9090-exec-5] HikariPool-6 - Failed to validate connection org.postgresql.jdbc.PgConnection@70f2a462 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
 2023-12-16 16:36:26,334 WARN c.z.h.p.PoolBase [http-nio-9090-exec-3] HikariPool-6 - Failed to validate connection org.postgresql.jdbc.PgConnection@44c48ea7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:52:04,569 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2023-12-18 11:52:05,025 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-18 11:52:05,029 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-18 11:52:08,368 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-18 11:52:08,565 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 176 ms. Found 4 JPA repository interfaces.
+2023-12-18 11:52:10,537 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9090 (http)
+2023-12-18 11:52:10,558 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:52:10,564 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-12-18 11:52:10,592 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.15]
+2023-12-18 11:52:10,785 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-12-18 11:52:10,786 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 5740 ms
+2023-12-18 11:52:11,438 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-18 11:52:11,584 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.2.13.Final
+2023-12-18 11:52:11,589 INFO o.h.c.Environment [restartedMain] HHH000406: Using bytecode reflection optimizer
+2023-12-18 11:52:12,213 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-18 11:52:12,277 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-12-18 11:52:15,649 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@787a0193
+2023-12-18 11:52:15,659 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-12-18 11:52:19,321 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-18 11:52:22,057 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 11:52:22,819 INFO o.s.d.j.r.q.QueryEnhancerFactory [restartedMain] Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-12-18 11:52:26,316 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-18 11:52:27,209 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-18 11:52:27,396 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3a876bdb, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7b5aca1b, org.springframework.security.web.context.SecurityContextHolderFilter@675e7deb, org.springframework.security.web.header.HeaderWriterFilter@6e0adcc4, org.springframework.web.filter.CorsFilter@68f10ca2, org.springframework.security.web.authentication.logout.LogoutFilter@51ae3198, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@1c71e923, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1c3dfdc0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5b6431f5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1fc5a25e, org.springframework.security.web.access.ExceptionTranslationFilter@27b2d501, org.springframework.security.web.access.intercept.AuthorizationFilter@577ae50e]
+2023-12-18 11:52:28,517 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-12-18 11:52:28,681 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:52:28,749 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9090 (http) with context path ''
+2023-12-18 11:52:31,152 INFO o.a.c.c.C.[.[.[/] [RMI TCP Connection(1)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-18 11:52:31,153 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+2023-12-18 11:52:31,157 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-127.0.0.1] Completed initialization in 2 ms
+2023-12-18 11:52:58,385 INFO o.s.a.AbstractOpenApiResource [http-nio-9090-exec-3] Init duration for springdoc-openapi is: 867 ms
+2023-12-18 11:54:04,577 INFO o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2023-12-18 11:54:04,708 INFO o.a.c.h.Http11NioProtocol [Thread-5] Pausing ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:04,745 INFO o.a.c.c.StandardService [Thread-5] Stopping service [Tomcat]
+2023-12-18 11:54:04,752 INFO o.a.c.c.C.[.[.[/] [Thread-5] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-12-18 11:54:04,812 INFO o.a.c.h.Http11NioProtocol [Thread-5] Stopping ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:04,820 INFO o.a.c.h.Http11NioProtocol [Thread-5] Destroying ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:04,939 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [Thread-5] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 11:54:04,950 INFO c.z.h.HikariDataSource [Thread-5] HikariPool-1 - Shutdown initiated...
+2023-12-18 11:54:09,402 INFO c.z.h.HikariDataSource [Thread-5] HikariPool-1 - Shutdown completed.
+2023-12-18 11:54:11,756 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-18 11:54:11,822 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 64 ms. Found 4 JPA repository interfaces.
+2023-12-18 11:54:12,115 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9090 (http)
+2023-12-18 11:54:12,118 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:12,119 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-12-18 11:54:12,120 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.15]
+2023-12-18 11:54:12,212 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-12-18 11:54:12,213 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1423 ms
+2023-12-18 11:54:12,428 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-18 11:54:12,449 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-18 11:54:12,493 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2023-12-18 11:54:15,239 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@26d1ae4d
+2023-12-18 11:54:15,240 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2023-12-18 11:54:16,796 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-18 11:54:19,030 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 11:54:19,958 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-18 11:54:20,274 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-18 11:54:20,303 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@181c86c6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@400e0e7d, org.springframework.security.web.context.SecurityContextHolderFilter@55cb1da8, org.springframework.security.web.header.HeaderWriterFilter@252a4f75, org.springframework.web.filter.CorsFilter@13fa1bd4, org.springframework.security.web.authentication.logout.LogoutFilter@40ed569d, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@326f77a8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2d23af76, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3a60951e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5ae1ec34, org.springframework.security.web.access.ExceptionTranslationFilter@5949c3b7, org.springframework.security.web.access.intercept.AuthorizationFilter@4e73aa92]
+2023-12-18 11:54:20,758 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-12-18 11:54:20,827 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:20,844 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9090 (http) with context path ''
+2023-12-18 11:54:21,769 INFO o.s.b.d.a.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-12-18 11:54:22,197 INFO o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2023-12-18 11:54:22,222 INFO o.a.c.h.Http11NioProtocol [Thread-7] Pausing ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:22,228 INFO o.a.c.c.StandardService [Thread-7] Stopping service [Tomcat]
+2023-12-18 11:54:22,234 INFO o.a.c.h.Http11NioProtocol [Thread-7] Stopping ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:22,241 INFO o.a.c.h.Http11NioProtocol [Thread-7] Destroying ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:22,261 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [Thread-7] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 11:54:22,265 INFO c.z.h.HikariDataSource [Thread-7] HikariPool-2 - Shutdown initiated...
+2023-12-18 11:54:25,322 INFO c.z.h.HikariDataSource [Thread-7] HikariPool-2 - Shutdown completed.
+2023-12-18 11:54:26,998 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-18 11:54:27,043 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 43 ms. Found 4 JPA repository interfaces.
+2023-12-18 11:54:27,435 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9090 (http)
+2023-12-18 11:54:27,438 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:27,442 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-12-18 11:54:27,443 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.15]
+2023-12-18 11:54:27,523 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-12-18 11:54:27,528 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1195 ms
+2023-12-18 11:54:27,869 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-18 11:54:27,889 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-18 11:54:27,898 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-3 - Starting...
+2023-12-18 11:54:30,464 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@6e05a2a
+2023-12-18 11:54:30,466 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-3 - Start completed.
+2023-12-18 11:54:31,768 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-18 11:54:34,024 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 11:54:34,601 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-18 11:54:34,845 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-18 11:54:34,872 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@201aba58, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1fcff84b, org.springframework.security.web.context.SecurityContextHolderFilter@4ef7da93, org.springframework.security.web.header.HeaderWriterFilter@6b611fb3, org.springframework.web.filter.CorsFilter@4268ba84, org.springframework.security.web.authentication.logout.LogoutFilter@3e4886fa, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@5a1f88b7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4297b5fa, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2d64f060, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6414d84e, org.springframework.security.web.access.ExceptionTranslationFilter@4bd48909, org.springframework.security.web.access.intercept.AuthorizationFilter@4b62c31d]
+2023-12-18 11:54:35,214 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-12-18 11:54:35,256 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:54:35,263 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9090 (http) with context path ''
+2023-12-18 11:54:36,148 INFO o.s.b.d.a.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-12-18 11:54:43,270 INFO o.a.c.c.C.[.[.[/] [http-nio-9090-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-18 11:54:43,270 INFO o.s.w.s.DispatcherServlet [http-nio-9090-exec-2] Initializing Servlet 'dispatcherServlet'
+2023-12-18 11:54:43,273 INFO o.s.w.s.DispatcherServlet [http-nio-9090-exec-2] Completed initialization in 2 ms
+2023-12-18 11:57:36,656 WARN c.z.h.p.PoolBase [http-nio-9090-exec-5] HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@6e05a2a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:57:41,932 WARN c.z.h.p.PoolBase [http-nio-9090-exec-5] HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@7f0614a4 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:57:45,659 WARN c.z.h.p.PoolBase [http-nio-9090-exec-9] HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@1404f664 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:57:51,539 WARN c.z.h.p.PoolBase [http-nio-9090-exec-5] HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@370d53b0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:57:54,830 WARN c.z.h.p.PoolBase [http-nio-9090-exec-9] HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@6c0993a7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:58:46,172 WARN c.z.h.p.PoolBase [http-nio-9090-exec-1] HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@3800a67e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:58:51,452 WARN c.z.h.p.PoolBase [http-nio-9090-exec-1] HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@223d2f6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:58:56,748 WARN c.z.h.p.PoolBase [http-nio-9090-exec-1] HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@35ef4961 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 11:59:43,645 INFO o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2023-12-18 11:59:44,076 INFO o.a.c.h.Http11NioProtocol [Thread-11] Pausing ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:59:44,216 INFO o.a.c.c.StandardService [Thread-11] Stopping service [Tomcat]
+2023-12-18 11:59:44,353 INFO o.a.c.c.C.[.[.[/] [Thread-11] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-12-18 11:59:44,593 INFO o.a.c.h.Http11NioProtocol [Thread-11] Stopping ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:59:44,904 INFO o.a.c.h.Http11NioProtocol [Thread-11] Destroying ProtocolHandler ["http-nio-9090"]
+2023-12-18 11:59:45,270 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [Thread-11] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 11:59:45,561 INFO c.z.h.HikariDataSource [Thread-11] HikariPool-3 - Shutdown initiated...
+2023-12-18 11:59:50,026 INFO c.z.h.HikariDataSource [Thread-11] HikariPool-3 - Shutdown completed.
