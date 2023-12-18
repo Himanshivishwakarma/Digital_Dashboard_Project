@@ -1,28 +1,7 @@
 package digital_board.digital_board.ServiceImpl;
 
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-
 import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
@@ -32,10 +11,37 @@ import digital_board.digital_board.Exception.ResourceNotFoundException;
 import digital_board.digital_board.Repository.NoticeRepository;
 import digital_board.digital_board.Servies.NoticeService;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import java.util.concurrent.CompletableFuture;
+
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
-  private static final Logger LOGGER = LoggerFactory.getLogger(NoticeServiceImpl.class);
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(
+    NoticeServiceImpl.class
+  );
 
   @Autowired
   NoticeRepository noticeRepository;
@@ -49,6 +55,59 @@ public class NoticeServiceImpl implements NoticeService {
   @Autowired
   private Cloudinary cloudinary;
 
+  // @Override
+  // public Notice createNoticeByUser(Notice notice) {
+  //   LOGGER.info("Start NoticeServiceImpl: createNoticeByUser method");
+  //   List<String> base64ImageStrings = notice.getImages_url();
+  //   LOGGER.info("Start NoticeServiceImpl: createNoticeByUser method ");
+  //   List<String> listofdata = new ArrayList<>();
+  //   if (base64ImageStrings != null) {
+  //     try {
+  //       for (String base64Image : base64ImageStrings) {
+  //         Map uploadResult =
+  //           this.cloudinary.uploader()
+  //             .upload(base64Image, ObjectUtils.emptyMap());
+  //         String imageUrl = (String) uploadResult.get("url");
+  //         listofdata.add(imageUrl);
+  //       }
+  //     } catch (IOException e) {
+  //       e.printStackTrace();
+  //     }
+  //   }
+  //   notice.setImages_url(listofdata);
+  //   Notice saveNotice = this.noticeRepository.save(notice);
+  //   try {
+  //     List<UserNotification> userNotification =
+  //       this.notificationServiceImpl.getAllUserNotification();
+
+  //     for (UserNotification user : userNotification) {
+  //       emailServices.sendSimpleMessage(
+  //         user.getUserEmail(),
+  //         "New Notice",
+  //         user.getUserName()
+  //       );
+  //     }
+  //   } catch (Exception e) {
+  //     LOGGER.info(
+  //       "End NoticeServiceImpl: createNoticeByUser method ! mail sending error"
+  //     );
+  //   }
+
+  //   LOGGER.info("End NoticeServiceImpl: createNoticeByUser method");
+  //   return saveNotice;
+  // }
+
+  @Async
+  public void sendEmailNotifications(List<UserNotification> userNotifications) {
+    for (UserNotification user : userNotifications) {
+      emailServices.sendSimpleMessage(
+        user.getUserEmail(),
+        "New Notice",
+        user.getUserName()
+      );
+    }
+  }
+
   @Override
   public Notice createNoticeByUser(Notice notice) {
     LOGGER.info("Start NoticeServiceImpl: createNoticeByUser method");
@@ -58,9 +117,9 @@ public class NoticeServiceImpl implements NoticeService {
     if (base64ImageStrings != null) {
       try {
         for (String base64Image : base64ImageStrings) {
-
-          Map uploadResult = this.cloudinary.uploader().upload(base64Image,
-              ObjectUtils.emptyMap());
+          Map uploadResult =
+            this.cloudinary.uploader()
+              .upload(base64Image, ObjectUtils.emptyMap());
           String imageUrl = (String) uploadResult.get("url");
           listofdata.add(imageUrl);
         }
@@ -70,17 +129,16 @@ public class NoticeServiceImpl implements NoticeService {
     }
     notice.setImages_url(listofdata);
     Notice saveNotice = this.noticeRepository.save(notice);
-    try {
-      List<UserNotification> userNotification = this.notificationServiceImpl.getAllUserNotification();
+    CompletableFuture.runAsync(() -> {
+      try {
+          List<UserNotification> userNotification = this.notificationServiceImpl.getAllUserNotification();
 
-      for (UserNotification user : userNotification) {
-        emailServices.sendSimpleMessage(user.getUserEmail(), "New Notice",
-        user.getUserName());
+          // Send email notifications asynchronously
+          sendEmailNotifications(userNotification);
+      } catch (Exception e) {
+          LOGGER.info("Mail sending error", e);
       }
-    } catch (Exception e) {
-      LOGGER.info("End NoticeServiceImpl: createNoticeByUser method ! mail sending error");
-    }
-
+  });
     LOGGER.info("End NoticeServiceImpl: createNoticeByUser method");
     return saveNotice;
   }
@@ -90,13 +148,18 @@ public class NoticeServiceImpl implements NoticeService {
     LOGGER.info("Start NoticeServiceImpl: getNoticeByNoticeId method");
     LOGGER.info("End NoticeServiceImpl: getNoticeByNoticeId method");
     return this.noticeRepository.findById(noticeId)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            ResponseMessagesConstants.messagelist.stream()
-                .filter(exceptionResponse -> "NOTICE_NOT_FOUND"
-                    .equals(exceptionResponse.getExceptonName()))
-                .map(ExceptionResponse::getMassage)
-                .findFirst()
-                .orElse("Default message if not found")));
+      .orElseThrow(() ->
+        new ResourceNotFoundException(
+          ResponseMessagesConstants.messagelist
+            .stream()
+            .filter(exceptionResponse ->
+              "NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName())
+            )
+            .map(ExceptionResponse::getMassage)
+            .findFirst()
+            .orElse("Default message if not found")
+        )
+      );
   }
 
   @Override
@@ -116,31 +179,44 @@ public class NoticeServiceImpl implements NoticeService {
 
   @Override
   public Page<Notice> getAllNoticesSorted(Pageable pageable) {
-  LOGGER.info("Start NoticeServiceImpl: getAllNoticesSorted method");
-  LOGGER.info("End NoticeServiceImpl: getAllNoticesSorted method");
-  return noticeRepository.findAll(pageable);
+    LOGGER.info("Start NoticeServiceImpl: getAllNoticesSorted method");
+    LOGGER.info("End NoticeServiceImpl: getAllNoticesSorted method");
+    return noticeRepository.findAll(pageable);
   }
 
-
   @Override
-  public Page<Notice> getNoticesByCategory(List<String> category, List<String> department, Pageable pageable) {
+  public Page<Notice> getNoticesByCategory(
+    List<String> category,
+    List<String> department,
+    Pageable pageable
+  ) {
     LOGGER.info("Start NoticeServiceImpl: getNoticesByCategory method");
     LOGGER.info("End NoticeServiceImpl: getNoticesByCategory method");
-    return noticeRepository.findByCategoryInDepartmentNameInAndStatusNotDisable(category, department, pageable);
+    return noticeRepository.findByCategoryInDepartmentNameInAndStatusNotDisable(
+      category,
+      department,
+      pageable
+    );
   }
 
   @Override
-  public Page<Notice> getNoticesByDepartment(List<String> departmentName, List<String> categories, Pageable pageable) {
+  public Page<Notice> getNoticesByDepartment(
+    List<String> departmentName,
+    List<String> categories,
+    Pageable pageable
+  ) {
     LOGGER.info("Start NoticeServiceImpl: getNoticesByCategory method");
     if (departmentName != null && departmentName.contains("All")) {
       LOGGER.info("End NoticeServiceImpl: getNoticesByCategory method");
       return null;
     } else {
       LOGGER.info("End NoticeServiceImpl: getNoticesByCategory method");
-      return noticeRepository.findByDepartmentNameInANDcategoriesInAndStatusNotDisable(departmentName, categories,
-          pageable);
+      return noticeRepository.findByDepartmentNameInANDcategoriesInAndStatusNotDisable(
+        departmentName,
+        categories,
+        pageable
+      );
     }
-
   }
 
   @Override
@@ -155,48 +231,68 @@ public class NoticeServiceImpl implements NoticeService {
     List<String> status = new ArrayList<>();
     status.add("enable");
     status.add("important");
-    return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query,
-        pageable);
+    return noticeRepository.findByNoticeTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+      query,
+      query,
+      pageable
+    );
   }
 
   @Override
   public List<Notice> getAllImportantNotice(int limit) {
     LOGGER.info("Start NoticeServiceImpl: getAllImportantNotice method");
-    List<Notice> findNoticesWithLimit = noticeRepository.findNoticesWithLimit(limit, "important");
+    List<Notice> findNoticesWithLimit = noticeRepository.findNoticesWithLimit(
+      limit,
+      "important"
+    );
 
     if (findNoticesWithLimit.isEmpty()) {
-      throw new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-          .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+      throw new ResourceNotFoundException(
+        ResponseMessagesConstants.messagelist
+          .stream()
+          .filter(exceptionResponse ->
+            "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName())
+          )
           .map(ExceptionResponse::getMassage)
           .findFirst()
-          .orElse("Default message if not found"));
+          .orElse("Default message if not found")
+      );
     } else {
       LOGGER.info("End NoticeServiceImpl: getAllImportantNotice method");
       return findNoticesWithLimit;
-
     }
-
   }
 
   @Override
   public Notice updateNotice(Notice notice) {
     LOGGER.info("Start NoticeServiceImpl: updateNotice method");
     this.noticeRepository.findById(notice.getNoticeId())
-        .orElseThrow(() -> new ResourceNotFoundException(ResponseMessagesConstants.messagelist.stream()
-            .filter(exceptionResponse -> "NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+      .orElseThrow(() ->
+        new ResourceNotFoundException(
+          ResponseMessagesConstants.messagelist
+            .stream()
+            .filter(exceptionResponse ->
+              "NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName())
+            )
             .map(ExceptionResponse::getMassage)
             .findFirst()
-            .orElse("Default message if not found")));
+            .orElse("Default message if not found")
+        )
+      );
     LOGGER.info("End NoticeServiceImpl: updateNotice method");
     return noticeRepository.save(notice);
-
   }
 
   // searching filter
 
-  public Map<String, Object> filterNotices(List<String> department, List<String> categories, List<String> admins,
-
-      String status, int page, int size) {
+  public Map<String, Object> filterNotices(
+    List<String> department,
+    List<String> categories,
+    List<String> admins,
+    String status,
+    int page,
+    int size
+  ) {
     LOGGER.info("Start NoticeServiceImpl: filterNotices method");
 
     if (department == null && categories == null) {
@@ -212,22 +308,25 @@ public class NoticeServiceImpl implements NoticeService {
           LOGGER.info("End NoticeServiceImpl: filterNotices method");
           return response;
         }
-        ;
         Map<String, Object> response = new HashMap<>();
         response.put("data", findAllNotDisabled.subList(startIndex, endIndex));
         response.put("count", findAllNotDisabled.size());
         LOGGER.info("End NoticeServiceImpl: filterNotices method");
         return response;
-
       } else {
         if (status != null && admins != null) {
-
-          List<Notice> findAllNotDisabled2 = findAllNotDisabled.stream()
-              .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                  && (admins != null && admins.contains(notice.getCreatedBy())))
-              .collect(Collectors.toList());
+          List<Notice> findAllNotDisabled2 = findAllNotDisabled
+            .stream()
+            .filter(notice ->
+              (status != null && status.equals(notice.getStatus())) &&
+              (admins != null && admins.contains(notice.getCreatedBy()))
+            )
+            .collect(Collectors.toList());
           int startIndex = page * size;
-          int endIndex = Math.min(startIndex + size, findAllNotDisabled2.size());
+          int endIndex = Math.min(
+            startIndex + size,
+            findAllNotDisabled2.size()
+          );
           if (startIndex > endIndex) {
             Map<String, Object> response = new HashMap<>();
             response.put("data", Collections.emptyList());
@@ -237,19 +336,27 @@ public class NoticeServiceImpl implements NoticeService {
             return response;
           }
           Map<String, Object> response = new HashMap<>();
-          response.put("data", findAllNotDisabled2.subList(startIndex, endIndex));
+          response.put(
+            "data",
+            findAllNotDisabled2.subList(startIndex, endIndex)
+          );
           response.put("count", findAllNotDisabled2.size());
           LOGGER.info("End NoticeServiceImpl: filterNotices method");
           return response;
-
         } else {
-          List<Notice> findAllNotDisabled3 = findAllNotDisabled.stream()
-              .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                  || (admins != null && admins.contains(notice.getCreatedBy())))
-              .collect(Collectors.toList());
+          List<Notice> findAllNotDisabled3 = findAllNotDisabled
+            .stream()
+            .filter(notice ->
+              (status != null && status.equals(notice.getStatus())) ||
+              (admins != null && admins.contains(notice.getCreatedBy()))
+            )
+            .collect(Collectors.toList());
 
           int startIndex = page * size;
-          int endIndex = Math.min(startIndex + size, findAllNotDisabled3.size());
+          int endIndex = Math.min(
+            startIndex + size,
+            findAllNotDisabled3.size()
+          );
           if (startIndex > endIndex) {
             Map<String, Object> response = new HashMap<>();
             response.put("data", Collections.emptyList());
@@ -259,18 +366,23 @@ public class NoticeServiceImpl implements NoticeService {
             return response;
           }
           Map<String, Object> response = new HashMap<>();
-          response.put("data", findAllNotDisabled3.subList(startIndex, endIndex));
+          response.put(
+            "data",
+            findAllNotDisabled3.subList(startIndex, endIndex)
+          );
           response.put("count", findAllNotDisabled3.size());
           LOGGER.info("End NoticeServiceImpl: filterNotices method");
           return response;
         }
       }
     } else {
-      List<Notice> findByCreatedByInAndStatusNotDisable = noticeRepository
-          .findBycategoriesInAndStatusNotDisable(categories);
+      List<Notice> findByCreatedByInAndStatusNotDisable = noticeRepository.findBycategoriesInAndStatusNotDisable(
+        categories
+      );
 
-      List<Notice> findByDepartmentAndStatusNotDisabled = noticeRepository
-          .findByDepartmentAndStatusNotDisabled(department);
+      List<Notice> findByDepartmentAndStatusNotDisabled = noticeRepository.findByDepartmentAndStatusNotDisabled(
+        department
+      );
       List<Notice> finalListofData = new ArrayList<>();
       finalListofData.addAll(findByCreatedByInAndStatusNotDisable);
       finalListofData.addAll(findByDepartmentAndStatusNotDisabled);
@@ -278,7 +390,6 @@ public class NoticeServiceImpl implements NoticeService {
         int startIndex = page * size;
         int endIndex = Math.min(startIndex + size, finalListofData.size());
         if (startIndex > endIndex) {
-
           Map<String, Object> response = new HashMap<>();
           response.put("data", Collections.emptyList());
           response.put("count", finalListofData.size());
@@ -292,14 +403,19 @@ public class NoticeServiceImpl implements NoticeService {
         return response;
       } else {
         if (status != null && admins != null) {
-          List<Notice> findAllNotDisabled2 = finalListofData.stream()
-              .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                  && (admins != null && admins.contains(notice.getCreatedBy())))
-              .collect(Collectors.toList());
+          List<Notice> findAllNotDisabled2 = finalListofData
+            .stream()
+            .filter(notice ->
+              (status != null && status.equals(notice.getStatus())) &&
+              (admins != null && admins.contains(notice.getCreatedBy()))
+            )
+            .collect(Collectors.toList());
           int startIndex = page * size;
-          int endIndex = Math.min(startIndex + size, findAllNotDisabled2.size());
+          int endIndex = Math.min(
+            startIndex + size,
+            findAllNotDisabled2.size()
+          );
           if (startIndex > endIndex) {
-
             Map<String, Object> response = new HashMap<>();
             response.put("data", Collections.emptyList());
             response.put("count", findAllNotDisabled2.size());
@@ -307,31 +423,41 @@ public class NoticeServiceImpl implements NoticeService {
             return response;
           }
           Map<String, Object> response = new HashMap<>();
-          response.put("data", findAllNotDisabled2.subList(startIndex, endIndex));
+          response.put(
+            "data",
+            findAllNotDisabled2.subList(startIndex, endIndex)
+          );
           response.put("count", findAllNotDisabled2.size());
           LOGGER.info("End NoticeServiceImpl: filterNotices method");
           return response;
         } else {
-          List<Notice> findAllNotDisabled3 = finalListofData.stream()
-              .filter(notice -> (status != null && status.equals(notice.getStatus()))
-                  || (admins != null && admins.contains(notice.getCreatedBy())))
-              .collect(Collectors.toList());
+          List<Notice> findAllNotDisabled3 = finalListofData
+            .stream()
+            .filter(notice ->
+              (status != null && status.equals(notice.getStatus())) ||
+              (admins != null && admins.contains(notice.getCreatedBy()))
+            )
+            .collect(Collectors.toList());
           int startIndex = page * size;
-          int endIndex = Math.min(startIndex + size, findAllNotDisabled3.size());
+          int endIndex = Math.min(
+            startIndex + size,
+            findAllNotDisabled3.size()
+          );
           if (startIndex > endIndex) {
             Map<String, Object> response = new HashMap<>();
             response.put("data", Collections.emptyList());
             response.put("count", findAllNotDisabled3.size());
             LOGGER.info("End NoticeServiceImpl: filterNotices method");
             return response;
-
           }
           Map<String, Object> response = new HashMap<>();
-          response.put("data", findAllNotDisabled3.subList(startIndex, endIndex));
+          response.put(
+            "data",
+            findAllNotDisabled3.subList(startIndex, endIndex)
+          );
           response.put("count", findAllNotDisabled3.size());
           LOGGER.info("End NoticeServiceImpl: filterNotices method");
           return response;
-
         }
       }
     }
@@ -352,45 +478,59 @@ public class NoticeServiceImpl implements NoticeService {
   // get important notice by limit
   @Override
   public List<Notice> noticefindByStatusImportant(Sort sort, int limit) {
-    return noticeRepository.findByImportantTrueAndStatusIs("enable", sort, PageRequest.of(0, limit));
+    return noticeRepository.findByImportantTrueAndStatusIs(
+      "enable",
+      sort,
+      PageRequest.of(0, limit)
+    );
   }
 
   @Override
-  public Page<Notice> getAllNoticesByfilter(List<String> categories, List<String> departmentNames,
-      List<String> createdBy,
-      String status, Pageable pageable) {
-
+  public Page<Notice> getAllNoticesByfilter(
+    List<String> categories,
+    List<String> departmentNames,
+    List<String> createdBy,
+    String status,
+    Pageable pageable
+  ) {
     LOGGER.info("Start NoticeServiceImpl: getAllNoticesByfilter method");
     // Handle the scenario where "DepartmentName = All"
     if (departmentNames != null) {
-      if (departmentNames.contains("Iteg") || departmentNames.contains("Meg") || departmentNames.contains("Beg")) {
+      if (
+        departmentNames.contains("Iteg") ||
+        departmentNames.contains("Meg") ||
+        departmentNames.contains("Beg")
+      ) {
         departmentNames.addAll(Arrays.asList("All"));
       }
     }
     if ("false".equals(status) || status == null) {
       LOGGER.info("End NoticeServiceImpl: getAllNoticesByfilter method");
       return noticeRepository.findByCategoryInAndDepartmentNameInAndAndCreatedByIn(
-          categories, departmentNames, createdBy, pageable);
+        categories,
+        departmentNames,
+        createdBy,
+        pageable
+      );
     } else {
       LOGGER.info("End NoticeServiceImpl: getAllNoticesByfilter method");
       return noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
-          categories, departmentNames, createdBy, pageable);
-
+        categories,
+        departmentNames,
+        createdBy,
+        pageable
+      );
     }
-
   }
 
   // {http://res.cloudinary.com/dkbdo9top/image/upload/v1702543503/etfonrrzdhazanffusj6.png,http://res.cloudinary.com/dkbdo9top/image/upload/v1702543505/yxnlttu9ejjcs5g6igvv.png}
   @Override
   public List<NoticeDto> countAllEnableDepartmentNotices() {
-     return noticeRepository.countAllEnableDepartmentNotices();
+    return noticeRepository.countAllEnableDepartmentNotices();
   }
 
-   @Override
+  @Override
   public List<CategoryNoticeDto> countAllEnableCategoryNotices() {
-     return noticeRepository.countAllEnableCategoryNotices();
+    return noticeRepository.countAllEnableCategoryNotices();
   }
-
-  
-
 }
