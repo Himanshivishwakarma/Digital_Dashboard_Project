@@ -392,5 +392,25 @@ public class NoticeRepositoryTest {
                 List<CategoryNoticeDto> result = noticeRepository.countAllEnableCategoryNotices();
                 assertEquals(mockNotices, result);
         }
+        @Test
+     void   testFindByNoticeCreatedDateIsCurrentDate(){
+ List<Notice> mockNotices = List.of(
+                                new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "enable"),
+                                new Notice("1", "z",
+                                                "z",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "disable"));
+                                                when(noticeRepository.findByNoticeCreatedDateIsCurrentDate()).thenReturn(mockNotices);
+
+                           List<Notice> result =                       noticeRepository.findByNoticeCreatedDateIsCurrentDate();
+                           assertEquals(mockNotices, result);
+        }
+
+
 
 }
