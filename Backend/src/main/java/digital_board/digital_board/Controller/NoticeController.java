@@ -1,7 +1,12 @@
 package digital_board.digital_board.Controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -40,6 +45,12 @@ public class NoticeController {
 
     @Autowired
     private NoticeServiceImpl noticeServiceImpl;
+
+    // schedule by end date
+    @GetMapping("/path")
+    public List<Notice> getMethodName() {
+        return noticeServiceImpl.getAllNoticeByScheduling();
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Map<String, Object>> createNoticeByUser(@RequestBody Notice notice) {
@@ -107,7 +118,7 @@ public class NoticeController {
 
                 response.put("message", successMessage);
                 response.put("data", updatedNotice);
-                
+
                 MDC.put("useremail", notice.getCreatedBy());
                 MDC.put("path", "notice/update/");
                 LOGGER.info("updateNoticeByNoticeId method : notice update");
@@ -385,9 +396,7 @@ public class NoticeController {
                     .map(ExceptionResponse::getMassage)
                     .findFirst()
                     .orElse("Default message if not found"));
-        } 
-        else 
-        {
+        } else {
             response.put("message", ResponseMessagesConstants.messagelist.stream()
                     .filter(exceptionResponse -> "TODAY_NOTICE".equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)
@@ -399,8 +408,6 @@ public class NoticeController {
 
         return ResponseEntity.ok(response);
     }
-
-   
 
     @GetMapping("/activeNoticeDepartmentCount")
     public ResponseEntity<Map<String, Object>> countAllEnableNotices() {
@@ -425,10 +432,9 @@ public class NoticeController {
         LOGGER.info("Start NoticeController: countAllCategoryNotices method");
         Map<String, Object> response = new HashMap<>();
 
-        List<CategoryNoticeDto>  categoryNoticeDtos = noticeServiceImpl.getCountAllEnableCategoryNotices();
+        List<CategoryNoticeDto> categoryNoticeDtos = noticeServiceImpl.getCountAllEnableCategoryNotices();
         response.put("data", categoryNoticeDtos);
-        if (categoryNoticeDtos.isEmpty()) 
-        {
+        if (categoryNoticeDtos.isEmpty()) {
             // Return a JSON response with a message for data not found
             response.put("count", categoryNoticeDtos.size());
             LOGGER.info("End NoticeController: countAllCategoryNotices method");
@@ -437,6 +443,13 @@ public class NoticeController {
         // Return the list of notices if data is found
         LOGGER.info("End NoticeController: countAllCategoryNotices method");
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/last7Days")
+    public List<Map<String, Object>> getLast7Days() {
+        LOGGER.info("Start NoticeController: getLast7Days method");
+        LOGGER.info("End NoticeController: getLast7Days method");
+        return noticeServiceImpl.getLast7DaysCount();
     }
 
 }

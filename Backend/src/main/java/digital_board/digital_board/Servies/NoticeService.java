@@ -1,6 +1,7 @@
 package digital_board.digital_board.Servies;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,9 +54,11 @@ public interface NoticeService {
             String status, Pageable pageable);
 
     // today created notice count
-   public List<Notice> todayCreatedNoticeCount();
+     public List<Notice> todayCreatedNoticeCount();
 
       List<NoticeDto> getCountAllEnableDepartmentNotices();
       
       List<CategoryNoticeDto> getCountAllEnableCategoryNotices();
+
+      List<Map<String, Object>> getLast7DaysCount();
 }
