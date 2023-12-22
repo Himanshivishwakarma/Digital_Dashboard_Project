@@ -58,4 +58,6 @@ public interface NoticeService {
       List<NoticeDto> getCountAllEnableDepartmentNotices();
       
       List<CategoryNoticeDto> getCountAllEnableCategoryNotices();
+
+   public  List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin();
 }

@@ -562,4 +562,11 @@ public class NoticeServiceImpl implements NoticeService {
   public List<CategoryNoticeDto> getCountAllEnableCategoryNotices() {
      return noticeRepository.countAllEnableCategoryNotices();
   }
+
+  @Override
+  public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin() {
+     return noticeRepository.findNoticeCountsByDepartmentForSuperAdmin();
+  }
+   
+  
 }

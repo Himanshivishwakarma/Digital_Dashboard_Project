@@ -438,4 +438,9 @@ public class NoticeController {
         return ResponseEntity.ok(response);
     }
 
+     @GetMapping("/NoticeCategoryCountBySuperAdmin")
+    public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin() {
+       return noticeServiceImpl.getFindNoticeCountsByDepartmentForSuperAdmin();
+    }
+
 }
