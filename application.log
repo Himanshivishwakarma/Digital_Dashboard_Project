@@ -2390,3 +2390,272 @@ java.net.SocketException: Connection reset
 2023-12-18 11:59:45,270 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [Thread-11] Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-12-18 11:59:45,561 INFO c.z.h.HikariDataSource [Thread-11] HikariPool-3 - Shutdown initiated...
 2023-12-18 11:59:50,026 INFO c.z.h.HikariDataSource [Thread-11] HikariPool-3 - Shutdown completed.
+2023-12-18 12:51:30,066 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2023-12-18 12:51:30,308 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-18 12:51:30,309 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-18 12:51:33,783 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-18 12:51:34,033 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 229 ms. Found 4 JPA repository interfaces.
+2023-12-18 12:51:36,114 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9090 (http)
+2023-12-18 12:51:36,138 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-9090"]
+2023-12-18 12:51:36,143 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-12-18 12:51:36,145 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.15]
+2023-12-18 12:51:36,354 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-12-18 12:51:36,355 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 6044 ms
+2023-12-18 12:51:37,102 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-18 12:51:37,365 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.2.13.Final
+2023-12-18 12:51:37,372 INFO o.h.c.Environment [restartedMain] HHH000406: Using bytecode reflection optimizer
+2023-12-18 12:51:38,229 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-18 12:51:38,318 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-12-18 12:51:41,561 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@18283dcc
+2023-12-18 12:51:41,572 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-12-18 12:51:45,414 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-18 12:51:48,626 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 12:51:49,940 INFO o.s.d.j.r.q.QueryEnhancerFactory [restartedMain] Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-12-18 12:51:54,165 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-18 12:51:55,414 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-18 12:51:55,640 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@23f60993, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1b9404ed, org.springframework.security.web.context.SecurityContextHolderFilter@18716f94, org.springframework.security.web.header.HeaderWriterFilter@3aae3a78, org.springframework.web.filter.CorsFilter@50fee006, org.springframework.security.web.authentication.logout.LogoutFilter@1e93c014, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@5653ae4f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3aa0a63d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@117531ab, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@730562b3, org.springframework.security.web.access.ExceptionTranslationFilter@2913c04e, org.springframework.security.web.access.intercept.AuthorizationFilter@709f2f4e]
+2023-12-18 12:51:56,637 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-12-18 12:51:56,791 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-9090"]
+2023-12-18 12:51:56,914 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9090 (http) with context path ''
+2023-12-18 12:51:57,110 INFO o.a.c.c.C.[.[.[/] [RMI TCP Connection(1)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-18 12:51:57,112 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+2023-12-18 12:51:57,116 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-127.0.0.1] Completed initialization in 3 ms
+2023-12-18 12:52:06,052 WARN c.z.h.p.PoolBase [restartedMain] HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@18283dcc (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 13:45:31,526 INFO o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2023-12-18 13:45:33,824 INFO o.a.c.h.Http11NioProtocol [Thread-5] Pausing ProtocolHandler ["http-nio-9090"]
+2023-12-18 13:45:33,890 INFO o.a.c.c.StandardService [Thread-5] Stopping service [Tomcat]
+2023-12-18 13:45:34,049 INFO o.a.c.c.C.[.[.[/] [Thread-5] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-12-18 13:45:34,352 INFO o.a.c.h.Http11NioProtocol [Thread-5] Stopping ProtocolHandler ["http-nio-9090"]
+2023-12-18 13:45:34,515 INFO o.a.c.h.Http11NioProtocol [Thread-5] Destroying ProtocolHandler ["http-nio-9090"]
+2023-12-18 13:45:34,927 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [Thread-5] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 13:45:35,388 INFO c.z.h.HikariDataSource [Thread-5] HikariPool-1 - Shutdown initiated...
+2023-12-18 13:45:41,364 INFO c.z.h.HikariDataSource [Thread-5] HikariPool-1 - Shutdown completed.
+2023-12-18 13:46:06,000 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-18 13:46:06,561 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 355 ms. Found 4 JPA repository interfaces.
+2023-12-18 13:46:10,636 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9090 (http)
+2023-12-18 13:46:11,385 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-9090"]
+2023-12-18 13:46:11,745 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-12-18 13:46:12,166 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.15]
+2023-12-18 13:46:14,149 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-12-18 13:46:14,151 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 14198 ms
+2023-12-18 13:46:27,087 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-18 13:46:27,515 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-18 13:46:27,864 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2023-12-18 13:46:31,988 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@32e61c7c
+2023-12-18 13:46:32,094 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2023-12-18 13:46:34,791 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-18 13:46:37,435 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18 13:46:42,155 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-18 13:46:44,257 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-18 13:46:45,595 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@233894c0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@56212c1, org.springframework.security.web.context.SecurityContextHolderFilter@218136b9, org.springframework.security.web.header.HeaderWriterFilter@7bdfcba3, org.springframework.web.filter.CorsFilter@3c5d0aff, org.springframework.security.web.authentication.logout.LogoutFilter@156b8b0e, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@7666e77a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1db8590b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@675f68db, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7d417739, org.springframework.security.web.access.ExceptionTranslationFilter@45e7ff58, org.springframework.security.web.access.intercept.AuthorizationFilter@e76fe0c]
+2023-12-18 13:46:48,635 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-12-18 13:46:50,107 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-9090"]
+2023-12-18 13:46:50,118 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9090 (http) with context path ''
+2023-12-18 13:46:58,895 WARN c.z.h.p.PoolBase [restartedMain] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@32e61c7c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 13:47:00,814 INFO o.s.b.d.a.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-12-18 14:37:25,877 WARN c.z.h.p.HikariPool [HikariPool-2 housekeeper] HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=3m52s490ms882µs900ns).
+2023-12-18 14:44:39,795 INFO o.a.c.c.C.[.[.[/] [http-nio-9090-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-18 14:44:39,799 INFO o.s.w.s.DispatcherServlet [http-nio-9090-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-12-18 14:44:39,975 INFO o.s.w.s.DispatcherServlet [http-nio-9090-exec-1] Completed initialization in 174 ms
+2023-12-18 14:44:40,716 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@8f3ba9c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,728 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@46cc317b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,748 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@2a427d83 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,761 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@3ff0150d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,768 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@2ae6772d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,776 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@d06cce3 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,781 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@341106a5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,799 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@bf63557 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,842 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@1230741b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 14:44:40,865 WARN c.z.h.p.PoolBase [http-nio-9090-exec-2] HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@296ad36a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-18 16:42:42,057 WARN c.z.h.p.HikariPool [HikariPool-2 housekeeper] HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=19m41s852ms642µs600ns).
+2023-12-21 15:57:24,538 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2023-12-21 15:57:25,301 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-21 15:57:25,304 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-21 15:57:41,548 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-21 15:57:41,977 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 293 ms. Found 4 JPA repository interfaces.
+2023-12-21 15:57:46,649 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9090 (http)
+2023-12-21 15:57:46,765 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-9090"]
+2023-12-21 15:57:46,788 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-12-21 15:57:46,814 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.15]
+2023-12-21 15:57:47,920 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-12-21 15:57:48,018 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 22696 ms
+2023-12-21 15:57:52,472 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-21 15:57:54,016 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.2.13.Final
+2023-12-21 15:57:54,035 INFO o.h.c.Environment [restartedMain] HHH000406: Using bytecode reflection optimizer
+2023-12-21 15:57:56,164 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-21 15:57:56,501 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-12-21 15:58:00,754 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@277add31
+2023-12-21 15:58:00,761 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-12-21 15:58:08,026 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-21 15:58:13,390 WARN c.z.h.p.PoolBase [restartedMain] HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@277add31 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-12-21 15:58:16,027 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-21 15:58:17,460 INFO o.s.d.j.r.q.QueryEnhancerFactory [restartedMain] Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-12-21 15:58:31,536 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-21 15:58:36,593 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-21 15:58:37,621 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3fac97a4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@288162da, org.springframework.security.web.context.SecurityContextHolderFilter@30d6169f, org.springframework.security.web.header.HeaderWriterFilter@286d725, org.springframework.web.filter.CorsFilter@33ce49e7, org.springframework.security.web.authentication.logout.LogoutFilter@5b4d0d44, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@2d46c257, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b4c3355, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@699d7d98, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@31114bdf, org.springframework.security.web.access.ExceptionTranslationFilter@176527e0, org.springframework.security.web.access.intercept.AuthorizationFilter@20645650]
+2023-12-21 15:58:40,975 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-12-21 15:58:41,968 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-9090"]
+2023-12-21 15:58:42,171 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9090 (http) with context path ''
+2023-12-21 16:12:18,788 INFO o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2023-12-21 16:12:18,889 INFO o.a.c.h.Http11NioProtocol [Thread-5] Pausing ProtocolHandler ["http-nio-9090"]
+2023-12-21 16:12:18,893 INFO o.a.c.c.StandardService [Thread-5] Stopping service [Tomcat]
+2023-12-21 16:12:18,907 INFO o.a.c.h.Http11NioProtocol [Thread-5] Stopping ProtocolHandler ["http-nio-9090"]
+2023-12-21 16:12:18,920 INFO o.a.c.h.Http11NioProtocol [Thread-5] Destroying ProtocolHandler ["http-nio-9090"]
+2023-12-21 16:12:18,942 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [Thread-5] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-21 16:12:19,031 INFO c.z.h.HikariDataSource [Thread-5] HikariPool-1 - Shutdown initiated...
+2023-12-21 16:12:22,483 INFO c.z.h.HikariDataSource [Thread-5] HikariPool-1 - Shutdown completed.
+2023-12-21 16:12:30,519 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-21 16:12:30,737 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 87 ms. Found 4 JPA repository interfaces.
+2023-12-21 16:12:32,386 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9090 (http)
+2023-12-21 16:12:32,414 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-9090"]
+2023-12-21 16:12:32,467 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-12-21 16:12:32,482 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.15]
+2023-12-21 16:12:32,961 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-12-21 16:12:32,963 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 9224 ms
+2023-12-21 16:12:33,801 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-21 16:12:33,899 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-21 16:12:33,952 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2023-12-21 16:12:36,726 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@f2d1493
+2023-12-21 16:12:36,731 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2023-12-21 16:12:38,359 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-21 16:12:40,586 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-21 16:12:41,198 WARN o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'noticeController': Unsatisfied dependency expressed through field 'noticeServiceImpl': Error creating bean with name 'noticeServiceImpl': Lookup method resolution failed
+2023-12-21 16:12:41,202 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-21 16:12:41,203 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Shutdown initiated...
+2023-12-21 16:12:43,398 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Shutdown completed.
+2023-12-21 16:12:43,401 INFO o.a.c.c.StandardService [restartedMain] Stopping service [Tomcat]
+2023-12-21 16:12:43,422 INFO o.s.b.a.l.ConditionEvaluationReportLogger [restartedMain] 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-12-21 16:12:43,737 ERROR o.s.b.SpringApplication [restartedMain] Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'noticeController': Unsatisfied dependency expressed through field 'noticeServiceImpl': Error creating bean with name 'noticeServiceImpl': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:747) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:492) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1416) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:597) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) [spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) [spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) [spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) [spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) [spring-boot-3.1.5.jar:3.1.5]
+	at digital_board.digital_board.DigitalBoardApplication.main(DigitalBoardApplication.java:20) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.1.5.jar:3.1.5]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'noticeServiceImpl': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:481) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:351) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1291) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1186) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:764) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 25 more
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [digital_board.digital_board.ServiceImpl.NoticeServiceImpl] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@3393c624]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483) ~[spring-core-6.0.13.jar:6.0.13]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:459) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:351) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1291) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1186) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:764) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 25 more
+Caused by: java.lang.NoClassDefFoundError: digital_board/digital_board/Exception/ResourceNotFoundException
+	at java.lang.Class.getDeclaredMethods0(Native Method) ~[?:?]
+	at java.lang.Class.privateGetDeclaredMethods(Class.java:3402) ~[?:?]
+	at java.lang.Class.getDeclaredMethods(Class.java:2504) ~[?:?]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-6.0.13.jar:6.0.13]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:459) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:351) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1291) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1186) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:764) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 25 more
+Caused by: java.lang.ClassNotFoundException: digital_board.digital_board.Exception.ResourceNotFoundException
+	at jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[?:?]
+	at jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[?:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[?:?]
+	at java.lang.Class.forName0(Native Method) ~[?:?]
+	at java.lang.Class.forName(Class.java:467) ~[?:?]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.1.5.jar:3.1.5]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[?:?]
+	at java.lang.Class.getDeclaredMethods0(Native Method) ~[?:?]
+	at java.lang.Class.privateGetDeclaredMethods(Class.java:3402) ~[?:?]
+	at java.lang.Class.getDeclaredMethods(Class.java:2504) ~[?:?]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-6.0.13.jar:6.0.13]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:459) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:351) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1291) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1186) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:764) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 25 more
+2023-12-21 17:12:20,674 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-21 17:12:20,802 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 120 ms. Found 4 JPA repository interfaces.
+2023-12-21 17:12:21,539 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9090 (http)
+2023-12-21 17:12:21,553 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-12-21 17:12:21,554 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.15]
+2023-12-21 17:12:21,656 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-12-21 17:12:21,657 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 4172 ms
+2023-12-21 17:12:21,825 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-21 17:12:21,864 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-21 17:12:21,869 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-3 - Starting...
+2023-12-21 17:12:24,690 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@1376c580
+2023-12-21 17:12:24,693 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-3 - Start completed.
+2023-12-21 17:12:26,103 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-21 17:12:28,405 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-21 17:12:29,817 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-21 17:12:30,219 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-12-21 17:12:30,262 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@65e0168f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5aed3410, org.springframework.security.web.context.SecurityContextHolderFilter@52e4d68e, org.springframework.security.web.header.HeaderWriterFilter@52300ed2, org.springframework.web.filter.CorsFilter@5da58b8d, org.springframework.security.web.authentication.logout.LogoutFilter@442b490, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@7417daa9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@655c21a6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@227290b6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@172dd002, org.springframework.security.web.access.ExceptionTranslationFilter@320ebcff, org.springframework.security.web.access.intercept.AuthorizationFilter@3656233b]
+2023-12-21 17:12:30,541 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-12-21 17:12:30,605 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-9090"]
+2023-12-21 17:12:30,621 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9090 (http) with context path ''
+2023-12-21 17:12:31,476 INFO o.s.b.d.a.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
