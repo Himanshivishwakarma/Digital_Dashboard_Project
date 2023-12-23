@@ -114,4 +114,7 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
         // get notice by department 
         @Query("SELECT n FROM Notice n WHERE n.departmentName = :departmentName And CAST(n.noticeCreatedDate AS date) = :customDate And n.status <> 'disable' AND n.status <> 'completed'")
         List<Notice> findByDepartmentNameCustomQuery(@Param("customDate") LocalDate customDate,@Param("departmentName") String departmentName);
+
+        @Query("SELECT n FROM Notice n WHERE n.category = :category  And n.status <> 'disable' AND n.status <> 'completed'")
+        List<Notice> findByCategoryName(@Param("category") String category);
 }

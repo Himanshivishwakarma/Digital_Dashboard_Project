@@ -61,4 +61,6 @@ public interface NoticeService {
       List<CategoryNoticeDto> getCountAllEnableCategoryNotices();
 
       List<Map<String, Object>> getLast7DaysCount();
+
+      List<Map<String,Object>>getnoticesByCategory();
 }

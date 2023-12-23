@@ -549,4 +549,32 @@ public class NoticeServiceImpl implements NoticeService {
     LOGGER.info("End NoticeServiceImpl: getLast7DaysCount method");
     return last7DaysDataList;
   }
+
+  @Override
+  public List<Map<String,Object>> getnoticesByCategory() 
+  {
+    List<Map<String,Object>> response=new ArrayList<>();
+    Map<String, Object> noticeData = new HashMap<>();
+
+    noticeData.put("Department", "Excellence Group");
+    noticeData.put("Event", noticeRepository.findByCategoryName("Event").size());
+    noticeData.put("Sport", noticeRepository.findByCategoryName("Sport").size());
+    noticeData.put("Interview", noticeRepository.findByCategoryName("Interview").size());
+    noticeData.put("Exam", noticeRepository.findByCategoryName("Exam").size());
+    noticeData.put("Placement", noticeRepository.findByCategoryName("Placement").size());
+    noticeData.put("Guest", noticeRepository.findByCategoryName("Guest").size());
+    noticeData.put("Result", noticeRepository.findByCategoryName("Result").size());
+    
+    response.add(noticeData);
+    
+    Map<String, Object> noticeAccount = new HashMap<>();
+    noticeAccount.put("Department","Account");
+    noticeAccount.put("NOC",noticeRepository.findByCategoryName("Result").size());
+    noticeAccount.put("Enrollment_Form",noticeRepository.findByCategoryName("Result").size());
+    noticeAccount.put("Document",noticeRepository.findByCategoryName("Result").size());
+    noticeAccount.put("Scholership",noticeRepository.findByCategoryName("Result").size());
+    
+    response.add(noticeAccount);
+    return response;
+  }
 }

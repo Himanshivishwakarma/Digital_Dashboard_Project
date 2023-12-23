@@ -452,4 +452,10 @@ public class NoticeController {
         return noticeServiceImpl.getLast7DaysCount();
     }
 
+    @GetMapping("/categories/count")
+    public List<Map<String,Object>> getNoticebyCategory()
+    {
+        return noticeServiceImpl.getnoticesByCategory();
+    }
+
 }

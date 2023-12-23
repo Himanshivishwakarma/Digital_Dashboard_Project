@@ -40,6 +40,7 @@ public class SecurityConfig {
             "/api/v1/notice/activeNoticeDepartmentCount",
             "/api/v1/notice/activeNoticeCategoryCount",
             "/api/v1/notice/last7Days",
+            "/api/v1/notice/categories/count",
             "/api/v1/user/FindAllUser",
             "/api/v1/notification/create",
             "/api/v1/notice/getAll/**",
