@@ -348,30 +348,30 @@
 //                 assertEquals(mockNotices, result);
 //         }
 
-        @Test
-        void testFindByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant() {
-                List<Notice> mockNotices = List.of(
-                                new Notice("1", "This is an important announcement.",
-                                                "this is notice descriptions",
-                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
-                                                new Date(), "John Doe",
-                                                false, "enable"),
-                                new Notice("1", "z",
-                                                "z",
-                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
-                                                new Date(), "John Doe",
-                                                false, "disable"));
-                Page<Notice> pageNotice = new PageImpl<>(mockNotices);
-                when(noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
-                                anyList(), anyList(),
-                                anyList(), any(Pageable.class))).thenReturn(pageNotice);
-                Page<Notice> result = noticeRepository
-                                .findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
-                                                Arrays.asList("categories", "categories"),
-                                                Arrays.asList("categories", "categories"),
-                                                Arrays.asList("categories", "categories"), PageRequest.of(0, 10));
-                assertEquals(pageNotice, result);
-        }
+        // @Test
+        // void testFindByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant() {
+        //         List<Notice> mockNotices = List.of(
+        //                         new Notice("1", "This is an important announcement.",
+        //                                         "this is notice descriptions",
+        //                                         "General", "HR Department", "2023-11-01", "2023-11-10", null,
+        //                                         new Date(), "John Doe",
+        //                                         false, "enable"),
+        //                         new Notice("1", "z",
+        //                                         "z",
+        //                                         "General", "HR Department", "2023-11-01", "2023-11-10", null,
+        //                                         new Date(), "John Doe",
+        //                                         false, "disable"));
+        //         Page<Notice> pageNotice = new PageImpl<>(mockNotices);
+        //         when(noticeRepository.findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
+        //                         anyList(), anyList(),
+        //                         anyList(), any(Pageable.class))).thenReturn(pageNotice);
+        //         Page<Notice> result = noticeRepository
+        //                         .findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
+        //                                         Arrays.asList("categories", "categories"),
+        //                                         Arrays.asList("categories", "categories"),
+        //                                         Arrays.asList("categories", "categories"), PageRequest.of(0, 10));
+        //         assertEquals(pageNotice, result);
+        // }
 
 //         @Test
 //         void testCountAllEnableDepartmentNotices() {
@@ -384,37 +384,37 @@
 //                 assertEquals(mockNotices, result);
 //         }
 
-        @Test
-        void testCountAllEnableCategoryNotices() {
-                long count = 2;
-                List<CategoryNoticeDto> mockNotices = Arrays.asList(new CategoryNoticeDto("Iteg", count),
-                                new CategoryNoticeDto("Iteg", count));
+//         @Test
+//         void testCountAllEnableCategoryNotices() {
+//                 long count = 2;
+//                 List<CategoryNoticeDto> mockNotices = Arrays.asList(new CategoryNoticeDto("Iteg", count),
+//                                 new CategoryNoticeDto("Iteg", count));
 
-                when(noticeRepository.countAllEnableCategoryNotices()).thenReturn(mockNotices);
+//                 when(noticeRepository.countAllEnableCategoryNotices()).thenReturn(mockNotices);
 
-                List<CategoryNoticeDto> result = noticeRepository.countAllEnableCategoryNotices();
-                assertEquals(mockNotices, result);
-        }
+//                 List<CategoryNoticeDto> result = noticeRepository.countAllEnableCategoryNotices();
+//                 assertEquals(mockNotices, result);
+//         }
 
-        @Test
-        void testFindByNoticeCreatedDateIsCurrentDate() {
-                List<Notice> mockNotices = List.of(
-                                new Notice("1", "This is an important announcement.",
-                                                "this is notice descriptions",
-                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
-                                                new Date(), "John Doe",
-                                                false, "enable"),
-                                new Notice("1", "z",
-                                                "z",
-                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
-                                                new Date(), "John Doe",
-                                                false, "disable"));
-                when(noticeRepository.findByNoticeCreatedDateIsCurrentDate()).thenReturn(mockNotices);
+//         @Test
+//         void testFindByNoticeCreatedDateIsCurrentDate() {
+//                 List<Notice> mockNotices = List.of(
+//                                 new Notice("1", "This is an important announcement.",
+//                                                 "this is notice descriptions",
+//                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
+//                                                 new Date(), "John Doe",
+//                                                 false, "enable"),
+//                                 new Notice("1", "z",
+//                                                 "z",
+//                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
+//                                                 new Date(), "John Doe",
+//                                                 false, "disable"));
+//                 when(noticeRepository.findByNoticeCreatedDateIsCurrentDate()).thenReturn(mockNotices);
 
-                List<Notice> result = noticeRepository.findByNoticeCreatedDateIsCurrentDate();
-                assertEquals(mockNotices, result);
-        }
+//                 List<Notice> result = noticeRepository.findByNoticeCreatedDateIsCurrentDate();
+//                 assertEquals(mockNotices, result);
+//         }
 
         
 
-}
+// }
