@@ -439,8 +439,21 @@ public class NoticeController {
     }
 
      @GetMapping("/NoticeCategoryCountBySuperAdmin")
-    public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin() {
-       return noticeServiceImpl.getFindNoticeCountsByDepartmentForSuperAdmin();
+    public ResponseEntity<Map<String, Object>> getFindNoticeCountsByDepartmentForSuperAdmin() {
+          LOGGER.info("Start NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
+        Map<String, Object> response = new HashMap<>();
+
+        List<NoticeDto>  noticeDtos = noticeServiceImpl.getFindNoticeCountsByDepartmentForSuperAdmin();
+        response.put("data", noticeDtos);
+        if (noticeDtos.isEmpty()) {
+            // Return a JSON response with a message for data not found
+            response.put("count", noticeDtos.size());
+            LOGGER.info("End NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        // Return the list of notices if data is found
+        LOGGER.info("End NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
+        return ResponseEntity.ok(response);
     }
 
 }
