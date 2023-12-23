@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ import digital_board.digital_board.Entity.Notice;
 @ExtendWith(MockitoExtension.class)
 public class NoticeRepositoryTest {
 
-        @Mock 
+        @Mock
         private NoticeRepository noticeRepository;
 
         @Test
@@ -412,12 +413,13 @@ public class NoticeRepositoryTest {
                                                 "General", "HR Department", "2023-11-01", "2023-11-10", null,
                                                 new Date(), "John Doe",
                                                 false, "disable", null, null));
-                when(noticeRepository.findByNoticeCreatedDateIsCurrentDate(any(LocalDate.class))).thenReturn(mockNotices);
+                when(noticeRepository.findByNoticeCreatedDateIsCurrentDate(any(LocalDate.class)))
+                                .thenReturn(mockNotices);
 
                 List<Notice> result = noticeRepository.findByNoticeCreatedDateIsCurrentDate(localDate);
                 assertEquals(mockNotices, result);
         }
-      
+
         @Test
         void testFindNoticeCountsByDepartmentForSuperAdmin() {
                 long count = 2;
@@ -428,7 +430,99 @@ public class NoticeRepositoryTest {
                 List<NoticeDto> result = noticeRepository.findNoticeCountsByDepartmentForSuperAdmin();
                 assertEquals(mockNotices, result);
         }
+
+        @Test
+        void testFindByDepartmentNameCustomQuery() {
+                LocalDate localDate = LocalDate.of(Year.MIN_VALUE, 1, 1);
+                List<Notice> mockNotices = List.of(
+                                new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "enable", null, null),
+                                new Notice("1", "z",
+                                                "z",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "disable", null, null));
+                when(noticeRepository.findByDepartmentNameCustomQuery(any(LocalDate.class), anyString()))
+                                .thenReturn(mockNotices);
+
+                List<Notice> result = noticeRepository.findByDepartmentNameCustomQuery(localDate, "HR Department");
+                assertEquals(mockNotices, result);
+        }
+
+        @Test
+        void testFindByCategoryName() {
+                List<Notice> mockNotices = List.of(
+                                new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "enable", null, null),
+                                new Notice("1", "z",
+                                                "z",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "disable", null, null));
+                when(noticeRepository.findByCategoryName(anyString())).thenReturn(mockNotices);
+
+                List<Notice> result = noticeRepository.findByCategoryName("HR Department");
+                assertEquals(mockNotices, result);
+        }
+
+         @Test
+        void testFindAllNotDisabledOrCompleted() {
+                Sort sort = Sort.by("desc");
+                List<Notice> mockNotices = List.of(
+                                new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "enable", null, null),
+                                new Notice("1", "z",
+                                                "z",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "disable", null, null));
+                when(noticeRepository.findByImportantTrueAndStatusIs(anyString(), any(Sort.class),any(PageRequest.class))).thenReturn(mockNotices);
+
+                List<Notice> result = noticeRepository.findByImportantTrueAndStatusIs("HR Department", sort, PageRequest.of(0, 10));
+                assertEquals(mockNotices, result);
+        }
+       
         
-        
+      @Test
+      void testFindByCategoryInAndDepartmentNameInAndAndCreatedByIn(){
+           List<Notice> mockNotices = Arrays.asList(
+                                new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "enable", null, null),
+                                new Notice("1", "This is an important announcement.",
+                                                "this is notice descriptions",
+                                                "General", "HR Department", "2023-11-01", "2023-11-10", null,
+                                                new Date(), "John Doe",
+                                                false, "disable", null, null));
+
+                // Mock the behavior of the repository method
+                when(noticeRepository.findByCategoryInAndDepartmentNameInAndAndCreatedByIn(
+                                Arrays.asList("Department1", "Department2"),
+                                Arrays.asList("Category1", "Category2"),
+                                                                Arrays.asList("Category1", "Category2"),
+                                Pageable.unpaged())) // You can adjust Pageable as needed
+                                .thenReturn(new PageImpl<>(mockNotices));
+
+                // Act: Perform the actual query using the mocked repository
+                Page<Notice> resultPage = noticeRepository.findByCategoryInAndDepartmentNameInAndAndCreatedByIn(
+                                Arrays.asList("Department1", "Department2"),
+                                Arrays.asList("Category1", "Category2"),
+                                  Arrays.asList("Category1", "Category2"),
+                                Pageable.unpaged());
+
+                // Assert: Ensure that only notices meeting the criteria are returned
+                assertEquals(2, resultPage.getTotalElements()); 
+      }
 
 }
