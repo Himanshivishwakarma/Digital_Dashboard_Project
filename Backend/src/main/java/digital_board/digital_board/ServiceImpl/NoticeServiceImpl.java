@@ -577,4 +577,11 @@ public class NoticeServiceImpl implements NoticeService {
     response.add(noticeAccount);
     return response;
   }
+
+  @Override
+  public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin() {
+     return noticeRepository.findNoticeCountsByDepartmentForSuperAdmin();
+  }
+   
+  
 }

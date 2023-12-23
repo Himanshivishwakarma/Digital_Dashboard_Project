@@ -63,4 +63,6 @@ public interface NoticeService {
       List<Map<String, Object>> getLast7DaysCount();
 
       List<Map<String,Object>>getnoticesByCategory();
+
+   public  List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin();
 }

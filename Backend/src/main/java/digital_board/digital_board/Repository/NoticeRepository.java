@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
+import org.antlr.v4.runtime.atn.SemanticContext.AND;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -117,4 +118,15 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
         @Query("SELECT n FROM Notice n WHERE n.category = :category  And n.status <> 'disable' AND n.status <> 'completed'")
         List<Notice> findByCategoryName(@Param("category") String category);
+
+
+        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n.noticeId)) " +
+        "FROM Notice n " +
+        "JOIN User u ON n.createdBy = u.email " +
+        "WHERE n.status = 'enable' AND u.role = 'SuperAdmin' " +
+        "GROUP BY n.departmentName")
+        List<NoticeDto> findNoticeCountsByDepartmentForSuperAdmin();
+
+
+
 }
