@@ -17,6 +17,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -358,4 +360,39 @@ public class NoticeServiceImplTest {
                 assertEquals(mockNotices, result);
 
         }
+
+      @Test
+      void testGetCountAllEnableDepartmentNotices(){
+        long count = 2;
+        List<NoticeDto> mockNotices = Arrays.asList(new NoticeDto("Iteg", count),
+                        new NoticeDto("Iteg", count));
+
+        when(noticeRepository.countAllEnableDepartmentNotices()).thenReturn(mockNotices);
+      List<NoticeDto> resuList = noticeService.getCountAllEnableDepartmentNotices();
+      assertEquals(mockNotices, resuList);
+      }
+
+      @Test
+      void testGetCountAllEnableCategoryNotices() {
+              long count = 2;
+              List<CategoryNoticeDto> mockNotices = Arrays.asList(new CategoryNoticeDto("Iteg", count),
+                              new CategoryNoticeDto("Iteg", count));
+
+              when(noticeRepository.countAllEnableCategoryNotices()).thenReturn(mockNotices);
+
+              List<CategoryNoticeDto> result = noticeService.getCountAllEnableCategoryNotices();
+              assertEquals(mockNotices, result);
+      }
+      
+      @Test
+      void testGetFindNoticeCountsByDepartmentForSuperAdmin(){
+        long count = 2;
+        List<NoticeDto> mockNotices = Arrays.asList(new NoticeDto("Iteg", count),
+                        new NoticeDto("Iteg", count));
+
+        when(noticeRepository.findNoticeCountsByDepartmentForSuperAdmin()).thenReturn(mockNotices);
+      List<NoticeDto> resuList = noticeService.getFindNoticeCountsByDepartmentForSuperAdmin();
+      assertEquals(mockNotices, resuList);
+      }
+
 }
