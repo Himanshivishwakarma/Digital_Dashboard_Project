@@ -203,6 +203,11 @@ public class NoticeServiceImpl implements NoticeService {
       return null;
     } else {
       LOGGER.info("End NoticeServiceImpl: getNoticesByCategory method");
+      if (departmentName.contains("Iteg") ||
+          departmentName.contains("Meg") ||
+          departmentName.contains("Beg")) {
+        departmentName.addAll(Arrays.asList("All"));
+      }
       return noticeRepository.findByDepartmentNameInANDcategoriesInAndStatusNotDisable(
           departmentName,
           categories,
