@@ -1,7 +1,12 @@
 package digital_board.digital_board.Controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -40,6 +45,12 @@ public class NoticeController {
 
     @Autowired
     private NoticeServiceImpl noticeServiceImpl;
+
+    // schedule by end date
+    @GetMapping("/path")
+    public List<Notice> getMethodName() {
+        return noticeServiceImpl.getAllNoticeByScheduling();
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Map<String, Object>> createNoticeByUser(@RequestBody Notice notice) {
@@ -107,7 +118,7 @@ public class NoticeController {
 
                 response.put("message", successMessage);
                 response.put("data", updatedNotice);
-                
+
                 MDC.put("useremail", notice.getCreatedBy());
                 MDC.put("path", "notice/update/");
                 LOGGER.info("updateNoticeByNoticeId method : notice update");
@@ -374,6 +385,32 @@ public class NoticeController {
         return ResponseEntity.ok(response);
     }
 
+    // today created notice count
+
+    @GetMapping("/today/created/notice/count")
+    public ResponseEntity<Map<String, Object>> todayCreatedNotice() {
+        Map<String, Object> response = new HashMap<>();
+        List<Notice> todayCreatedNoticeCount = noticeServiceImpl.todayCreatedNoticeCount();
+        System.out.println(todayCreatedNoticeCount);
+        if (todayCreatedNoticeCount.isEmpty()) {
+            response.put("message", ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "TODAY_NOTICE_NOT_FOUND".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
+        } else {
+            response.put("message", ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "TODAY_NOTICE".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default message if not found"));
+            response.put("count", todayCreatedNoticeCount.size());
+
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/activeNoticeDepartmentCount")
     public ResponseEntity<Map<String, Object>> countAllEnableNotices() {
         LOGGER.info("Start NoticeController: countAllEnableNotices method");
@@ -397,7 +434,7 @@ public class NoticeController {
         LOGGER.info("Start NoticeController: countAllCategoryNotices method");
         Map<String, Object> response = new HashMap<>();
 
-        List<CategoryNoticeDto>  categoryNoticeDtos = noticeServiceImpl.getCountAllEnableCategoryNotices();
+        List<CategoryNoticeDto> categoryNoticeDtos = noticeServiceImpl.getCountAllEnableCategoryNotices();
         response.put("data", categoryNoticeDtos);
         if (categoryNoticeDtos.isEmpty()) {
             // Return a JSON response with a message for data not found
@@ -407,6 +444,37 @@ public class NoticeController {
         }
         // Return the list of notices if data is found
         LOGGER.info("End NoticeController: countAllCategoryNotices method");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/last7Days")
+    public List<Map<String, Object>> getLast7Days() {
+        LOGGER.info("Start NoticeController: getLast7Days method");
+        LOGGER.info("End NoticeController: getLast7Days method");
+        return noticeServiceImpl.getLast7DaysCount();
+    }
+
+    @GetMapping("/categories/count")
+    public List<Map<String,Object>> getNoticebyCategory()
+    {
+        return noticeServiceImpl.getnoticesByCategory();
+    }
+
+     @GetMapping("/NoticeCategoryCountBySuperAdmin")
+    public ResponseEntity<Map<String, Object>> getFindNoticeCountsByDepartmentForSuperAdmin() {
+          LOGGER.info("Start NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
+        Map<String, Object> response = new HashMap<>();
+
+        List<NoticeDto>  noticeDtos = noticeServiceImpl.getFindNoticeCountsByDepartmentForSuperAdmin();
+        response.put("data", noticeDtos);
+        if (noticeDtos.isEmpty()) {
+            // Return a JSON response with a message for data not found
+            response.put("count", noticeDtos.size());
+            LOGGER.info("End NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        // Return the list of notices if data is found
+        LOGGER.info("End NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
         return ResponseEntity.ok(response);
     }
 

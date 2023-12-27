@@ -1,6 +1,7 @@
 package digital_board.digital_board.Servies;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,13 +47,22 @@ public interface NoticeService {
     public Long countByDepartmentName(String departmentName);
 
     // get important notice by limit
-    public List<Notice> noticefindByStatusImportant( Sort sort, int limit);
+    public List<Notice> noticefindByStatusImportant(Sort sort, int limit);
 
     public Page<Notice> getAllNoticesByfilter(List<String> categories, List<String> departmentNames,
             List<String> createdBy,
             String status, Pageable pageable);
 
+    // today created notice count
+     public List<Notice> todayCreatedNoticeCount();
+
       List<NoticeDto> getCountAllEnableDepartmentNotices();
       
       List<CategoryNoticeDto> getCountAllEnableCategoryNotices();
+
+      List<Map<String, Object>> getLast7DaysCount();
+
+      List<Map<String,Object>>getnoticesByCategory();
+
+   public  List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin();
 }

@@ -1,7 +1,11 @@
 package digital_board.digital_board.Repository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
+import org.antlr.v4.runtime.atn.SemanticContext.AND;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +31,10 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
                         @Param("categories") List<String> categories, Pageable pageable);
 
         @Query("SELECT n FROM Notice n WHERE n.status <> 'disable' AND n.status <> 'completed'")
-        // @Query("SELECT * FROM notice WHERE status <> 'disable' AND status <> 'completed' AND COALESCE(images_url, '{}') <> '{}'")
+        // @Query("SELECT * FROM notice WHERE status <> 'disable' AND status <>
+        // 'completed' AND COALESCE(images_url, '{}') <> '{}'")
         Page<Notice> findAll(Pageable pageable);
+
         @Query(value = "SELECT * FROM notice WHERE status <> 'disable' AND status <> 'completed'", nativeQuery = true)
         List<Object[]> findAllNotDisabledOrCompleted();
 
@@ -63,9 +69,9 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
         List<Notice> findByImportantTrueAndStatusIs(String status, Sort sort, PageRequest of);
 
-            @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
-                                    "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
-                                    "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) "+
+        @Query("SELECT n FROM Notice n WHERE (:categories IS NULL OR n.category IN :categories) " +
+                        "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
+                        "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) " +
                         "And n.status <> 'disable' AND n.status <> 'completed'")
         Page<Notice> findByCategoryInAndDepartmentNameInAndAndCreatedByIn(
                         @Param("categories") List<String> categories,
@@ -75,21 +81,34 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
         @Query("SELECT n FROM Notice n " +
                         "WHERE (:categories IS NULL OR n.category IN :categories) " +
-                        "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +   
-                                    "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) " +
-                        "AND (n.important IS NULL OR n.important = true) " + 
+                        "AND (:departmentNames IS NULL OR n.departmentName IN :departmentNames) " +
+                        "AND (:createdBy IS NULL OR n.createdBy IN :createdBy) " +
+                        "AND (n.important IS NULL OR n.important = true) " +
                         "And n.status <> 'disable' AND n.status <> 'completed'")
-            Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
-                                    @Param("categories") List<String> categories,
-                                    @Param("departmentNames") List<String> departmentNames,
-                              
-                                    @Param("createdBy") List<String> createdBy,
-                                    Pageable pageable);
+        Page<Notice> findByCategoryInAndDepartmentNameInAndStatusInAndCreatedByInAndImportant(
+                        @Param("categories") List<String> categories,
+                        @Param("departmentNames") List<String> departmentNames,
 
-        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n)) " +
-                        "FROM Notice n " +
-                        "WHERE n.status = 'enable' " +
-                        "GROUP BY n.departmentName")
+                        @Param("createdBy") List<String> createdBy,
+                        Pageable pageable);
+
+        // @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n)) " +
+        //                 "FROM Notice n " +
+        //                 "WHERE n.status = 'enable' and department_name <> 'All'" +
+        //                 "GROUP BY n.departmentName")
+        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n.noticeId) + COALESCE(allCount, 0))\r\n" + //
+                        "FROM Notice n\r\n" + //
+                        "LEFT JOIN (\r\n" + //
+                        "    SELECT departmentName AS allDepartment, COUNT(noticeId) AS allCount\r\n" + //
+                        "    FROM Notice\r\n" + //
+                        "    WHERE status = 'enable' AND departmentName = 'All'\r\n" + //
+                        "    GROUP BY departmentName\r\n" + //
+                        ") AS allNotices\r\n" + //
+                        "ON n.departmentName IN ('Beg', 'Meg', 'Iteg')" + //
+                        "WHERE n.status = 'enable' AND n.departmentName <> 'All'\r\n" + //
+                        "GROUP BY n.departmentName, allCount\r\n" + //
+                        "")
+                    
         List<NoticeDto> countAllEnableDepartmentNotices();
 
         @Query("SELECT NEW digital_board.digital_board.Dto.CategoryNoticeDto(n.category, COUNT(n)) " +
@@ -97,5 +116,30 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
                         "WHERE n.status = 'enable' " +
                         "GROUP BY n.category")
         List<CategoryNoticeDto> countAllEnableCategoryNotices();
+
+        // today created notice count
+        @Query(value = "SELECT n FROM Notice n WHERE CAST(n.noticeCreatedDate AS date) = :customDate")
+        List<Notice> findByNoticeCreatedDateIsCurrentDate(@Param("customDate") LocalDate customDate);
+
+        // schedule by end date
+        // @Query(value = "SELECT n FROM Notice n WHERE CAST(n.noticeCreatedDate AS date) >= current_date")
+        // List<Notice> findByNoticeEndDateAfterOrEqual();
+
+        // get notice by department 
+        @Query("SELECT n FROM Notice n WHERE n.departmentName = :departmentName And CAST(n.noticeCreatedDate AS date) = :customDate And n.status <> 'disable' AND n.status <> 'completed'")
+        List<Notice> findByDepartmentNameCustomQuery(@Param("customDate") LocalDate customDate,@Param("departmentName") String departmentName);
+
+        @Query("SELECT n FROM Notice n WHERE n.category = :category  And n.status <> 'disable' AND n.status <> 'completed'")
+        List<Notice> findByCategoryName(@Param("category") String category);
+
+
+        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n.noticeId)) " +
+        "FROM Notice n " +
+        "JOIN User u ON n.createdBy = u.email " +
+        "WHERE n.status = 'enable' AND u.role = 'SuperAdmin' " +
+        "GROUP BY n.departmentName")
+        List<NoticeDto> findNoticeCountsByDepartmentForSuperAdmin();
+
+
 
 }

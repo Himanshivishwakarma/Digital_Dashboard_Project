@@ -45,6 +45,8 @@ public class Notice {
 
     private String createdBy;
     private boolean important;
+    private String noticeBackground;
+    private Integer timeDuration;
     private String status;
 
     @PrePersist
