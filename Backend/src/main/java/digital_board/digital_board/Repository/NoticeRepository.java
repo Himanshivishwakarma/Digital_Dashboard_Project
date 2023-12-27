@@ -92,10 +92,23 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
                         @Param("createdBy") List<String> createdBy,
                         Pageable pageable);
 
-        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n)) " +
-                        "FROM Notice n " +
-                        "WHERE n.status = 'enable' " +
-                        "GROUP BY n.departmentName")
+        // @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n)) " +
+        //                 "FROM Notice n " +
+        //                 "WHERE n.status = 'enable' and department_name <> 'All'" +
+        //                 "GROUP BY n.departmentName")
+        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n.noticeId) + COALESCE(allCount, 0))\r\n" + //
+                        "FROM Notice n\r\n" + //
+                        "LEFT JOIN (\r\n" + //
+                        "    SELECT departmentName AS allDepartment, COUNT(noticeId) AS allCount\r\n" + //
+                        "    FROM Notice\r\n" + //
+                        "    WHERE status = 'enable' AND departmentName = 'All'\r\n" + //
+                        "    GROUP BY departmentName\r\n" + //
+                        ") AS allNotices\r\n" + //
+                        "ON n.departmentName IN ('Beg', 'Meg', 'Iteg')" + //
+                        "WHERE n.status = 'enable' AND n.departmentName <> 'All'\r\n" + //
+                        "GROUP BY n.departmentName, allCount\r\n" + //
+                        "")
+                    
         List<NoticeDto> countAllEnableDepartmentNotices();
 
         @Query("SELECT NEW digital_board.digital_board.Dto.CategoryNoticeDto(n.category, COUNT(n)) " +

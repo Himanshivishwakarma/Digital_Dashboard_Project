@@ -540,10 +540,14 @@ public class NoticeServiceImpl implements NoticeService {
       Map<String, Object> dayData = new HashMap<>();
       dayData.put("DAY", dayOfWeek);
       dayData.put("DATE", formattedDate);
-      dayData.put("MEG", noticeRepository.findByDepartmentNameCustomQuery(date, "Meg").size());
-      dayData.put("BEG", noticeRepository.findByDepartmentNameCustomQuery(date, "Beg").size());
-      dayData.put("ITEG", noticeRepository.findByDepartmentNameCustomQuery(date, "Iteg").size());
-      dayData.put("Account", noticeRepository.findByDepartmentNameCustomQuery(date, "Account").size());
+      dayData.put("MEG", noticeRepository.findByDepartmentNameCustomQuery(date, "Meg").size()
+          + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
+      dayData.put("BEG", noticeRepository.findByDepartmentNameCustomQuery(date, "Beg").size()
+          + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
+      dayData.put("ITEG", noticeRepository.findByDepartmentNameCustomQuery(date, "Iteg").size()
+          + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
+      dayData.put("Account", noticeRepository.findByDepartmentNameCustomQuery(date, "Account").size()
+          + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
       last7DaysDataList.add(dayData);
     }
     LOGGER.info("End NoticeServiceImpl: getLast7DaysCount method");
@@ -551,9 +555,8 @@ public class NoticeServiceImpl implements NoticeService {
   }
 
   @Override
-  public List<Map<String,Object>> getnoticesByCategory() 
-  {
-    List<Map<String,Object>> response=new ArrayList<>();
+  public List<Map<String, Object>> getnoticesByCategory() {
+    List<Map<String, Object>> response = new ArrayList<>();
     Map<String, Object> noticeData = new HashMap<>();
 
     noticeData.put("Department", "Excellence Group");
@@ -564,24 +567,23 @@ public class NoticeServiceImpl implements NoticeService {
     noticeData.put("Placement", noticeRepository.findByCategoryName("Placement").size());
     noticeData.put("Guest", noticeRepository.findByCategoryName("Guest").size());
     noticeData.put("Result", noticeRepository.findByCategoryName("Result").size());
-    
+
     response.add(noticeData);
-    
+
     Map<String, Object> noticeAccount = new HashMap<>();
-    noticeAccount.put("Department","Account");
-    noticeAccount.put("NOC",noticeRepository.findByCategoryName("Result").size());
-    noticeAccount.put("Enrollment_Form",noticeRepository.findByCategoryName("Result").size());
-    noticeAccount.put("Document",noticeRepository.findByCategoryName("Result").size());
-    noticeAccount.put("Scholership",noticeRepository.findByCategoryName("Result").size());
-    
+    noticeAccount.put("Department", "Account");
+    noticeAccount.put("NOC", noticeRepository.findByCategoryName("Result").size());
+    noticeAccount.put("Enrollment_Form", noticeRepository.findByCategoryName("Result").size());
+    noticeAccount.put("Document", noticeRepository.findByCategoryName("Result").size());
+    noticeAccount.put("Scholership", noticeRepository.findByCategoryName("Result").size());
+
     response.add(noticeAccount);
     return response;
   }
 
   @Override
   public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin() {
-     return noticeRepository.findNoticeCountsByDepartmentForSuperAdmin();
+    return noticeRepository.findNoticeCountsByDepartmentForSuperAdmin();
   }
-   
-  
+
 }
