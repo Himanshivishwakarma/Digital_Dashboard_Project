@@ -133,11 +133,20 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
         List<Notice> findByCategoryName(@Param("category") String category);
 
 
-        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n.noticeId)) " +
+        @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n.noticeId) + COALESCE(allNotices.allCount, 0)) "
+        +
         "FROM Notice n " +
+        "LEFT JOIN (" +
+        "    SELECT departmentName AS allDepartment, COUNT(noticeId) AS allCount " +
+        "    FROM Notice " +
+        "    WHERE status = 'enable' AND departmentName = 'All' " +
+        "    GROUP BY departmentName" +
+        ") AS allNotices ON n.departmentName = allNotices.allDepartment " +
         "JOIN User u ON n.createdBy = u.email " +
-        "WHERE n.status = 'enable' AND u.role = 'SuperAdmin' " +
-        "GROUP BY n.departmentName")
+        "WHERE n.status = 'enable' AND n.departmentName IN ('Beg', 'Meg', 'Iteg','Account') AND n.departmentName <> 'All' "
+        +
+        "  AND u.role = 'SuperAdmin' " +
+        "GROUP BY n.departmentName, allNotices.allCount")
         List<NoticeDto> findNoticeCountsByDepartmentForSuperAdmin();
 
 
