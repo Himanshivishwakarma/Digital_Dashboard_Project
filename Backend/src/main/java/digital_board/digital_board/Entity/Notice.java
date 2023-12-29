@@ -32,7 +32,14 @@ public class Notice {
     private String category;
     private String departmentName;
     private String noticeStartDate;
-    private String noticeEndDate;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date noticeEndDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date si;
 
     @ElementCollection
     @CollectionTable(name = "notice_images", joinColumns = @JoinColumn(name = "notice_id"))

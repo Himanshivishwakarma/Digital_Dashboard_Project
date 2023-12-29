@@ -7,14 +7,14 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.boot.CommandLineRunner;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.ServiceImpl.ExceptionResponseServiceImpl;
 import digital_board.digital_board.constants.ResponseMessagesBackup;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
 @SpringBootApplication
+@EnableScheduling
 public class DigitalBoardApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(DigitalBoardApplication.class, args);

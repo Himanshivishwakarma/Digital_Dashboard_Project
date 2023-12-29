@@ -11,8 +11,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
@@ -109,24 +111,31 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
         List<Notice> findByNoticeCreatedDateIsCurrentDate(@Param("customDate") LocalDate customDate);
 
         // schedule by end date
-        // @Query(value = "SELECT n FROM Notice n WHERE CAST(n.noticeCreatedDate AS date) >= current_date")
+        // @Query(value = "SELECT n FROM Notice n WHERE CAST(n.noticeCreatedDate AS
+        // date) >= current_date")
         // List<Notice> findByNoticeEndDateAfterOrEqual();
 
-        // get notice by department 
+        // get notice by department
         @Query("SELECT n FROM Notice n WHERE n.departmentName = :departmentName And CAST(n.noticeCreatedDate AS date) = :customDate And n.status <> 'disable' AND n.status <> 'completed'")
-        List<Notice> findByDepartmentNameCustomQuery(@Param("customDate") LocalDate customDate,@Param("departmentName") String departmentName);
+        List<Notice> findByDepartmentNameCustomQuery(@Param("customDate") LocalDate customDate,
+                        @Param("departmentName") String departmentName);
 
         @Query("SELECT n FROM Notice n WHERE n.category = :category  And n.status <> 'disable' AND n.status <> 'completed'")
         List<Notice> findByCategoryName(@Param("category") String category);
 
-
         @Query("SELECT NEW digital_board.digital_board.Dto.NoticeDto(n.departmentName, COUNT(n.noticeId)) " +
-        "FROM Notice n " +
-        "JOIN User u ON n.createdBy = u.email " +
-        "WHERE n.status = 'enable' AND u.role = 'SuperAdmin' " +
-        "GROUP BY n.departmentName")
+                        "FROM Notice n " +
+                        "JOIN User u ON n.createdBy = u.email " +
+                        "WHERE n.status = 'enable' AND u.role = 'SuperAdmin' " +
+                        "GROUP BY n.departmentName")
         List<NoticeDto> findNoticeCountsByDepartmentForSuperAdmin();
 
-
+        // notice scheduling
+        @Transactional
+        @Modifying
+        @Query("UPDATE Notice n SET n.status = 'completed' " +
+                        "WHERE(COALESCE(CAST(n.noticeEndDate AS date), CURRENT_DATE)<CURRENT_DATE) " +
+                        "AND (n.status = 'completed' OR n.status NOT IN ('disable', 'completed'))")
+        void updateStatusToCompleted();
 
 }
