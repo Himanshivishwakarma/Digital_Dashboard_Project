@@ -143,7 +143,7 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
         "    GROUP BY departmentName" +
         ") AS allNotices ON n.departmentName = allNotices.allDepartment " +
         "JOIN User u ON n.createdBy = u.email " +
-        "WHERE n.status = 'enable' AND n.departmentName IN ('Beg', 'Meg', 'Iteg','Account') AND n.departmentName <> 'All' "
+        "WHERE n.status = 'enable' AND n.departmentName IN ('Beg', 'Meg', 'Iteg','Accounts') AND n.departmentName <> 'All' "
         +
         "  AND u.role = 'SuperAdmin' " +
         "GROUP BY n.departmentName, allNotices.allCount")
