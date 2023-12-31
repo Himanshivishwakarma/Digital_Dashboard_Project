@@ -13,12 +13,12 @@ server:
 
 spring:
   datasource:
-  #  url: jdbc:postgresql://dpg-clo3cof5felc73a1nong-a.oregon-postgres.render.com/digital_board
-  #  username: digital_board_user
-  #  password: mibjZBLOiXsEXSUi4pr8iP4MVBDQbLn6
-  #  driver-class-name: org.postgresql.Driver
-    url: jdbc:mysql://localhost:3306/digital_board
-    username: root
+   url: jdbc:postgresql://dpg-cls8cmdetvis73b6ehb0-a.oregon-postgres.render.com/digital_board_1ee7
+   username: root
+   password: vXlsl5HZPlT378fEDBR2IXsBtekOG0zb
+   driver-class-name: org.postgresql.Driver
+    # url: jdbc:mysql://localhost:3307/digital_board
+    # username: root
     # password: root
 
 

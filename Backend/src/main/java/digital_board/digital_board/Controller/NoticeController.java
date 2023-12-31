@@ -50,6 +50,8 @@ public class NoticeController {
     private NoticeServiceImpl noticeServiceImpl;
     @Autowired
     private NoticeRepository noticeRepository;
+    @Autowired
+    private NoticeRepository noticeRepository;
 
     // schedule by end date
     @GetMapping("/path")
@@ -480,7 +482,7 @@ public class NoticeController {
         return ResponseEntity.ok(response);
     }
 
-    // scheduling
+   // scheduling
     // @Scheduled(fixedRate = 6000)
     public String noticeDoCompleted() {
         System.out.println("run notice completed");
