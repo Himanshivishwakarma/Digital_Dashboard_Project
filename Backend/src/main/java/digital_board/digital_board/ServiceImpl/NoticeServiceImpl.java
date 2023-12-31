@@ -36,6 +36,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 
@@ -590,5 +591,7 @@ public class NoticeServiceImpl implements NoticeService {
   public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin() {
     return noticeRepository.findNoticeCountsByDepartmentForSuperAdmin();
   }
+ 
+
 
 }

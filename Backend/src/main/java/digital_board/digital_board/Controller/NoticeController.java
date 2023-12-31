@@ -18,7 +18,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +35,7 @@ import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.ExceptionResponse;
 import digital_board.digital_board.Entity.Notice;
+import digital_board.digital_board.Repository.NoticeRepository;
 import digital_board.digital_board.ServiceImpl.NoticeServiceImpl;
 import digital_board.digital_board.constants.ResponseMessagesConstants;
 
@@ -45,6 +48,8 @@ public class NoticeController {
 
     @Autowired
     private NoticeServiceImpl noticeServiceImpl;
+    @Autowired
+    private NoticeRepository noticeRepository;
 
     // schedule by end date
     @GetMapping("/path")
@@ -78,7 +83,7 @@ public class NoticeController {
                     .filter(exceptionResponse -> "NOTICE_CREATE_FAILURE".equals(exceptionResponse.getExceptonName()))
                     .map(ExceptionResponse::getMassage)
                     .findFirst()
-                    .orElse("Default failure message if not found");
+                    .orElse("Default message if not found");
 
             response.put("message", failureMessage);
             LOGGER.info("End Notic Controller : createNoticeByUser method");
@@ -244,6 +249,7 @@ public class NoticeController {
 
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getAllNoticesSorted(pageable);
+        System.out.println("notice =>"+notice);
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
 
@@ -453,17 +459,16 @@ public class NoticeController {
     }
 
     @GetMapping("/categories/count")
-    public List<Map<String,Object>> getNoticebyCategory()
-    {
+    public List<Map<String, Object>> getNoticebyCategory() {
         return noticeServiceImpl.getnoticesByCategory();
     }
 
-     @GetMapping("/NoticeCategoryCountBySuperAdmin")
+    @GetMapping("/NoticeCategoryCountBySuperAdmin")
     public ResponseEntity<Map<String, Object>> getFindNoticeCountsByDepartmentForSuperAdmin() {
-          LOGGER.info("Start NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
+        LOGGER.info("Start NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
         Map<String, Object> response = new HashMap<>();
 
-        List<NoticeDto>  noticeDtos = noticeServiceImpl.getFindNoticeCountsByDepartmentForSuperAdmin();
+        List<NoticeDto> noticeDtos = noticeServiceImpl.getFindNoticeCountsByDepartmentForSuperAdmin();
         response.put("data", noticeDtos);
         if (noticeDtos.isEmpty()) {
             // Return a JSON response with a message for data not found
@@ -474,6 +479,21 @@ public class NoticeController {
         // Return the list of notices if data is found
         LOGGER.info("End NoticeController: getFindNoticeCountsByDepartmentForSuperAdmin method");
         return ResponseEntity.ok(response);
+    }
+
+    // scheduling
+    @Scheduled(fixedRate = 6000)
+    public String noticeDoCompleted() {
+        System.out.println("run notice completed");
+        noticeRepository.updateStatusToCompleted();
+        noticeRepository.updateStatusForActiveNotices();
+        return "notice status completed successfully";
+    }
+
+    // get all notice draft
+    @GetMapping("/getall/draft")
+    public List<Notice> getAllNoticeDraft() {
+        return noticeRepository.getAllNoticeDraft();
     }
 
 }
