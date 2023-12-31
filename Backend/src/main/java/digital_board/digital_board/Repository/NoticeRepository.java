@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import digital_board.digital_board.Dto.CategoryNoticeDto;
 import digital_board.digital_board.Dto.NoticeDto;
 import digital_board.digital_board.Entity.Notice;
-import jakarta.transaction.Transactional;
 
 public interface NoticeRepository extends JpaRepository<Notice, String> {
         @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId")

@@ -50,8 +50,7 @@ public class NoticeController {
     private NoticeServiceImpl noticeServiceImpl;
     @Autowired
     private NoticeRepository noticeRepository;
-    @Autowired
-    private NoticeRepository noticeRepository;
+
 
     // schedule by end date
     @GetMapping("/path")

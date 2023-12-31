@@ -22,7 +22,6 @@ import digital_board.digital_board.constants.ResponseMessagesConstants;
 
 @SpringBootApplication
 @EnableScheduling
-@EnableScheduling
 public class DigitalBoardApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
