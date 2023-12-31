@@ -51,7 +51,6 @@ public class NoticeController {
     @Autowired
     private NoticeRepository noticeRepository;
 
-
     // schedule by end date
     @GetMapping("/path")
     public List<Notice> getMethodName() {
@@ -250,6 +249,7 @@ public class NoticeController {
 
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getAllNoticesSorted(pageable);
+        System.out.println("notice =>"+notice);
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
 
@@ -481,8 +481,8 @@ public class NoticeController {
         return ResponseEntity.ok(response);
     }
 
-   // scheduling
-    // @Scheduled(fixedRate = 6000)
+    // scheduling
+    @Scheduled(fixedRate = 6000)
     public String noticeDoCompleted() {
         System.out.println("run notice completed");
         noticeRepository.updateStatusToCompleted();
@@ -490,6 +490,10 @@ public class NoticeController {
         return "notice status completed successfully";
     }
 
-
+    // get all notice draft
+    @GetMapping("/getall/draft")
+    public List<Notice> getAllNoticeDraft() {
+        return noticeRepository.getAllNoticeDraft();
+    }
 
 }
