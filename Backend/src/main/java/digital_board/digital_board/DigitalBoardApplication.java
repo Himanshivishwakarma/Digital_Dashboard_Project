@@ -36,6 +36,7 @@ public class DigitalBoardApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("test_branch_01");
         ResponseMessagesConstants.messagelist = this.exceptionResponseServiceImpl.GetAllMassage();
         String specificMessage = ResponseMessagesConstants.messagelist.stream()
                 .filter(exceptionResponse -> "NOTICE_CREATE_FAILURE".equals(exceptionResponse.getExceptonName()))
