@@ -67,4 +67,8 @@ public interface NoticeService {
 
         public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin();
 
+        public Page<Notice> getAllNoticeStatusDraftByUserEmail(String email, Pageable pageable);
+
+
+
 }
