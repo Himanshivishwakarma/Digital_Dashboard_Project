@@ -46,6 +46,7 @@ public class SecurityConfig {
             "/api/v1/notice/getAll/**",
             "/api/v1/user/admin-list",
             "/api/v1/notice/today/created/notice/count",
+            "/api/v1/notice/getall/draft",
             
     };
 
@@ -64,7 +65,6 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers(public_urls).permitAll()
                         .requestMatchers(HttpMethod.POST).permitAll()
-                        .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(
                         oauth2ResourceServer -> oauth2ResourceServer.jwt(jwt -> jwt.decoder(jwtDecoder())))

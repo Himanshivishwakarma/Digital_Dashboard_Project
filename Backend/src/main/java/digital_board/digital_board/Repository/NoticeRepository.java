@@ -25,11 +25,11 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
         @Query("SELECT n FROM Notice n WHERE n.createdBy=:userId")
         Page<Notice> getAllNoticeByUserId(@Param("userId") String userId, Pageable pageable);
 
-        @Query("SELECT n FROM Notice n WHERE n.category IN :category AND (:department IS NULL OR n.departmentName IN :department) AND n.status <> 'disable' AND n.status <> 'completed'")
+        @Query("SELECT n FROM Notice n WHERE n.category IN :category AND (:department IS NULL OR n.departmentName IN :department) AND n.status <> 'disable' AND n.status <> 'completed' AND n.status <> 'draft'")
         Page<Notice> findByCategoryInDepartmentNameInAndStatusNotDisable(List<String> category,
                         @Param("department") List<String> department, Pageable pageable);
 
-        @Query("SELECT n FROM Notice n WHERE n.departmentName IN :departmentName AND (:categories IS NULL OR n.category IN :categories) AND n.status <> 'disable' AND n.status <> 'completed'")
+        @Query("SELECT n FROM Notice n WHERE n.departmentName IN :departmentName AND (:categories IS NULL OR n.category IN :categories) AND n.status <> 'disable' AND n.status <> 'completed' AND n.status <> 'draft'")
         Page<Notice> findByDepartmentNameInANDcategoriesInAndStatusNotDisable(List<String> departmentName,
                         @Param("categories") List<String> categories, Pageable pageable);
 
@@ -150,11 +150,14 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
                         "SET n.status = 'enable' " +
                         "WHERE CURRENT_TIMESTAMP >= n.noticeStartDate " +
                         "AND CURRENT_TIMESTAMP <= n.noticeEndDate " +
-                        "AND n.status <> 'enable'")
+                        "AND n.status = 'draft'")
         void updateStatusForActiveNotices();
 
         // get all notice draft
         @Query("SELECT n FROM Notice n WHERE n.status = 'draft'")
         List<Notice> getAllNoticeDraft();
+
+          @Query("SELECT n FROM Notice n WHERE n.createdBy=:email And n.status = 'draft'")
+        Page<Notice> getAllDraftNoticeByUserId(@Param("email") String email, Pageable pageable);
 
 }

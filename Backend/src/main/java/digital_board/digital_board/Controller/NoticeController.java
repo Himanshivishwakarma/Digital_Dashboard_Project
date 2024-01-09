@@ -249,7 +249,7 @@ public class NoticeController {
 
         Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
         Page<Notice> notice = noticeServiceImpl.getAllNoticesSorted(pageable);
-        System.out.println("notice =>"+notice);
+        System.out.println("notice =>" + notice);
         response.put("count", notice.getTotalElements());
         response.put("data", notice.getContent());
 
@@ -494,6 +494,34 @@ public class NoticeController {
     @GetMapping("/getall/draft")
     public List<Notice> getAllNoticeDraft() {
         return noticeRepository.getAllNoticeDraft();
+    }
+
+    @GetMapping("/getAll/draft/byAdminEmail/{adminEmail}")
+    public ResponseEntity<Map<String, Object>> getAllNoticeStatusDraftByUserEmail(@PathVariable String adminEmail,
+
+            @RequestParam(required = false, defaultValue = "noticeCreatedDate,desc") String sort,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        LOGGER.info("Start NoticeController: getAllNoticeStatusDraftByUserEmail method");
+        Map<String, Object> response = new HashMap<>();
+        Pageable pageable = PageRequest.of(page, size, parseSortString(sort));
+        Page<Notice> notice = noticeServiceImpl.getAllNoticeStatusDraftByUserEmail(adminEmail, pageable);
+        response.put("count", notice.getTotalElements());
+        response.put("data", notice.getContent());
+
+        if (notice.isEmpty()) {
+            String emptyMessage = ResponseMessagesConstants.messagelist.stream()
+                    .filter(exceptionResponse -> "LIST_IS_EMPTY".equals(exceptionResponse.getExceptonName()))
+                    .map(ExceptionResponse::getMassage)
+                    .findFirst()
+                    .orElse("Default failure message if not found");
+
+            response.put("message", emptyMessage);
+            LOGGER.info("End NoticeController: getAllNoticeStatusDraftByUserEmail method");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        LOGGER.info("End NoticeController: getAllNoticeStatusDraftByUserEmail method");
+        return ResponseEntity.ok(response);
     }
 
 }

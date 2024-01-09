@@ -591,7 +591,16 @@ public class NoticeServiceImpl implements NoticeService {
   public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin() {
     return noticeRepository.findNoticeCountsByDepartmentForSuperAdmin();
   }
- 
 
+  @Override
+  public Page<Notice> getAllNoticeStatusDraftByUserEmail(String email, Pageable pageable) {
+    // TODO Auto-generated method stub
+    // throw new UnsupportedOperationException("Unimplemented method 'getAllNoticeStatusDraftByUserEmail'");
+    LOGGER.info("Start NoticeServiceImpl: getAllNoticeStatusDraftByUserEmail method");
+    LOGGER.info("End NoticeServiceImpl: getAllNoticeStatusDraftByUserEmail method");
+    return this.noticeRepository.getAllDraftNoticeByUserId(email, pageable);
+    
+
+  }
 
 }
