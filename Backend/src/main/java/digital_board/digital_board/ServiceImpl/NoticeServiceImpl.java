@@ -36,6 +36,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 
@@ -551,8 +552,7 @@ public class NoticeServiceImpl implements NoticeService {
           + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
       dayData.put("ITEG", noticeRepository.findByDepartmentNameCustomQuery(date, "Iteg").size()
           + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
-      dayData.put("Account", noticeRepository.findByDepartmentNameCustomQuery(date, "Account").size()
-          + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
+      dayData.put("Account", noticeRepository.findByDepartmentNameCustomQuery(date, "Account").size());
       last7DaysDataList.add(dayData);
     }
     LOGGER.info("End NoticeServiceImpl: getLast7DaysCount method");
@@ -589,6 +589,17 @@ public class NoticeServiceImpl implements NoticeService {
   @Override
   public List<NoticeDto> getFindNoticeCountsByDepartmentForSuperAdmin() {
     return noticeRepository.findNoticeCountsByDepartmentForSuperAdmin();
+  }
+
+  @Override
+  public Page<Notice> getAllNoticeStatusDraftByUserEmail(String email, Pageable pageable) {
+    // TODO Auto-generated method stub
+    // throw new UnsupportedOperationException("Unimplemented method 'getAllNoticeStatusDraftByUserEmail'");
+    LOGGER.info("Start NoticeServiceImpl: getAllNoticeStatusDraftByUserEmail method");
+    LOGGER.info("End NoticeServiceImpl: getAllNoticeStatusDraftByUserEmail method");
+    return this.noticeRepository.getAllDraftNoticeByUserId(email, pageable);
+    
+
   }
 
 }

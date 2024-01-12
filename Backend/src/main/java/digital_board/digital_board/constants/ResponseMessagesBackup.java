@@ -44,7 +44,7 @@ public class ResponseMessagesBackup {
                 new ExceptionResponse(19, "EVENT_DELETE_SUCCESS", "Event Deleted Sucessfully"),
                 new ExceptionResponse(20, "EVENT_NOT_FOUND", "Event Not Found !"),
                 new ExceptionResponse(21, "EVENT_UPDATED_SUCCESS", "Event Updated Successfully"),
-                 new ExceptionResponse(22, "NOTICE_CREATE_FAILURE", "Notice Created Failure!"),
+                 new ExceptionResponse(22, "NOTICE_CREATE_FAILURE", "Failed to create notice. Please try again later.!"),
                  new ExceptionResponse(23, "NOTICE_UPDATE_FAILURE", "Notice update Failure!"),
                   new ExceptionResponse(24, "NOT_SUPERADMIN", "User Must be Super Admin!"),
                   new ExceptionResponse(25, "NOTIFICATION_CREATED_SUCCESSFULLY", "Email Notification Added successfully"),
