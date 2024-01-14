@@ -552,8 +552,7 @@ public class NoticeServiceImpl implements NoticeService {
           + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
       dayData.put("ITEG", noticeRepository.findByDepartmentNameCustomQuery(date, "Iteg").size()
           + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
-      dayData.put("Account", noticeRepository.findByDepartmentNameCustomQuery(date, "Account").size()
-          + noticeRepository.findByDepartmentNameCustomQuery(date, "All").size());
+      dayData.put("Account", noticeRepository.findByDepartmentNameCustomQuery(date, "Account").size());
       last7DaysDataList.add(dayData);
     }
     LOGGER.info("End NoticeServiceImpl: getLast7DaysCount method");

@@ -24,29 +24,27 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Deprecated
 public class SecurityConfig {
     private static final String[] public_urls = {
-            "/login",
-            "/api/v1/user/public",
-            "api/v1/auth/**",
-            "/v3/api-docs",
-            "/v2/api-docs",
-            "/swagger-resources/**",
-            "/swagger-ui/**",
-            "/webjars/**",
-            "/api/v1/notice/byCategory/**",
-            "/api/v1/notice/byDepartment/**",
-            "/api/v1/notice/important/**",
-            "/api/v1/notice/search/**",
-            "/api/v1/notice/get/byNoticeId/**",
-            "/api/v1/notice/activeNoticeDepartmentCount",
-            "/api/v1/notice/activeNoticeCategoryCount",
-            "/api/v1/notice/last7Days",
-            "/api/v1/notice/categories/count",
-            "/api/v1/user/FindAllUser",
-            "/api/v1/notification/create",
-            "/api/v1/notice/getAll/**",
-            "/api/v1/user/admin-list",
-            "/api/v1/notice/today/created/notice/count",
-            "/api/v1/notice/getall/draft",
+        "/login",
+        "/api/v1/user/public",
+        "api/v1/auth/**",
+        "/v3/api-docs",
+        "/v2/api-docs",
+        "/swagger-resources/**",
+        "/swagger-ui/**",
+        "/webjars/**",
+        "/api/v1/notice/byCategory/**",
+        "/api/v1/notice/byDepartment/**",
+        "/api/v1/notice/important/**",
+        "/api/v1/notice/search/**",
+        "/api/v1/notice/get/byNoticeId/**",
+        "/api/v1/notice/activeNoticeDepartmentCount",
+        "/api/v1/notice/activeNoticeCategoryCount",
+        "/api/v1/notice/categories/count",
+        "/api/v1/user/FindAllUser",
+        "/api/v1/notification/create",
+        "/api/v1/notice/getAll/**",
+        "/api/v1/user/admin-list",
+        "/api/v1/notice/today/created/notice/count",
             
     };
 
@@ -65,6 +63,7 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers(public_urls).permitAll()
                         .requestMatchers(HttpMethod.POST).permitAll()
+                                .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(
                         oauth2ResourceServer -> oauth2ResourceServer.jwt(jwt -> jwt.decoder(jwtDecoder())))
